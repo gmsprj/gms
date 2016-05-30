@@ -9,7 +9,7 @@ class EntranceController extends AppController
 	public function index()
 	{
 		$this->viewBuilder()->layout('fwu-entrance');
-		$this->set('title', 'FreeWorkerUnion（仮）');
+		$this->set('title', 'Freelance Workers Union（仮）');
 	}
 }
 

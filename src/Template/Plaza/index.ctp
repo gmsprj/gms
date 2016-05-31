@@ -14,7 +14,7 @@
 	<b><?= $dispBoard->name ?>板のスレッドリスト</b>
 	<ul>
 	<?php foreach ($dispThreads as $el) : ?>
-		<li><a href="threads/thread/<?= h($el->id) ?>"><?= h($el->name) ?></a></li>
+		<li><a href="threads/thread/<?= h($el->id) ?>"><?= h($el->name) ?></a> (<?= $el->countPosts() ?>)</li>
 	<?php endforeach; ?>
 	</ul>
 

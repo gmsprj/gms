@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * Thread Entity.
@@ -30,8 +31,18 @@ class Thread extends Entity
         'id' => false,
     ];
 
-    public function toString() {
+    public function toString()
+    {
 	return sprintf("id[%d] name[%s] created[%s] board_id[%d]",
 		$this->id, $this->name, $this->created, $this->board_id);
+    }
+
+    public function countPosts()
+    {
+	$this->Posts = TableRegistry::get('Posts');
+	return $this->Posts->find()
+		->where(['thread_id' => $this->id])
+		->count()
+		;
     }
 }

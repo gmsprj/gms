@@ -2,7 +2,7 @@
 
 <!-- スレッドリスト -->
 <?php foreach ($threads as $thread) : ?>
-	<li><a href="/threads/thread/<?= h($thread->id) ?>"><?= h($thread->name) ?></a></li>	
+	<li><a href="/threads/thread/<?= h($thread->id) ?>"><?= h($thread->name) ?></a> (<?= $thread->countPosts() ?>)</li>	
 <?php endforeach; ?>
 
 <!-- 新規スレッド投稿フォーム -->

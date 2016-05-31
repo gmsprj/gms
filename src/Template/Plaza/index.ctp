@@ -18,7 +18,6 @@
 	<?php endforeach; ?>
 	</ul>
 
-	<?php /* TODO: Threads/thread.ctp と重複 */ ?>
 	<!-- 閲覧中スレッド -->
 	<b>「<?= $dispThread->name ?>」スレッドのポストリスト</b>
 	<ul>

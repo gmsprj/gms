@@ -1,11 +1,13 @@
 <h3><?= $board->name ?> &gt; <?= $thread->name ?></h3>
 
-<?php /* TODO: Plaza/index.ctp と重複 */ ?>
 <ul>
 <?php $i = 1; foreach ($posts as $el) : ?>
 	<li>
 	<?php
-		echo $i++ . ': ' . $el->name . ': ' . $el->created . ': ' . $el->content;
+		echo '<div>';
+		echo '<p style="margin:0;">' . $i++ . ': ' . $el->name . ': ' . $el->created . ': ' . '</p>';
+		echo '<p>' . $el->content . '</p>';
+		echo '</div>';
 	?>
 	</li>
 <?php endforeach; ?>

@@ -9,6 +9,12 @@ use DateTime;
 
 class ThreadsController extends AppController
 {
+	public function initialize()
+	{
+		parent::initialize();
+		$this->viewBuilder()->layout('fwu-default');
+	}
+
 	public function index()
 	{
 		$this->autoRender = false;
@@ -17,8 +23,6 @@ class ThreadsController extends AppController
 
 	public function thread($threadId)
 	{
-		$this->viewBuilder()->layout('fwu-default');
-		
 		$this->loadModel('Boards');
 		$this->loadModel('Threads');
 		$this->loadModel('Posts');

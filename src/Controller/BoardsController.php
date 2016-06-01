@@ -8,18 +8,20 @@ use DateTime;
 
 class BoardsController extends AppController
 {
+	public function initialize()
+	{
+		parent::initialize();
+		$this->viewBuilder()->layout('fwu-default');
+	}
+
 	public function index()
 	{
-		$this->viewBuilder()->layout('fwu-default');
-
 		$boards = $this->Boards->find('all');
 		$this->set('boards', $boards);
 	}
 
 	public function board($boardId)
 	{
-		$this->viewBuilder()->layout('fwu-default');
-		
 		$this->loadModel('Boards');
 		$this->loadModel('Threads');
 

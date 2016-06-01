@@ -9,15 +9,18 @@ use DateTime;
 
 class PlazaController extends AppController
 {
+	public function initialize()
+	{
+		parent::initialize();
+		$this->viewBuilder()->layout('fwu-default');
+	}
+
 	public function index()
 	{
 		$this->loadModel('Boards');
 		$this->loadModel('Threads');
 		$this->loadModel('Posts');
 		
-		// Layout
-		$this->viewBuilder()->layout('fwu-default');
-
 		// 板のリスト
 		$boards = $this->Boards->find('all')
 			->order(['name' => 'DESC'])

@@ -4,7 +4,7 @@
 	<ul>
 	<?php foreach ($boards as $el) : ?>
 		<li>
-			<a href="boards/board/<?= h($el->id) ?>"><?= h($el->name) ?></a>
+			<?= $this->Html->link($el->name, ['controller' => 'Boards', 'action' => 'board', $el->id]) ?>
 		</li>
 	<?php endforeach; ?>
 	</ul>
@@ -14,7 +14,10 @@
 	<b><?= $dispBoard->name ?>板のスレッドリスト</b>
 	<ul>
 	<?php foreach ($dispThreads as $el) : ?>
-		<li><a href="threads/thread/<?= h($el->id) ?>"><?= h($el->name) ?></a> (<?= $el->countPosts() ?>)</li>
+		<li>
+			<?= $this->Html->link($el->name, ['controller' => 'Threads', 'action' => 'thread', $el->id]) ?>
+			(<?= $el->countPosts() ?>)
+		</li>
 	<?php endforeach; ?>
 	</ul>
 

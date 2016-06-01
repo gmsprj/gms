@@ -1,9 +1,14 @@
 <h3><?= h($board->name) ?></h3>
 
 <!-- スレッドリスト -->
-<?php foreach ($threads as $thread) : ?>
-	<li><a href="/threads/thread/<?= h($thread->id) ?>"><?= h($thread->name) ?></a> (<?= $thread->countPosts() ?>)</li>	
+<ul>
+<?php foreach ($threads as $el) : ?>
+	<li>
+		<?= $this->Html->link($el->name, ['controller' => 'Threads', 'action' => 'thread', $el->id]) ?>
+		(<?= $el->countPosts() ?>)
+	</li>
 <?php endforeach; ?>
+</ul>
 
 <!-- 新規スレッド投稿フォーム -->
 <h3>新規スレッド</h3>

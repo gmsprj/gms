@@ -47,6 +47,7 @@ class BoardsController extends AppController
 		$postContent = $this->request->data('postContent');
 		$created = new DateTime(date('Y-m-d H:i:s'));
 		$boardId = $this->request->data('boardId');
+		$redirect = ['action' => 'board', $boardId];
 		
 		// スレッドの作成
 		$threadsTable = TableRegistry::get('Threads');
@@ -61,7 +62,8 @@ class BoardsController extends AppController
 		} else {
 			$this->Flash->error('入力が不正です。');
 			Log::write('error', $newThread->toString());
-			$this->redirect(['action' => 'board', $boardId]);
+			$this->redirect($redirect);
+			return;
 		}
 
 		// ポストの作成
@@ -80,7 +82,7 @@ class BoardsController extends AppController
 			$threadsTable->delete($newThread);
 		}
 
-		$this->redirect(['action' => 'board', $boardId]);
+		$this->redirect($redirect);
 	}
 }
 

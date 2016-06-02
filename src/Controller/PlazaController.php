@@ -6,6 +6,7 @@ use Cake\Log\Log;
 use App\Model\Table;
 use Cake\ORM\TableRegistry;
 use DateTime;
+use \Exception;
 
 class PlazaController extends AppController
 {
@@ -25,17 +26,26 @@ class PlazaController extends AppController
 		$boards = $this->Boards->find('all')
 			->order(['name' => 'DESC'])
 			;
+		if ($boards->count() == 0) {
+			throw new Exception('(´･ω･`)板がありません。');
+		}
 		
 		// 表示板
 		$dispBoard = $this->Boards->find()
 			->where(['name' => 'ロビー'])
 			->first()
 			;
+		if ($dispBoard == null) {
+			throw new Exception('(´･ω･`)ロビー板を作成してください。');
+		}
 		
 		// 表示板スレッドリスト
 		$dispThreads = $this->Threads->find('all')
 			->where(['board_id' => $dispBoard->id])
 			;
+		if ($dispThreads->count() == 0) {
+			throw new Exception('(´･ω･`)' . $dispBoard->name . '板にスレッドがありません。最低１スレッド必要です。');
+		}
 		
 		// 表示スレッド
 		$dispThread = $this->Threads->find('all')

@@ -11,6 +11,7 @@ class BoardsController extends AppController
 	public function initialize()
 	{
 		parent::initialize();
+		$this->loadComponent('Csrf');
 		$this->viewBuilder()->layout('fwu-default');
 	}
 

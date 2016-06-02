@@ -70,6 +70,7 @@ class ThreadsController extends AppController
 		if ($postsTable->save($newPost)) {
 			Log::write('debug', $newPost->toString());
 		} else {
+			$this->Flash->error('入力が不正です。');
 			Log::write('error', $newPost->toString());
 		}
 		

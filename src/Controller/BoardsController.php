@@ -59,7 +59,9 @@ class BoardsController extends AppController
 		if ($threadsTable->save($newThread)) {
 			Log::write('debug', $newThread->toString());
 		} else {
+			$this->Flash->error('入力が不正です。');
 			Log::write('error', $newThread->toString());
+			$this->redirect(['action' => 'board', $boardId]);
 		}
 
 		// ポストの作成
@@ -73,7 +75,9 @@ class BoardsController extends AppController
 		if ($postsTable->save($newPost)) {
 			Log::write('debug', $newPost->toString());
 		} else {
+			$this->Flash->error('入力が不正です。');
 			Log::write('error', $newPost->toString());
+			$threadsTable->delete($newThread);
 		}
 
 		$this->redirect(['action' => 'board', $boardId]);

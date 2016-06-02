@@ -51,6 +51,10 @@ class BoardsTable extends Table
         $validator
             ->requirePresence('name', 'create')
             ->notEmpty('name');
+	
+	$validator
+	    ->add('name', 'length', ['rule' => ['minLength', 1]])
+	    ->add('name', 'length', ['rule' => ['maxLength', 64]]);
 
         return $validator;
     }

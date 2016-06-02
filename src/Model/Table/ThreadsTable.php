@@ -57,6 +57,10 @@ class ThreadsTable extends Table
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
+	$validator
+	    ->add('name', 'length', ['rule' => ['minLength', 1]])
+	    ->add('name', 'length', ['rule' => ['maxLength', 92]]);
+
         return $validator;
     }
 

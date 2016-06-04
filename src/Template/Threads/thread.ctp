@@ -5,7 +5,7 @@
 	<li>
 	<?php
 		echo '<div>';
-		echo '<p style="margin:0;">' . $i++ . ': ' . $el->name . ': ' . $el->created . ': ' . '</p>';
+		echo '<p style="margin:0;">' . $i++ . ': ' . h($el->name) . ': ' . h($el->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) . ': ' . '</p>';
 		echo '<p>' . $el->content . '</p>';
 		echo '</div>';
 	?>

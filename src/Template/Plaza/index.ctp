@@ -27,7 +27,7 @@
 	<?php $i = 1; foreach ($dispPosts as $el) : ?>
 		<li>
 		<?php
-			echo $i++ . ': ' . h($el->name) . ': ' . h($el->created) . ': ' . h($el->content);
+			echo $i++ . ': ' . h($el->name) . ': ' . h($el->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) . ': ' . h($el->content);
 		?>
 		</li>
 	<?php endforeach; ?>

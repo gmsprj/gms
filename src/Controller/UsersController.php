@@ -10,6 +10,13 @@ use Cake\ORM\TableRegistry;
 
 class UsersController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Csrf');
+        $this->viewBuilder()->layout('fwu-default');
+    }
+
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);

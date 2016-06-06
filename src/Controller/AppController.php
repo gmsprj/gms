@@ -48,8 +48,16 @@ class AppController extends Controller
                 'Form' => [
                 'fields' => ['name' => 'email', 'password' => 'password']
                 ]
-            ]
-            // TODO: /users/signout
+            ],
+            'authorize' => ['Controller'], // Added this line
+                'loginRedirect' => [
+                    'controller' => 'Plaza',
+                    'action' => 'index'
+                ],
+                'logoutRedirect' => [
+                    'controller' => 'Plaza',
+                    'action' => 'index',
+                ]
         ]);
     }
 

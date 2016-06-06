@@ -2,11 +2,11 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\Log\Log;
 use App\Model\Table;
+use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use DateTime;
-use \Exception;
+use Exception;
 
 class PlazaController extends AppController
 {

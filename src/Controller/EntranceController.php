@@ -1,8 +1,9 @@
 <?php
 namespace App\Controller;
+
 use App\Controller\AppController;
-use Cake\Log\Log;
 use App\Model\Table;
+use Cake\Log\Log;
 
 class EntranceController extends AppController
 {

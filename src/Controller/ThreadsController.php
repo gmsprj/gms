@@ -1,10 +1,11 @@
 <?php
 namespace App\Controller;
+
 use App\Controller\AppController;
-use Cake\Log\Log;
 use App\Model\Table;
-use \Exception;
+use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
+use Exception;
 use DateTime;
 
 class ThreadsController extends AppController

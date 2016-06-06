@@ -79,7 +79,7 @@ CREATE TABLE `users` (
   `name` varchar(64) NOT NULL COMMENT 'ユーザーの名前',
   `email` varchar(256) NOT NULL COMMENT 'ユーザーのメールアドレス',
   `password` varchar(256) NOT NULL COMMENT 'ユーザーのログイン・パスワード',
-  `state` int(11) NOT NULL DEFAULT 0 COMMENT 'ユーザーの状態（0:初期状態, 1:ログイン状態）',
+  `state` int(11) DEFAULT 0 COMMENT 'ユーザーの状態（0:初期状態, 1:ログイン状態）',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='ユーザーのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;

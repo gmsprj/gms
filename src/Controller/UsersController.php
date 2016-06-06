@@ -39,8 +39,7 @@ class UsersController extends AppController
             'state' => 0,
         ]);
 
-        $errs = $newUser->errors();
-        if ($errs) {
+        if ($newUser->errors()) {
             $this->Flash->error(__('入力が不正です。'));
             Log::write('error', $newUser->toString());
             return;    

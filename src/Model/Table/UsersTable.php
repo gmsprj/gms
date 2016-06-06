@@ -17,10 +17,8 @@ class UsersTable extends Table
      * User の状態。
      *
      */
-    enum State : int {
-        First = 0, // 初期状態
-        Login = 1, // ログイン状態
-    };
+    const STATE_FIRST = 0; // 初期状態
+    const STATE_LOGIN = 1; // ログイン状態
 
     /**
      * Initialize method

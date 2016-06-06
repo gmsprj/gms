@@ -33,16 +33,16 @@ class Thread extends Entity
 
     public function toString()
     {
-	return sprintf("id[%d] name[%s] created[%s] board_id[%d]",
-		$this->id, $this->name, $this->created, $this->board_id);
+        return sprintf("id[%d] name[%s] created[%s] board_id[%d] errors[%s]",
+                $this->id, $this->name, json_encode($this->created), $this->board_id, json_encode($this->errors()));
     }
 
     public function countPosts()
     {
-	$this->Posts = TableRegistry::get('Posts');
-	return $this->Posts->find()
-		->where(['thread_id' => $this->id])
-		->count()
-		;
+        $this->Posts = TableRegistry::get('Posts');
+        return $this->Posts->find()
+            ->where(['thread_id' => $this->id])
+            ->count()
+            ;
     }
 }

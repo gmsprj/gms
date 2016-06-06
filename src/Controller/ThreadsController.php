@@ -5,6 +5,7 @@ use App\Controller\AppController;
 use App\Model\Table;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
+use Cake\Event\Event;
 use Exception;
 use DateTime;
 
@@ -17,10 +18,16 @@ class ThreadsController extends AppController
 		$this->viewBuilder()->layout('fwu-default');
 	}
 
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['view', 'post']);
+    }
+
 	public function index()
 	{
 		$this->autoRender = false;
-		throw new Exception('そんなページありません。');
+		throw new Exception(__('そんなページありません。'));
 	}
 
 	public function view($threadId)
@@ -35,7 +42,7 @@ class ThreadsController extends AppController
 			;
 
 		if ($thread == null) {
-			throw new Exception('そんなスレッドありません。');
+			throw new Exception(__('そんなスレッドありません。'));
 		}
 		
 		$board = $this->Boards->find()
@@ -59,6 +66,7 @@ class ThreadsController extends AppController
 		$content = $this->request->data('content');
 		$threadId = $this->request->data('threadId');
 		$created = new DateTime(date('Y-m-d H:i:s'));
+        $redirect = ['action' => 'view', $threadId];
 
 		// ポストの作成
 		$postsTable = TableRegistry::get('Posts');
@@ -68,14 +76,21 @@ class ThreadsController extends AppController
 			'thread_id' => $threadId,
 		]);
 		
+        if ($newPost->errors()) {
+			$this->Flash->error(__('入力が不正です。'));
+			Log::write('error', $newPost->toString());
+            $this->redirect($redirect);
+            return;
+        }
+
 		if ($postsTable->save($newPost)) {
 			Log::write('debug', $newPost->toString());
 		} else {
-			$this->Flash->error('入力が不正です。');
+			$this->Flash->error(__('入力が不正です。'));
 			Log::write('error', $newPost->toString());
 		}
 		
-		$this->redirect(['action' => 'thread', $threadId]);
+		$this->redirect($redirect);
 	}
 }
 

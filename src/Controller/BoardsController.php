@@ -5,6 +5,7 @@ use App\Controller\AppController;
 use App\Model\Table;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
+use Cake\Event\Event;
 use DateTime;
 
 class BoardsController extends AppController
@@ -15,6 +16,12 @@ class BoardsController extends AppController
 		$this->loadComponent('Csrf');
 		$this->viewBuilder()->layout('fwu-default');
 	}
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['view', 'post']);
+    }
 
 	public function index()
 	{
@@ -48,7 +55,7 @@ class BoardsController extends AppController
 		$postContent = $this->request->data('postContent');
 		$created = new DateTime(date('Y-m-d H:i:s'));
 		$boardId = $this->request->data('boardId');
-		$redirect = ['action' => 'board', $boardId];
+		$redirect = ['action' => 'view', $boardId];
 		
 		// スレッドの作成
 		$threadsTable = TableRegistry::get('Threads');
@@ -57,13 +64,20 @@ class BoardsController extends AppController
 			'created' => $created,
 			'board_id' => $boardId,
 		]);
+
+        if ($newThread->errors()) {
+			$this->Flash->error(__('入力が不正です。'));
+			Log::write('error', $newThread->toString());
+            $this->redirect($redirect);
+            return;
+        }
 		
 		if ($threadsTable->save($newThread)) {
 			Log::write('debug', $newThread->toString());
 		} else {
-			$this->Flash->error('入力が不正です。');
+			$this->Flash->error(__('登録に失敗しました。'));
 			Log::write('error', $newThread->toString());
-			$this->redirect($redirect);
+            $this->redirect($redirect);
 			return;
 		}
 
@@ -75,10 +89,18 @@ class BoardsController extends AppController
 			'thread_id' => $newThread->id,
 		]);
 		
+        if ($newPost->errors()) {
+			$this->Flash->error(__('入力が不正です。'));
+			Log::write('error', $newPost->toString());
+			$threadsTable->delete($newThread);
+            $this->redirect($redirect);
+            return;
+        }
+		
 		if ($postsTable->save($newPost)) {
 			Log::write('debug', $newPost->toString());
 		} else {
-			$this->Flash->error('入力が不正です。');
+			$this->Flash->error(__('登録に失敗しました。'));
 			Log::write('error', $newPost->toString());
 			$threadsTable->delete($newThread);
 		}

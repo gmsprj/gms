@@ -31,7 +31,7 @@ class Post extends Entity
     ];
 
     public function toString() {
-	return sprintf('id[%d] name[%s] created[%s] content[%s]',
-		$this->id, $this->name, $this->created, $this->content);
+	return sprintf('id[%d] name[%s] created[%s] content[%s] errors[%s]',
+		$this->id, $this->name, json_encode($this->created), $this->content, json_encode($this->errors()));
     }
 }

@@ -48,6 +48,10 @@ class BoardsController extends AppController
 
     public function post()
     {
+        if (!$this->request->is('post')) {
+            return;
+        }
+
         $threadName = $this->request->data('threadName');
         $postName = $this->request->data('postName');
         $postContent = $this->request->data('postContent');

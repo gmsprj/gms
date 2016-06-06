@@ -59,6 +59,10 @@ class ThreadsController extends AppController
     /* TODO: PlazaController.php: post() と重複 */
     public function post()
     {
+        if (!$this->request->is('post')) {
+            return;
+        }
+
         $name = $this->request->data('name');
         $content = $this->request->data('content');
         $threadId = $this->request->data('threadId');

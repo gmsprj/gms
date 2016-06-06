@@ -13,6 +13,14 @@ use Cake\Validation\Validator;
  */
 class UsersTable extends Table
 {
+    /**
+     * User の状態。
+     *
+     */
+    enum State : int {
+        First = 0, // 初期状態
+        Login = 1, // ログイン状態
+    };
 
     /**
      * Initialize method
@@ -53,6 +61,11 @@ class UsersTable extends Table
         $validator
             ->requirePresence('password', 'create')
             ->notEmpty('password');
+
+        $validator
+            ->integer('state')
+            ->requirePresence('state', 'create')
+            ->notEmpty('state');
 
         return $validator;
     }

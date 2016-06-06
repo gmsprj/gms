@@ -2,7 +2,6 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * User Entity.
@@ -11,6 +10,7 @@ use Cake\Auth\DefaultPasswordHasher;
  * @property string $name
  * @property string $email
  * @property string $password
+ * @property int $state
  */
 class User extends Entity
 {

@@ -21,6 +21,7 @@ class UsersFixture extends TestFixture
         'name' => ['type' => 'string', 'length' => 64, 'null' => false, 'default' => null, 'comment' => 'ユーザーの名前', 'precision' => null, 'fixed' => null],
         'email' => ['type' => 'string', 'length' => 256, 'null' => false, 'default' => null, 'comment' => 'ユーザーのメールアドレス', 'precision' => null, 'fixed' => null],
         'password' => ['type' => 'string', 'length' => 256, 'null' => false, 'default' => null, 'comment' => 'ユーザーのログイン・パスワード', 'precision' => null, 'fixed' => null],
+        'state' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => 'ユーザーの状態（0:初期状態, 1:ログイン状態）', 'precision' => null, 'autoIncrement' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -41,7 +42,8 @@ class UsersFixture extends TestFixture
             'id' => 1,
             'name' => 'Lorem ipsum dolor sit amet',
             'email' => 'Lorem ipsum dolor sit amet',
-            'password' => 'Lorem ipsum dolor sit amet'
+            'password' => 'Lorem ipsum dolor sit amet',
+            'state' => 1
         ],
     ];
 }

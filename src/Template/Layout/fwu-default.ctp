@@ -28,6 +28,9 @@
                 <li><a href="/entrance">Entrance</a></li>
                 <li><a href="/plaza">Plaza</a></li>
                 <li><a href="/boards">Boards</a></li>
+                <li><a href="/users/signup">Sign up</a></li>
+                <li><a href="/users/signin">Sign in</a></li>
+                <li><a href="/users/signout">Sign out</a></li>
             </ul>
         </div>
     </nav>

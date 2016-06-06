@@ -4,7 +4,7 @@
 <ul>
 <?php foreach ($threads as $el) : ?>
 	<li>
-		<?= $this->Html->link($el->name, ['controller' => 'Threads', 'action' => 'thread', $el->id]) ?>
+		<?= $this->Html->link($el->name, ['controller' => 'Threads', 'action' => 'view', $el->id]) ?>
 		(<?= $el->countPosts() ?>)
 	</li>
 <?php endforeach; ?>

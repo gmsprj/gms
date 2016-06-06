@@ -21,7 +21,7 @@ class BoardsController extends AppController
 		$this->set('boards', $boards);
 	}
 
-	public function board($boardId)
+	public function view($boardId)
 	{
 		$this->loadModel('Boards');
 		$this->loadModel('Threads');

@@ -22,7 +22,7 @@ class ThreadsController extends AppController
 		throw new Exception('そんなページありません。');
 	}
 
-	public function thread($threadId)
+	public function view($threadId)
 	{
 		$this->loadModel('Boards');
 		$this->loadModel('Threads');

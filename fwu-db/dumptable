@@ -1,0 +1,19 @@
+#!/bin/bash
+DBUSER="$1"
+DBNAME="$2"
+
+if [ -z $DBUSER ]; then
+	echo "Need database user name."
+	exit 1
+fi
+
+if [ -z $DBNAME ]; then
+	echo "Need database name."
+	exit 1
+fi
+
+echo db-user: $DBUSER
+echo db-name: $DBNAME
+
+mysqldump -u $DBUSER --no-data $DBNAME -p > $DBNAME.all-table-structures.sql
+

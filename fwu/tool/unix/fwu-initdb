@@ -22,7 +22,7 @@ DELETE FROM users;
 INSERT INTO boards (name, created) VALUES ('ロビー', "$NOW");
 SET @board_id = LAST_INSERT_ID();
 INSERT INTO threads (name, created, board_id) VALUES ('雑談スレ', "$NOW", @board_id);
-SET @thread_ID = LAST_INSERT_ID();
-INSERT INTO posts (name, content, created, thread_ID) VALUES ('名無し', '雑談スレです。', "$NOW", @thread_ID);
+SET @thread_id = LAST_INSERT_ID();
+INSERT INTO posts (name, content, created, thread_id) VALUES ('名無し', '雑談スレです。', "$NOW", @thread_id);
 EOF
 

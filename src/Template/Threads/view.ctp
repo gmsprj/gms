@@ -6,7 +6,7 @@
 	<?php
 		echo '<div>';
 		echo '<p style="margin:0;">' . $i++ . ': ' . h($el->name) . ': ' . h($el->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) . ': ' . '</p>';
-		echo '<p>' . $el->content . '</p>';
+		echo '<p>' . h($el->content) . '</p>';
 		echo '</div>';
 	?>
 	</li>
@@ -19,11 +19,11 @@
 	'type' => 'post',
 	'url' => ['controller' => 'Threads', 'action' => 'post']]
 ) ?>
-<?= $this->Form->label('name', '名前：') ?>
-<?= $this->Form->hidden('threadId', ['value' => $thread->id]) ?>
-<?= $this->Form->text('name', ['value' => $postName]) ?>
-<?= $this->Form->label('name', '内容：') ?>
-<?= $this->Form->textarea('content', ['value' => '内容なし']) ?>
-<?= $this->Form->submit('投稿') ?>
+<?= $this->Form->label('name', __('名前：')) ?>
+<?= $this->Form->hidden('threadId', ['value' => h($thread->id)]) ?>
+<?= $this->Form->text('name', ['value' => h($postName)]) ?>
+<?= $this->Form->label('name', __('内容：')) ?>
+<?= $this->Form->textarea('content', ['value' => __('内容なし')]) ?>
+<?= $this->Form->submit(__('投稿')) ?>
 <?= $this->Form->end() ?>
 

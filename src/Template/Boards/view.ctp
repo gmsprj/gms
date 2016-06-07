@@ -17,12 +17,12 @@
 	'url' => ['controller' => 'Boards', 'action' => 'post']]
 ) ?>
 <?= $this->Form->hidden('boardId', ['value' => h($board->id)]) ?>
-<?= $this->Form->label('threadName', 'スレッド名：') ?>
-<?= $this->Form->text('threadName', ['value' => 'スレッド名']) ?>
-<?= $this->Form->label('postName', '名前：') ?>
-<?= $this->Form->text('postName', ['value' => $postName]) ?>
-<?= $this->Form->label('postContent', '内容：') ?>
-<?= $this->Form->textarea('postContent', ['value' => '内容なし']) ?>
-<?= $this->Form->submit('投稿') ?>
+<?= $this->Form->label('threadName', __('スレッド名：')) ?>
+<?= $this->Form->text('threadName', ['value' => __('スレッド名')]) ?>
+<?= $this->Form->label('postName', __('名前：')) ?>
+<?= $this->Form->text('postName', ['value' => h($postName)]) ?>
+<?= $this->Form->label('postContent', __('内容：')) ?>
+<?= $this->Form->textarea('postContent', ['value' => __('内容なし')]) ?>
+<?= $this->Form->submit(__('投稿')) ?>
 <?= $this->Form->end() ?>
 

@@ -1,6 +1,9 @@
 #!/bin/bash
-DBUSER="$1"
-DBNAME="$2"
+#
+# DBの全てのテーブル定義を出力する。
+#
+DBUSER="$FWU_DBUSER"
+DBNAME="$FWU_DBNAME"
 
 if [ -z $DBUSER ]; then
 	echo "Need database user name."

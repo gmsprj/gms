@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# Yes/No のプロンプトを表示する。
+# ユーザーの入力が Yes の場合は 0 、No の場合は 0 以外で終了する。
+#
+# @param string $1 表示するメッセージ
+# @return number yes の場合は 0
+# @return number no の場合は 0 以外
+#
+while :
+do
+    echo -n "$1 [Y/N]: "
+    read ans
+    case $ans in
+        [yY]) exit 0 ;;
+        [nN]) exit 1 ;;
+    esac
+done
+

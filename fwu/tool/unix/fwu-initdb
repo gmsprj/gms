@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# DBのテーブルを初期化する。
+#
+DBUSER="$FWU_DBUSER"
+DBNAME="$FWU_DBNAME"
+NOW=`date +%Y-%m-%d`
+
+echo db-user:$DBUSER
+echo db-name:$DBNAME
+
+fwu-confirm "本当に実行しますか？"
+if [ $? -ne 0 ]; then
+    exit 0
+fi
+
+mysql -u $DBUSER -p $DBNAME <<EOF
+DELETE FROM posts;
+DELETE FROM threads;
+DELETE FROM boards;
+DELETE FROM users;
+INSERT INTO boards (name, created) VALUES ('ロビー', "$NOW");
+SET @board_id = LAST_INSERT_ID();
+INSERT INTO threads (name, created, board_id) VALUES ('雑談スレ', "$NOW", @board_id);
+SET @thread_ID = LAST_INSERT_ID();
+INSERT INTO posts (name, content, created, thread_ID) VALUES ('名無し', '雑談スレです。', "$NOW", @thread_ID);
+EOF
+

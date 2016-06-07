@@ -4,7 +4,6 @@
 #
 DBUSER="$FWU_DBUSER"
 DBNAME="$FWU_DBNAME"
-NOW=`date +%Y-%m-%d`
 
 echo db-user:$DBUSER
 echo db-name:$DBNAME
@@ -13,6 +12,8 @@ fwu-confirm "上記の DB を初期化します。本当に実行しますか？
 if [ $? -ne 0 ]; then
     exit 0
 fi
+
+NOW=`date +%Y-%m-%d`
 
 mysql -u $DBUSER -p $DBNAME <<EOF
 DELETE FROM posts;

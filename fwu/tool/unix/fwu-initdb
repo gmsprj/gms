@@ -16,14 +16,39 @@ fi
 NOW=`date +%Y-%m-%d`
 
 mysql -u $DBUSER -p $DBNAME <<EOF
+
+-- テーブルのクリア
+
 DELETE FROM posts;
 DELETE FROM threads;
 DELETE FROM boards;
 DELETE FROM users;
-INSERT INTO boards (name, created) VALUES ('ロビー', "$NOW");
+DELETE FROM guilds;
+
+
+-- Plaza 用の板、スレッド、ポストを作成
+
+INSERT INTO boards (name, created, parent_name) VALUES ('ロビー', "$NOW", 'plaza');
 SET @board_id = LAST_INSERT_ID();
+
 INSERT INTO threads (name, created, board_id) VALUES ('雑談スレ', "$NOW", @board_id);
 SET @thread_id = LAST_INSERT_ID();
+
 INSERT INTO posts (name, content, created, thread_id) VALUES ('名無し', '雑談スレです。', "$NOW", @thread_id);
+
+
+-- Guilds と板、スレッド、ポストを作成
+
+INSERT INTO guilds (name) VALUES ('Web制作管理');
+SET @guild_id = LAST_INSERT_ID();
+
+INSERT INTO boards (name, created, parent_name, parent_id) VALUES ('ロビー', "$NOW", 'guilds', @guild_id);
+SET @board_id = LAST_INSERT_ID();
+
+INSERT INTO threads (name, created, board_id) VALUES ('雑談スレ', "$NOW", @board_id);
+SET @thread_id = LAST_INSERT_ID();
+
+INSERT INTO posts (name, content, created, thread_id) VALUES ('名無し', '雑談スレです。', "$NOW", @thread_id);
+
 EOF
 

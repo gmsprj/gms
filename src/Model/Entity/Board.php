@@ -9,6 +9,8 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $name
  * @property \Cake\I18n\Time $created
+ * @property string $parent_name
+ * @property int $parent_id
  * @property \App\Model\Entity\Thread[] $threads
  */
 class Board extends Entity

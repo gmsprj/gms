@@ -23,11 +23,13 @@ DROP TABLE IF EXISTS `boards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `boards` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) NOT NULL,
-  `created` datetime NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '板のID',
+  `name` varchar(128) NOT NULL COMMENT '板の名前',
+  `created` datetime NOT NULL COMMENT '板の作成日',
+  `parent_name` varchar(32) NOT NULL COMMENT 'この板の親の名前（plaza, guilds等）',
+  `parent_id` int(11) NOT NULL DEFAULT 0 COMMENT 'この板の親のID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -17,9 +17,11 @@ class BoardsFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
-        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'name' => ['type' => 'string', 'length' => 128, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
-        'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
+        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '板のID', 'autoIncrement' => true, 'precision' => null],
+        'name' => ['type' => 'string', 'length' => 128, 'null' => false, 'default' => null, 'comment' => '板の名前', 'precision' => null, 'fixed' => null],
+        'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '板の作成日', 'precision' => null],
+        'parent_name' => ['type' => 'string', 'length' => 32, 'null' => false, 'default' => null, 'comment' => 'この板の親の名前（plaza, guilds等）', 'precision' => null, 'fixed' => null],
+        'parent_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => 'この板の親のID', 'precision' => null, 'autoIncrement' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -39,7 +41,9 @@ class BoardsFixture extends TestFixture
         [
             'id' => 1,
             'name' => 'Lorem ipsum dolor sit amet',
-            'created' => '2016-05-31 06:58:55'
+            'created' => '2016-06-08 08:10:01',
+            'parent_name' => 'Lorem ipsum dolor sit amet',
+            'parent_id' => 1
         ],
     ];
 }

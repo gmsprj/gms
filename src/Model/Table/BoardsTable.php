@@ -10,6 +10,8 @@ use Cake\Validation\Validator;
 /**
  * Boards Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $ParentBoards
+ * @property \Cake\ORM\Association\HasMany $ChildBoards
  * @property \Cake\ORM\Association\HasMany $Threads
  */
 class BoardsTable extends Table
@@ -31,6 +33,14 @@ class BoardsTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('ParentBoards', [
+            'className' => 'Boards',
+            'foreignKey' => 'parent_id'
+        ]);
+        $this->hasMany('ChildBoards', [
+            'className' => 'Boards',
+            'foreignKey' => 'parent_id'
+        ]);
         $this->hasMany('Threads', [
             'foreignKey' => 'board_id'
         ]);
@@ -51,11 +61,28 @@ class BoardsTable extends Table
         $validator
             ->requirePresence('name', 'create')
             ->notEmpty('name');
-	
-	$validator
-	    ->add('name', 'length', ['rule' => ['minLength', 1]])
-	    ->add('name', 'length', ['rule' => ['maxLength', 64]]);
+
+        $validator
+            ->requirePresence('parent_name', 'create')
+            ->notEmpty('parent_name');
+
+        $validator
+            ->add('name', 'length', ['rule' => ['minLength', 1]])
+            ->add('name', 'length', ['rule' => ['maxLength', 64]]);
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['parent_id'], 'ParentBoards'));
+        return $rules;
     }
 }

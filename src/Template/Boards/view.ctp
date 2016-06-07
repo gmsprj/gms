@@ -20,8 +20,9 @@
 <?= $this->Form->label('threadName', 'スレッド名：') ?>
 <?= $this->Form->text('threadName', ['value' => 'スレッド名']) ?>
 <?= $this->Form->label('postName', '名前：') ?>
-<?= $this->Form->text('postName', ['value' => '名無しさん']) ?>
+<?= $this->Form->text('postName', ['value' => $postName]) ?>
 <?= $this->Form->label('postContent', '内容：') ?>
 <?= $this->Form->textarea('postContent', ['value' => '内容なし']) ?>
 <?= $this->Form->submit('投稿') ?>
 <?= $this->Form->end() ?>
+

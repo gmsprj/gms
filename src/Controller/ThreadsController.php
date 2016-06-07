@@ -16,6 +16,7 @@ class ThreadsController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('fwu-default');
+        $this->Auth->allow(['index', 'view', 'post']);
     }
 
     public function beforeFilter(Event $event)
@@ -51,9 +52,14 @@ class ThreadsController extends AppController
         $posts = $this->Posts->find('all')
             ->where(['thread_id' => $thread->id]);
 
+        $authUser = $this->Auth->user();
+        $postName = ($authUser == null ? '名無しさん' : $authUser['name']);
+
+        // テンプレートに設定
         $this->set('board', $board);
         $this->set('thread', $thread);
         $this->set('posts', $posts);
+        $this->set('postName', $postName);
     }
 
     /* TODO: PlazaController.php: post() と重複 */

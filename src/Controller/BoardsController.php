@@ -15,6 +15,7 @@ class BoardsController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('fwu-default');
+        $this->Auth->allow(['index', 'view', 'post']);
     }
 
     public function beforeFilter(Event $event)
@@ -25,7 +26,10 @@ class BoardsController extends AppController
 
     public function index()
     {
+        // 板のリスト
         $boards = $this->Boards->find('all');
+
+        // テンプレートを設定
         $this->set('boards', $boards);
     }
 
@@ -34,16 +38,24 @@ class BoardsController extends AppController
         $this->loadModel('Boards');
         $this->loadModel('Threads');
 
+        // 板のリスト
         $board = $this->Boards->find()
             ->where(['id' => $boardId])
             ->first();
 
+        // スレッドのリスト
         $threads = $this->Threads->find('all')
             ->where(['board_id' => $boardId])
             ->order(['name' => 'DESC']);
 
+        // 認証ユーザーから投稿者ネームを得る
+        $authUser = $this->Auth->user();
+        $postName = ($authUser == null ? '名無しさん' : $authUser['name']);
+
+        // テンプレートに設定
         $this->set('board', $board);
         $this->set('threads', $threads);
+        $this->set('postName', $postName);
     }
 
     public function post()

@@ -27,7 +27,21 @@ CREATE TABLE `boards` (
   `name` varchar(128) NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='板';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `guilds`
+--
+
+DROP TABLE IF EXISTS `guilds`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `guilds` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ギルドのID',
+  `name` varchar(128) NOT NULL COMMENT 'ギルドの名前',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ギルドのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +60,7 @@ CREATE TABLE `posts` (
   PRIMARY KEY (`id`),
   KEY `thread_id` (`thread_id`),
   CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`thread_id`) REFERENCES `threads` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='スレッドへのポスト';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='スレッドへのポスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +78,7 @@ CREATE TABLE `threads` (
   PRIMARY KEY (`id`),
   KEY `board_id` (`board_id`),
   CONSTRAINT `threads_ibfk_1` FOREIGN KEY (`board_id`) REFERENCES `boards` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='板のスレッド';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のスレッド';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,9 +93,9 @@ CREATE TABLE `users` (
   `name` varchar(64) NOT NULL COMMENT 'ユーザーの名前',
   `email` varchar(256) NOT NULL COMMENT 'ユーザーのメールアドレス',
   `password` varchar(256) NOT NULL COMMENT 'ユーザーのログイン・パスワード',
-  `state` int(11) DEFAULT 0 COMMENT 'ユーザーの状態（0:初期状態, 1:ログイン状態）',
+  `state` int(11) DEFAULT '0' COMMENT 'ユーザーの状態（0:初期状態, 1:ログイン状態）',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='ユーザーのリスト';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ユーザーのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -93,4 +107,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-06 11:52:13
+-- Dump completed on 2016-06-07 15:29:48

@@ -24,8 +24,9 @@ class PlazaController extends AppController
 
     public function index()
     {
-        // 板のリスト
+        // Plaza の板のリスト
         $boards = $this->Boards->find('all')
+            ->where(['parent_name' => 'plaza'])
             ->order(['name' => 'DESC']);
 
         if ($boards->count() == 0) {
@@ -34,7 +35,7 @@ class PlazaController extends AppController
         
         // 表示板
         $dispBoard = $this->Boards->find()
-            ->where(['name' => 'ロビー'])
+            ->where(['name' => 'ロビー', 'parent_name' => 'plaza'])
             ->first();
 
         if ($dispBoard == null) {

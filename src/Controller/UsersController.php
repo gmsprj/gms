@@ -25,67 +25,33 @@ class UsersController extends AppController
 
     public function signup()
     {
-        if (!$this->request->is('post')) {
-            return;
-        }
-
-        $name = $this->request->data('name');
-        $email = $this->request->data('email');
-
-        // TODO: 平文パスワードの即ハッシュ化
-        $password = $this->request->data('password');
-        $hasher = new DefaultPasswordHasher();
-        $hashedPwd = $hasher->hash($password);
-
-        // ユーザーの作成
-        $usersTable = TableRegistry::get('Users');
-        $newUser = $usersTable->newEntity([
-            'name' => $name,
-            'email' => $email,
-            'password' => $password,
-            'state' => 0,
-        ]);
-
-        if ($newUser->errors()) {
-            $this->Flash->error(__('入力が不正です。'));
-            Log::write('error', $newUser->toString());
-            return;    
-        }
-
-        if ($usersTable->save($newUser)) {
-            Log::write('debug', $newUser->toString());
-            $this->redirect([
-                'controller' => 'Plaza',
-                'action' => 'index'
-            ]);
-        } else {
-            $this->Flash->error(__('登録に失敗しました。'));
-            Log::write('error', $newUser->toString());
+        if ($this->request->is('post')) {
+            $user = $this->Users->newEntity();
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('サインアップしました。'));
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error(__('サインアップに失敗しました。もう一度トライしてください。'));
         }
     }
 
     public function signin()
     {
-        if (!$this->request->is('post')) {
-            return;
-        }
-
-        // Post されたユーザー名とパスワードを元に DB からユーザーを検索
-        $user = $this->Auth->identify();
-
-        if ($user) {
-            // ログイン処理
-            $this->Auth->setUser($user);
-            return $this->Auth->redirectUrl();
-        } else {
-            // 該当ユーザーなし
-            $this->Flash->error(__('ユーザー名かパスワードが不正です。'));
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                $this->Flash->success(__('サインインしました。'));
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error(__('サインインに失敗しました。もう一度トライしてください。'));
         }
     }
 
     public function signout()
     {
-        $this->request->session()->destroy();
+        $this->Flash->success(__('サインアウトました。'));
         return $this->redirect($this->Auth->logout());
     }
 }

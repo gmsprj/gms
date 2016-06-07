@@ -2,7 +2,7 @@
     <?= $this->Flash->render('auth') ?>
     <?= $this->Form->create() ?>
     <fieldset>
-    <legend><?= __('Please enter your username and email and password') ?></legend>
+    <legend><?= __('登録する名前とメールアドレス、パスワードを入力してください。') ?></legend>
     <?= $this->Form->input('name') ?>
     <?= $this->Form->input('email') ?>
     <?= $this->Form->input('password') ?>

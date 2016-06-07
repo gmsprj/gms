@@ -62,8 +62,7 @@ class UsersTable extends Table
 
         $validator
             ->integer('state')
-            ->requirePresence('state', 'create')
-            ->notEmpty('state');
+            ->allowEmpty('state');
 
         return $validator;
     }

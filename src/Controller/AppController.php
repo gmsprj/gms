@@ -40,24 +40,31 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
-
-        $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
-        $this->loadComponent('Auth', [
+        //認証
+        $this->loadComponent('Auth',[
+            'authorize' => 'Controller',
             'authenticate' => [
                 'Form' => [
-                'fields' => ['name' => 'email', 'password' => 'password']
+                    'fields' => [
+                        'username' => 'email',
+                        'password' => 'password'
+                    ]
                 ]
             ],
-            'authorize' => ['Controller'], // Added this line
-                'loginRedirect' => [
-                    'controller' => 'Plaza',
-                    'action' => 'index'
-                ],
-                'logoutRedirect' => [
-                    'controller' => 'Plaza',
-                    'action' => 'index',
-                ]
+            'loginAction' => [
+                'controller' => 'Users',
+                'action' => 'signin'
+            ],
+            'loginRedirect' => [ // ログイン後に遷移するアクションを指定
+                'controller' => 'Plaza',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [ // ログアウト後に遷移するアクションを指定
+                'controller' => 'Users',
+                'action' => 'signin',
+            ],
+            'authError' => 'ログインできませんでした。ログインしてください。',
         ]);
     }
 

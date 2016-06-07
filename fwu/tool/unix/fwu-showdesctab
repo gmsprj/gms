@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# DBのテーブル定義を表示する。
+#
+DBUSER="$FWU_DBUSER"
+DBNAME="$FWU_DBNAME"
+TABNAME="$1"
+
+echo db-user: $DBUSER
+echo db-name: $DBNAME
+
+mysql -u $DBUSER -p $DBNAME <<EOF
+DESC $TABNAME;
+EOF
+

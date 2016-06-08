@@ -10,6 +10,12 @@ use App\Controller\AppController;
  */
 class GuildsController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Csrf');
+        $this->viewBuilder()->layout('fwu-default');
+    }
 
     /**
      * Index method
@@ -18,6 +24,7 @@ class GuildsController extends AppController
      */
     public function index()
     {
+        $this->set('guilds', $this->Guilds->find('all'));
     }
 
     /**

@@ -46,6 +46,7 @@ class GuildsController extends AppController
             ->where(['board_id' => $board->id]);
 
         $this->set('guild', $guild);
+        $this->set('board', $board);
         $this->set('threads', $threads);
     }
 }

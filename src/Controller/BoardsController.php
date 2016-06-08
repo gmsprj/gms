@@ -64,12 +64,23 @@ class BoardsController extends AppController
             return;
         }
 
+        $authUser = $this->Auth->user();
         $threadName = $this->request->data('threadName');
         $postName = $this->request->data('postName');
         $postContent = $this->request->data('postContent');
         $created = new DateTime(date('Y-m-d H:i:s'));
         $boardId = $this->request->data('boardId');
         $redirect = ['action' => 'view', $boardId];
+
+        // 板の親が guilds でかつ、認証ユーザーがそのギルド・メンバーでないなら書き込み不可
+        $board = $this->Boards->get($boardId);
+        if ($board->parent_name == 'guilds') {
+            if ($authUser->guild_id != $board->parent_id) {
+                $this->Flash->error(__('書込みできません。'));
+                $this->redirect($redirect);
+                return;
+            }
+        }
         
         // スレッドの作成
         $threadsTable = TableRegistry::get('Threads');

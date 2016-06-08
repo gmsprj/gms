@@ -41,7 +41,7 @@ class ThreadsController extends AppController
             ->where(['id' => $threadId])
             ->first();
 
-        if ($thread == null) {
+        if (!$thread) {
             throw new Exception(__('そんなスレッドありません。'));
         }
         
@@ -53,7 +53,7 @@ class ThreadsController extends AppController
             ->where(['thread_id' => $thread->id]);
 
         $authUser = $this->Auth->user();
-        $postName = ($authUser == null ? '名無しさん' : $authUser['name']);
+        $postName = ($authUser ? $authUser['name'] : '名無しさん');
 
         // テンプレートに設定
         $this->set('board', $board);

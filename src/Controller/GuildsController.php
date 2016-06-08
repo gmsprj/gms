@@ -37,7 +37,6 @@ class GuildsController extends AppController
     public function view($id = null)
     {
         $guild = $this->Guilds->get($id);
-
         $this->set('guild', $guild);
     }
 }

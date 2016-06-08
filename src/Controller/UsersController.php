@@ -20,7 +20,12 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['signup', 'signin', 'signout']);
+        $this->Auth->allow([
+            'signup',
+            'signin',
+            'signout',
+            'redirectToPageOfUser'
+        ]);
     }
 
     public function signup()
@@ -57,6 +62,16 @@ class UsersController extends AppController
     {
         $this->Flash->success(__('サインアウトました。'));
         return $this->redirect($this->Auth->logout());
+    }
+
+    public function redirectToPageOfUser()
+    {
+        $user = $this->Auth->user();
+        if (!$user) {
+            return $this->redirect(['controller' => 'Plaza', 'action' => 'index']);
+        }
+
+        return $this->redirect(['controller' => 'Guilds', 'action' => 'view', $user['guild_id']]);
     }
 }
 

@@ -47,16 +47,18 @@
 
     <?php /* TODO: Plaza/index.ctp と重複 */ ?>
     <!-- 投稿フォーム -->
-    <?= $this->Form->create(null, [
-        'type' => 'post',
-        'url' => ['controller' => 'Threads', 'action' => 'post']]
-    ) ?>
-    <?= $this->Form->label('name', __('名前：')) ?>
-    <?= $this->Form->hidden('threadId', ['value' => h($thread->id)]) ?>
-    <?= $this->Form->text('name', ['value' => h($postName)]) ?>
-    <?= $this->Form->label('name', __('内容：')) ?>
-    <?= $this->Form->textarea('content', ['value' => __('内容なし')]) ?>
-    <?= $this->Form->submit(__('投稿')) ?>
-    <?= $this->Form->end() ?>
+    <?php if ($board->parent_name != 'guilds' || $user) : ?>
+        <?= $this->Form->create(null, [
+            'type' => 'post',
+            'url' => ['controller' => 'Threads', 'action' => 'post']]
+        ) ?>
+        <?= $this->Form->label('name', __('名前：')) ?>
+        <?= $this->Form->hidden('threadId', ['value' => h($thread->id)]) ?>
+        <?= $this->Form->text('name', ['value' => h($postName)]) ?>
+        <?= $this->Form->label('name', __('内容：')) ?>
+        <?= $this->Form->textarea('content', ['value' => __('内容なし')]) ?>
+        <?= $this->Form->submit(__('投稿')) ?>
+        <?= $this->Form->end() ?>
+    <?php endif; ?>
 </div>
 

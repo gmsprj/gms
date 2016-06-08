@@ -79,8 +79,8 @@ class BoardsController extends AppController
 
         // 板の親が guilds でかつ、認証ユーザーがそのギルド・メンバーでないなら書き込み不可
         $board = $this->Boards->get($boardId);
-        if ($board->parent_name == 'guilds') {
-            if ($authUser->guild_id != $board->parent_id) {
+        if ($board && $board->parent_name == 'guilds') {
+            if ($authUser && $authUser['guild_id'] != $board->parent_id) {
                 $this->Flash->error(__('書込みできません。'));
                 $this->redirect($redirect);
                 return;

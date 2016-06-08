@@ -24,7 +24,7 @@ class UsersController extends AppController
             'signup',
             'signin',
             'signout',
-            'redirectToPageOfUser'
+            'signinRedirect',
         ]);
     }
 
@@ -64,7 +64,7 @@ class UsersController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
-    public function redirectToPageOfUser()
+    public function signinRedirect()
     {
         $user = $this->Auth->user();
         if (!$user) {

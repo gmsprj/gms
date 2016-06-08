@@ -58,7 +58,7 @@ class AppController extends Controller
             ],
             'loginRedirect' => [ // ログイン後に遷移するアクションを指定
                 'controller' => 'Users',
-                'action' => 'redirectToPageOfUser',
+                'action' => 'signinRedirect',
             ],
             'logoutRedirect' => [ // ログアウト後に遷移するアクションを指定
                 'controller' => 'Plaza',

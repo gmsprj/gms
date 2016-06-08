@@ -25,6 +25,9 @@
         </ul>
         <div class="top-bar-section">
             <ul class="right">
+                <?php if ($user) : ?>
+                    <li><a href=""><?= __('ようこそ ') ?><?= h($user['name']) ?><?= __(' さん') ?></a></li>
+                <?php endif; ?>
                 <li><a href="/plaza"><?= __('広場') ?></a></li>
                 <li><a href="/guilds"><?= __('ギルド一覧') ?></a></li>
                 <li><a href="/users/signup"><?= __('サインアップ') ?></a></li>

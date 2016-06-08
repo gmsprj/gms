@@ -26,6 +26,7 @@ class GuildsController extends AppController
      */
     public function index()
     {
+        $this->set('user', $this->Auth->user());
         $this->set('guilds', $this->Guilds->find('all'));
     }
 
@@ -45,6 +46,7 @@ class GuildsController extends AppController
         $threads = $this->Threads->find('all')
             ->where(['board_id' => $board->id]);
 
+        $this->set('user', $this->Auth->user());
         $this->set('guild', $guild);
         $this->set('board', $board);
         $this->set('threads', $threads);

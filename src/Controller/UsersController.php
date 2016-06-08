@@ -42,6 +42,8 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('サインアップに失敗しました。もう一度トライしてください。'));
             Log::write('error', json_encode($user->errors()));
+        } else if ($this->request->is('get')) {
+            $this->set('user', $this->Auth->user());
         }
     }
 
@@ -55,6 +57,8 @@ class UsersController extends AppController
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('サインインに失敗しました。もう一度トライしてください。'));
+        } else if ($this->request->is('get')) {
+            $this->set('user', $this->Auth->user());
         }
     }
 

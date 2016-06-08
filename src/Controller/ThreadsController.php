@@ -29,6 +29,7 @@ class ThreadsController extends AppController
     {
         $threads = $this->Threads->find('all');
 
+        $this->set('user', $this->Auth->user());
         $this->set('threads', $threads);
     }
 
@@ -60,6 +61,7 @@ class ThreadsController extends AppController
         $postName = ($authUser ? $authUser['name'] : '名無しさん');
 
         // テンプレートに設定
+        $this->set('user', $authUser);
         $this->set('board', $board);
         $this->set('thread', $thread);
         $this->set('threads', $threads);

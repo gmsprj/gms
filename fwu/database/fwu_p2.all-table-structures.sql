@@ -25,9 +25,10 @@ DROP TABLE IF EXISTS `boards`;
 CREATE TABLE `boards` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '板のID',
   `name` varchar(128) NOT NULL COMMENT '板の名前',
-  `created` datetime NOT NULL COMMENT '板の作成日',
-  `parent_name` varchar(32) NOT NULL COMMENT 'この板の親の名前（plaza, guilds等）',
-  `parent_id` int(11) NOT NULL DEFAULT 0 COMMENT 'この板の親のID',
+  `created` datetime DEFAULT NULL COMMENT '板の作成日',
+  `modified` datetime DEFAULT NULL COMMENT '板の更新日',
+  `parent_name` varchar(32) NOT NULL DEFAULT 'plaza' COMMENT '板の親の名前（plaza, guilds等）',
+  `parent_id` int(11) NOT NULL DEFAULT 0 COMMENT '板の親のID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -42,6 +43,8 @@ DROP TABLE IF EXISTS `guilds`;
 CREATE TABLE `guilds` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ギルドのID',
   `name` varchar(128) NOT NULL COMMENT 'ギルドの名前',
+  `created` datetime DEFAULT NULL COMMENT 'ギルドの作成日',
+  `modified` datetime DEFAULT NULL COMMENT 'ギルドの更新日',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ギルドのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -54,11 +57,12 @@ DROP TABLE IF EXISTS `posts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `posts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) NOT NULL,
-  `content` text NOT NULL,
-  `created` datetime NOT NULL,
-  `thread_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ポストのID',
+  `name` varchar(128) NOT NULL COMMENT 'ポストの投稿者名',
+  `content` text NOT NULL COMMENT 'ポストの投稿内容',
+  `created` datetime DEFAULT NULL COMMENT 'ポストの作成日',
+  `modified` datetime DEFAULT NULL COMMENT 'ポストの更新日',
+  `thread_id` int(11) NOT NULL COMMENT '所属するスレッドのID',
   PRIMARY KEY (`id`),
   KEY `thread_id` (`thread_id`),
   CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`thread_id`) REFERENCES `threads` (`id`)
@@ -73,10 +77,11 @@ DROP TABLE IF EXISTS `threads`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `threads` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) NOT NULL,
-  `created` datetime NOT NULL,
-  `board_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'スレッドのID',
+  `name` varchar(128) NOT NULL COMMENT 'スレッドの名前',
+  `created` datetime DEFAULT NULL COMMENT 'スレッドの作成日',
+  `modified` datetime DEFAULT NULL COMMENT 'スレッドの更新日',
+  `board_id` int(11) NOT NULL COMMENT '所属する板のID',
   PRIMARY KEY (`id`),
   KEY `board_id` (`board_id`),
   CONSTRAINT `threads_ibfk_1` FOREIGN KEY (`board_id`) REFERENCES `boards` (`id`)
@@ -95,6 +100,8 @@ CREATE TABLE `users` (
   `name` varchar(64) NOT NULL COMMENT 'ユーザーの名前',
   `email` varchar(256) NOT NULL COMMENT 'ユーザーのメールアドレス',
   `password` varchar(256) NOT NULL COMMENT 'ユーザーのログイン・パスワード',
+  `created` datetime DEFAULT NULL COMMENT 'ユーザーの作成日',
+  `modified` datetime DEFAULT NULL COMMENT 'ユーザーの更新日',
   `guild_id` int(11) NOT NULL COMMENT '所属ギルドの外部キー',
   PRIMARY KEY (`id`),
   KEY `guild_id` (`guild_id`),

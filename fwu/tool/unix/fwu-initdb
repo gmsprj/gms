@@ -40,7 +40,10 @@ ALTER TABLE guilds AUTO_INCREMENT = 1;
 
 -- サイトの設定
 
-INSERT INTO configs (site_name) VALUES ('FWU（仮）');
+INSERT INTO configs (site_name, site_desc) VALUES (
+  'FWU（仮）',
+  '労働者のユニオン・サイト'
+);
 
 
 -- Plaza 用の板、スレッド、ポストを作成

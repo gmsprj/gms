@@ -25,7 +25,8 @@ DROP TABLE IF EXISTS `configs`;
 CREATE TABLE `configs` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'サイトのID',
   `site_name` varchar(512) NOT NULL COMMENT 'サイトの名前',
-    PRIMARY KEY (`id`)
+  `site_desc` varchar(1024) NOT NULL COMMENT 'サイトの説明',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='サイトの設定リスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 

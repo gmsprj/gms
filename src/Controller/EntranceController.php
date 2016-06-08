@@ -7,15 +7,15 @@ use Cake\Log\Log;
 
 class EntranceController extends AppController
 {
-	public function initialize()
-	{
-		parent::initialize();
-		$this->viewBuilder()->layout('fwu-entrance');
-	}
+    public function initialize()
+    {
+        parent::initialize();
+        $this->viewBuilder()->layout('fwu-entrance');
+    }
 
-	public function index()
-	{
-	}
+    public function index()
+    {
+    }
 }
 
 ?>

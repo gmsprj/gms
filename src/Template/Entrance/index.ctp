@@ -1,6 +1,6 @@
 <div>
-	<h1>FWU（仮）</h1>
-	<p>労働者のユニオンサイト。</p>
+	<h1><?= $config->site_name ?></h1>
+	<p><?= $config->site_desc ?></p>
 	<p><a href="/plaza">Enter</a></p>
 </div>
 

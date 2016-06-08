@@ -66,6 +66,7 @@ class AppController extends Controller
             ],
             'authError' => 'ログインできませんでした。ログインしてください。',
         ]);
+        $this->loadModel('Configs');
     }
 
     public function beforeFilter(Event $event)
@@ -86,5 +87,8 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+
+        $this->set('config', $this->Configs->find()->first());
+        $this->set('user', $this->Auth->user());
     }
 }

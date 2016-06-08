@@ -56,7 +56,6 @@ class BoardsController extends AppController
         $postName = ($authUser == null ? '名無しさん' : $authUser['name']);
 
         // テンプレートに設定
-        $this->set('user', $authUser);
         $this->set('board', $board);
         $this->set('threads', $threads);
         $this->set('postName', $postName);

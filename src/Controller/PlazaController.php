@@ -69,7 +69,6 @@ class PlazaController extends AppController
         $postName = ($authUser == null ? '名無しさん' : $authUser['name']);
 
         // テンプレートに設定
-        $this->set('user', $authUser);
         $this->set('boards', $boards);
         $this->set('dispBoard', $dispBoard);
         $this->set('dispThreads', $dispThreads);

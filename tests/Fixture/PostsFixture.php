@@ -17,11 +17,12 @@ class PostsFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
-        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'name' => ['type' => 'string', 'length' => 128, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
-        'content' => ['type' => 'text', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
-        'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
-        'thread_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => 'ポストのID', 'autoIncrement' => true, 'precision' => null],
+        'name' => ['type' => 'string', 'length' => 128, 'null' => false, 'default' => null, 'comment' => 'ポストの投稿者名', 'precision' => null, 'fixed' => null],
+        'content' => ['type' => 'text', 'length' => null, 'null' => false, 'default' => null, 'comment' => 'ポストの投稿内容', 'precision' => null],
+        'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => 'ポストの作成日', 'precision' => null],
+        'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => 'ポストの更新日', 'precision' => null],
+        'thread_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '所属するスレッドのID', 'precision' => null, 'autoIncrement' => null],
         '_indexes' => [
             'thread_id' => ['type' => 'index', 'columns' => ['thread_id'], 'length' => []],
         ],
@@ -46,7 +47,8 @@ class PostsFixture extends TestFixture
             'id' => 1,
             'name' => 'Lorem ipsum dolor sit amet',
             'content' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-            'created' => '2016-05-31 06:59:04',
+            'created' => '2016-06-09 08:15:52',
+            'modified' => '2016-06-09 08:15:52',
             'thread_id' => 1
         ],
     ];

@@ -1,18 +1,17 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Guild;
+use App\Model\Entity\Config;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Guilds Model
+ * Configs Model
  *
- * @property \Cake\ORM\Association\HasMany $Users
  */
-class GuildsTable extends Table
+class ConfigsTable extends Table
 {
 
     /**
@@ -25,15 +24,9 @@ class GuildsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('guilds');
-        $this->displayField('name');
+        $this->table('configs');
+        $this->displayField('id');
         $this->primaryKey('id');
-
-        $this->addBehavior('Timestamp');
-
-        $this->hasMany('Users', [
-            'foreignKey' => 'guild_id'
-        ]);
     }
 
     /**
@@ -49,8 +42,8 @@ class GuildsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('name', 'create')
-            ->notEmpty('name');
+            ->requirePresence('site_name', 'create')
+            ->notEmpty('site_name');
 
         return $validator;
     }

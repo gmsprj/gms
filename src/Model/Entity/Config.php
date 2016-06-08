@@ -4,14 +4,12 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Guild Entity.
+ * Config Entity.
  *
  * @property int $id
- * @property string $name
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
+ * @property string $site_name
  */
-class Guild extends Entity
+class Config extends Entity
 {
 
     /**

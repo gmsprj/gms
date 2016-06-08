@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string $content
  * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  * @property int $thread_id
  * @property \App\Model\Entity\Thread $thread
  */
@@ -29,9 +30,10 @@ class Post extends Entity
         '*' => true,
         'id' => false,
     ];
-
+ 
     public function toString() {
-	return sprintf('id[%d] name[%s] created[%s] content[%s] errors[%s]',
-		$this->id, $this->name, json_encode($this->created), $this->content, json_encode($this->errors()));
+        return sprintf('id[%d] name[%s] created[%s] modified[%s] content[%s] errors[%s]',
+                $this->id, $this->name, json_encode($this->created), json_encode($this->modified), $this->content, json_encode($this->errors()));
     }
+
 }

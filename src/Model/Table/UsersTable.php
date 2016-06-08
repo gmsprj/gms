@@ -29,6 +29,8 @@ class UsersTable extends Table
         $this->displayField('name');
         $this->primaryKey('id');
 
+        $this->addBehavior('Timestamp');
+
         $this->belongsTo('Guilds', [
             'foreignKey' => 'guild_id',
             'joinType' => 'INNER'

@@ -21,6 +21,8 @@ class UsersFixture extends TestFixture
         'name' => ['type' => 'string', 'length' => 64, 'null' => false, 'default' => null, 'comment' => 'ユーザーの名前', 'precision' => null, 'fixed' => null],
         'email' => ['type' => 'string', 'length' => 256, 'null' => false, 'default' => null, 'comment' => 'ユーザーのメールアドレス', 'precision' => null, 'fixed' => null],
         'password' => ['type' => 'string', 'length' => 256, 'null' => false, 'default' => null, 'comment' => 'ユーザーのログイン・パスワード', 'precision' => null, 'fixed' => null],
+        'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => 'ユーザーの作成日', 'precision' => null],
+        'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => 'ユーザーの更新日', 'precision' => null],
         'guild_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '所属ギルドの外部キー', 'precision' => null, 'autoIncrement' => null],
         '_indexes' => [
             'guild_id' => ['type' => 'index', 'columns' => ['guild_id'], 'length' => []],
@@ -47,6 +49,8 @@ class UsersFixture extends TestFixture
             'name' => 'Lorem ipsum dolor sit amet',
             'email' => 'Lorem ipsum dolor sit amet',
             'password' => 'Lorem ipsum dolor sit amet',
+            'created' => '2016-06-09 08:16:11',
+            'modified' => '2016-06-09 08:16:11',
             'guild_id' => 1
         ],
     ];

@@ -19,6 +19,8 @@ class GuildsFixture extends TestFixture
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => 'ギルドのID', 'autoIncrement' => true, 'precision' => null],
         'name' => ['type' => 'string', 'length' => 128, 'null' => false, 'default' => null, 'comment' => 'ギルドの名前', 'precision' => null, 'fixed' => null],
+        'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => 'ギルドの作成日', 'precision' => null],
+        'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => 'ギルドの更新日', 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -37,7 +39,9 @@ class GuildsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet'
+            'name' => 'Lorem ipsum dolor sit amet',
+            'created' => '2016-06-09 08:15:39',
+            'modified' => '2016-06-09 08:15:39'
         ],
     ];
 }

@@ -10,6 +10,7 @@ use Cake\ORM\TableRegistry;
  * @property int $id
  * @property string $name
  * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  * @property int $board_id
  * @property \App\Model\Entity\Board $board
  * @property \App\Model\Entity\Post[] $posts
@@ -33,8 +34,8 @@ class Thread extends Entity
 
     public function toString()
     {
-        return sprintf("id[%d] name[%s] created[%s] board_id[%d] errors[%s]",
-                $this->id, $this->name, json_encode($this->created), $this->board_id, json_encode($this->errors()));
+        return sprintf("id[%d] name[%s] created[%s] modified[%s] board_id[%d] errors[%s]",
+                $this->id, $this->name, json_encode($this->created), json_encode($this->modified), $this->board_id, json_encode($this->errors()));
     }
 
     public function countPosts()
@@ -42,7 +43,6 @@ class Thread extends Entity
         $this->Posts = TableRegistry::get('Posts');
         return $this->Posts->find()
             ->where(['thread_id' => $this->id])
-            ->count()
-            ;
+            ->count();
     }
 }

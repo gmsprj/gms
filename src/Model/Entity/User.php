@@ -12,7 +12,10 @@ use Cake\Log\Log;
  * @property string $name
  * @property string $email
  * @property string $password
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  * @property int $guild_id
+ * @property \App\Model\Entity\Guild $guild
  */
 class User extends Entity
 {
@@ -56,7 +59,7 @@ class User extends Entity
 
     public function toString()
     {
-        return sprintf('name[%s] email[%s] password[****] state[%d] errors[%s]',
-                $this->name, $this->email, $this->state, json_encode($this->errors()));
+        return sprintf('name[%s] email[%s] password[****] created[%s] modified[%s] errors[%s]',
+                $this->name, $this->email, json_encode($this->created), json_encode($this->modified), json_encode($this->errors()));
     }
 }

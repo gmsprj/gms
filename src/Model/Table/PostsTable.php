@@ -53,17 +53,18 @@ class PostsTable extends Table
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
-	$validator
-	    ->add('name', 'length', ['rule' => ['minLength', 1]])
-	    ->add('name', 'length', ['rule' => ['maxLength', 32]]);
-
         $validator
             ->requirePresence('content', 'create')
             ->notEmpty('content');
 
-	$validator
-	    ->add('content', 'length', ['rule' => ['minLength', 1]])
-	    ->add('content', 'length', ['rule' => ['maxLength', 256]]);
+        $validator
+            ->add('name', 'length', ['rule' => ['minLength', 1]])
+            ->add('name', 'length', ['rule' => ['maxLength', 32]]);
+
+
+        $validator
+            ->add('content', 'length', ['rule' => ['minLength', 1]])
+            ->add('content', 'length', ['rule' => ['maxLength', 256]]);
 
         return $validator;
     }

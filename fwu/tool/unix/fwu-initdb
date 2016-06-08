@@ -37,13 +37,13 @@ ALTER TABLE guilds AUTO_INCREMENT = 1;
 
 -- Plaza 用の板、スレッド、ポストを作成
 
-INSERT INTO boards (name, created, parent_name) VALUES ('ロビー', "$NOW", 'plaza');
+INSERT INTO boards (name, parent_name) VALUES ('ロビー', 'plaza');
 SET @board_id = LAST_INSERT_ID();
 
-INSERT INTO threads (name, created, board_id) VALUES ('雑談スレ', "$NOW", @board_id);
+INSERT INTO threads (name, board_id) VALUES ('雑談スレ', @board_id);
 SET @thread_id = LAST_INSERT_ID();
 
-INSERT INTO posts (name, content, created, thread_id) VALUES ('名無し', '雑談スレです。', "$NOW", @thread_id);
+INSERT INTO posts (name, content, thread_id) VALUES ('名無し', '雑談スレです。', @thread_id);
 
 
 -- Guilds と板、スレッド、ポストを作成
@@ -51,13 +51,13 @@ INSERT INTO posts (name, content, created, thread_id) VALUES ('名無し', '雑�
 INSERT INTO guilds (name) VALUES ('入門者');
 SET @guild_id = LAST_INSERT_ID();
 
-INSERT INTO boards (name, created, parent_name, parent_id) VALUES ('入門者', "$NOW", 'guilds', @guild_id);
+INSERT INTO boards (name, parent_name, parent_id) VALUES ('入門者', 'guilds', @guild_id);
 SET @board_id = LAST_INSERT_ID();
 
-INSERT INTO threads (name, created, board_id) VALUES ('ギルド・雑談スレ', "$NOW", @board_id);
+INSERT INTO threads (name, board_id) VALUES ('ギルド・雑談スレ', @board_id);
 SET @thread_id = LAST_INSERT_ID();
 
-INSERT INTO posts (name, content, created, thread_id) VALUES ('Name Not Foundし', 'ギルドの雑談スレです。', "$NOW", @thread_id);
+INSERT INTO posts (name, content, thread_id) VALUES ('Name Not Found', 'ギルドの雑談スレです。', @thread_id);
 
 EOF
 

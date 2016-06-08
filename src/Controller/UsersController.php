@@ -26,6 +26,9 @@ class UsersController extends AppController
     public function signup()
     {
         if ($this->request->is('post')) {
+            // 登録時のギルドIDは 1
+            $this->request->data['guild_id'] = 1;
+
             $user = $this->Users->newEntity();
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
@@ -33,6 +36,7 @@ class UsersController extends AppController
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('サインアップに失敗しました。もう一度トライしてください。'));
+            Log::write('error', json_encode($user->errors()));
         }
     }
 

@@ -15,6 +15,8 @@ class GuildsController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('fwu-default');
+        $this->loadModel('Boards');
+        $this->loadModel('Threads');
     }
 
     /**
@@ -37,6 +39,13 @@ class GuildsController extends AppController
     public function view($id = null)
     {
         $guild = $this->Guilds->get($id);
+        $board = $this->Boards->find()
+            ->where(['parent_name' => 'guilds', 'parent_id' => $guild->id])
+            ->first();
+        $threads = $this->Threads->find('all')
+            ->where(['board_id' => $board->id]);
+
         $this->set('guild', $guild);
+        $this->set('threads', $threads);
     }
 }

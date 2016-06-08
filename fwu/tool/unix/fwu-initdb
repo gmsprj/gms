@@ -39,7 +39,7 @@ INSERT INTO posts (name, content, created, thread_id) VALUES ('名無し', '雑�
 
 -- Guilds と板、スレッド、ポストを作成
 
-INSERT INTO guilds (id, name) VALUES (0, '入門者');
+INSERT INTO guilds (name) VALUES ('入門者');
 
 INSERT INTO guilds (name) VALUES ('Web制作管理');
 SET @guild_id = LAST_INSERT_ID();

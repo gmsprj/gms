@@ -20,17 +20,17 @@
     <nav class="top-bar expanded" data-topbar role="navigation">
         <ul class="title-area large-3 medium-4 columns">
             <li class="name">
-                <h1><a href="#"><?= $this->fetch('title') ?></a></h1>
+                <h1><a href="/plaza"><?= __('FWU（仮）') ?></a></h1>
             </li>
         </ul>
         <div class="top-bar-section">
             <ul class="right">
-                <li><a href="/entrance">Entrance</a></li>
-                <li><a href="/plaza">Plaza</a></li>
-                <li><a href="/guilds">Guilds</a></li>
-                <li><a href="/users/signup">Sign up</a></li>
-                <li><a href="/users/signin">Sign in</a></li>
-                <li><a href="/users/signout">Sign out</a></li>
+                <li><a href="/plaza"><?= __('広場') ?></a></li>
+                <li><a href="/guilds"><?= __('ギルド一覧') ?></a></li>
+                <li><a href="/users/signup"><?= __('サインアップ') ?></a></li>
+                <li><a href="/users/signin"><?= __('サインイン') ?></a></li>
+                <li><a href="/users/signout"><?= __('サインアウト') ?></a></li>
+                <li><a href="/entrance"><?= __('トップページ') ?></a></li>
             </ul>
         </div>
     </nav>

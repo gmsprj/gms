@@ -27,8 +27,9 @@ class ThreadsController extends AppController
 
     public function index()
     {
-        $this->autoRender = false;
-        throw new Exception(__('そんなページありません。'));
+        $threads = $this->Threads->find('all');
+
+        $this->set('threads', $threads);
     }
 
     public function view($threadId)
@@ -40,6 +41,9 @@ class ThreadsController extends AppController
         $thread = $this->Threads->find()
             ->where(['id' => $threadId])
             ->first();
+
+        $threads = $this->Threads->find('all')
+            ->where(['board_id' => $thread->board_id]);
 
         if (!$thread) {
             throw new Exception(__('そんなスレッドありません。'));
@@ -58,6 +62,7 @@ class ThreadsController extends AppController
         // テンプレートに設定
         $this->set('board', $board);
         $this->set('thread', $thread);
+        $this->set('threads', $threads);
         $this->set('posts', $posts);
         $this->set('postName', $postName);
     }

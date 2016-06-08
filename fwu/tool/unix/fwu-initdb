@@ -20,10 +20,19 @@ mysql -u $DBUSER -p $DBNAME <<EOF
 -- テーブルのクリア
 
 DELETE FROM posts;
+ALTER TABLE posts AUTO_INCREMENT = 1;
+
 DELETE FROM threads;
+ALTER TABLE threads AUTO_INCREMENT = 1;
+
 DELETE FROM boards;
+ALTER TABLE boards AUTO_INCREMENT = 1;
+
 DELETE FROM users;
+ALTER TABLE users AUTO_INCREMENT = 1;
+
 DELETE FROM guilds;
+ALTER TABLE guilds AUTO_INCREMENT = 1;
 
 
 -- Plaza 用の板、スレッド、ポストを作成
@@ -40,11 +49,9 @@ INSERT INTO posts (name, content, created, thread_id) VALUES ('名無し', '雑�
 -- Guilds と板、スレッド、ポストを作成
 
 INSERT INTO guilds (name) VALUES ('入門者');
-
-INSERT INTO guilds (name) VALUES ('Web制作管理');
 SET @guild_id = LAST_INSERT_ID();
 
-INSERT INTO boards (name, created, parent_name, parent_id) VALUES ('Web制作管理', "$NOW", 'guilds', @guild_id);
+INSERT INTO boards (name, created, parent_name, parent_id) VALUES ('入門者', "$NOW", 'guilds', @guild_id);
 SET @board_id = LAST_INSERT_ID();
 
 INSERT INTO threads (name, created, board_id) VALUES ('ギルド・雑談スレ', "$NOW", @board_id);

@@ -38,10 +38,12 @@ class BoardsController extends AppController
         $this->loadModel('Boards');
         $this->loadModel('Threads');
 
-        // 板のリスト
+        // 板
         $board = $this->Boards->find()
             ->where(['id' => $boardId])
             ->first();
+
+        $boards = $this->Boards->find();
 
         // スレッドのリスト
         $threads = $this->Threads->find('all')
@@ -56,6 +58,7 @@ class BoardsController extends AppController
         $this->set('board', $board);
         $this->set('threads', $threads);
         $this->set('postName', $postName);
+        $this->set('boards', $boards);
     }
 
     public function post()

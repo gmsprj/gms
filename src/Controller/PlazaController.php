@@ -20,6 +20,7 @@ class PlazaController extends AppController
         $this->loadModel('Boards');
         $this->loadModel('Threads');
         $this->loadModel('Posts');
+        $this->loadModel('Guilds');
     }
 
     public function index()
@@ -59,6 +60,10 @@ class PlazaController extends AppController
         $dispPosts = $this->Posts->find('all')
             ->where(['thread_id' => $dispThread->id]);
 
+
+        // ギルドのリスト
+        $dispGuilds = $this->Guilds->find('all');
+
         // 認証ユーザーを取得して投稿者ネームを得る
         $authUser = $this->Auth->user();
         $postName = ($authUser == null ? '名無しさん' : $authUser['name']);
@@ -69,6 +74,7 @@ class PlazaController extends AppController
         $this->set('dispThreads', $dispThreads);
         $this->set('dispThread', $dispThread);
         $this->set('dispPosts', $dispPosts);
+        $this->set('dispGuilds', $dispGuilds);
         $this->set('postName', $postName);
     }
 

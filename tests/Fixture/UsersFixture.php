@@ -21,9 +21,13 @@ class UsersFixture extends TestFixture
         'name' => ['type' => 'string', 'length' => 64, 'null' => false, 'default' => null, 'comment' => 'ユーザーの名前', 'precision' => null, 'fixed' => null],
         'email' => ['type' => 'string', 'length' => 256, 'null' => false, 'default' => null, 'comment' => 'ユーザーのメールアドレス', 'precision' => null, 'fixed' => null],
         'password' => ['type' => 'string', 'length' => 256, 'null' => false, 'default' => null, 'comment' => 'ユーザーのログイン・パスワード', 'precision' => null, 'fixed' => null],
-        'state' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => 'ユーザーの状態（0:初期状態, 1:ログイン状態）', 'precision' => null, 'autoIncrement' => null],
+        'guild_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '所属ギルドの外部キー', 'precision' => null, 'autoIncrement' => null],
+        '_indexes' => [
+            'guild_id' => ['type' => 'index', 'columns' => ['guild_id'], 'length' => []],
+        ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
+            'guild_ibfk_1' => ['type' => 'foreign', 'columns' => ['guild_id'], 'references' => ['guilds', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -43,7 +47,7 @@ class UsersFixture extends TestFixture
             'name' => 'Lorem ipsum dolor sit amet',
             'email' => 'Lorem ipsum dolor sit amet',
             'password' => 'Lorem ipsum dolor sit amet',
-            'state' => 1
+            'guild_id' => 1
         ],
     ];
 }

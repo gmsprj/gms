@@ -10,15 +10,10 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $Guilds
  */
 class UsersTable extends Table
 {
-    /**
-     * User の状態。
-     *
-     */
-    const STATE_FIRST = 0; // 初期状態
-    const STATE_LOGIN = 1; // ログイン状態
 
     /**
      * Initialize method
@@ -33,6 +28,11 @@ class UsersTable extends Table
         $this->table('users');
         $this->displayField('name');
         $this->primaryKey('id');
+
+        $this->belongsTo('Guilds', [
+            'foreignKey' => 'guild_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -60,10 +60,6 @@ class UsersTable extends Table
             ->requirePresence('password', 'create')
             ->notEmpty('password');
 
-        $validator
-            ->integer('state')
-            ->allowEmpty('state');
-
         return $validator;
     }
 
@@ -77,6 +73,7 @@ class UsersTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['email']));
+        $rules->add($rules->existsIn(['guild_id'], 'Guilds'));
         return $rules;
     }
 }

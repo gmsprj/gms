@@ -2,8 +2,6 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\Auth\DefaultPasswordHasher;
-use Cake\Log\Log;
 
 /**
  * User Entity.
@@ -12,7 +10,7 @@ use Cake\Log\Log;
  * @property string $name
  * @property string $email
  * @property string $password
- * @property int $state
+ * @property int $guild_id
  */
 class User extends Entity
 {
@@ -50,13 +48,13 @@ class User extends Entity
     protected function _setPassword($password)
     {
         $hash = (new DefaultPasswordHasher)->hash($password);
-		Log::write('debug', '_setPassword: ' + $hash);
+        Log::write('debug', '_setPassword: ' + $hash);
         return $hash;
     }
 
     public function toString()
     {
         return sprintf('name[%s] email[%s] password[****] state[%d] errors[%s]',
-            $this->name, $this->email, $this->state, json_encode($this->errors()));
+                $this->name, $this->email, $this->state, json_encode($this->errors()));
     }
 }

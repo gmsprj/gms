@@ -95,8 +95,10 @@ CREATE TABLE `users` (
   `name` varchar(64) NOT NULL COMMENT 'ユーザーの名前',
   `email` varchar(256) NOT NULL COMMENT 'ユーザーのメールアドレス',
   `password` varchar(256) NOT NULL COMMENT 'ユーザーのログイン・パスワード',
-  `state` int(11) DEFAULT 0 COMMENT 'ユーザーの状態（0:初期状態, 1:ログイン状態）',
-  PRIMARY KEY (`id`)
+  `guild_id` int(11) NOT NULL COMMENT '所属ギルドの外部キー',
+  PRIMARY KEY (`id`),
+  KEY `guild_id` (`guild_id`),
+  CONSTRAINT `guild_ibfk_1` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ユーザーのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -17,6 +17,9 @@ class ThreadsController extends AppController
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('fwu-default');
         $this->Auth->allow(['index', 'view', 'post']);
+        $this->loadModel('Boards');
+        $this->loadModel('Threads');
+        $this->loadModel('Posts');
     }
 
     public function beforeFilter(Event $event)
@@ -35,9 +38,6 @@ class ThreadsController extends AppController
 
     public function view($threadId)
     {
-        $this->loadModel('Boards');
-        $this->loadModel('Threads');
-        $this->loadModel('Posts');
 
         $thread = $this->Threads->find()
             ->where(['id' => $threadId])
@@ -76,11 +76,23 @@ class ThreadsController extends AppController
             return;
         }
 
+        $authUser = $this->Auth->user();
         $name = $this->request->data('name');
         $content = $this->request->data('content');
         $threadId = $this->request->data('threadId');
+        $thread = $this->Threads->get($threadId);
         $created = new DateTime(date('Y-m-d H:i:s'));
         $redirect = ['action' => 'view', $threadId];
+
+        // 板の親が guilds でかつ、認証ユーザーがそのギルド・メンバーでないなら書き込み不可
+        $board = $this->Boards->get($thread->board_id);
+        if ($board && $board->parent_name == 'guilds') {
+            if ($authUser && $authUser['guild_id'] != $board->parent_id) {
+                $this->Flash->error(__('書込みできません。'));
+                $this->redirect($redirect);
+                return;
+            }
+        }
 
         // ポストの作成
         $postsTable = TableRegistry::get('Posts');

@@ -1,6 +1,6 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><a href="/boards"><?= __('広場の板一覧') ?></a></li>
+        <li class="heading"><a href="/boards"><?= __('板一覧') ?></a></li>
         <?php foreach ($boards as $el) : ?>
             <li>
                 <?= $this->Html->link($el->name, ['controller' => 'Boards', 'action' => 'view', $el->id]) ?>

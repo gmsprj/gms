@@ -6,7 +6,7 @@
                 <?= $this->Html->link($el->name, ['controller' => 'Boards', 'action' => 'view', $el->id]) ?>
             </li>
         <?php endforeach; ?>
-        <li class="heading">----</li>
+        <li class="heading"><hr/></li>
 
         <li class="heading"><?= __('ロビー板のスレッド一覧') ?></li>
         <?php foreach ($dispThreads as $el) : ?>
@@ -15,7 +15,7 @@
                 <?= $this->Html->link($name, ['controller' => 'Threads', 'action' => 'view', $el->id]) ?>
             </li>
         <?php endforeach; ?>
-        <li class="heading">----</li>
+        <li class="heading"><hr/></li>
 
         <li class="heading"><?= __('ギルド一覧') ?></li>
         <?php foreach ($dispGuilds as $el) : ?>

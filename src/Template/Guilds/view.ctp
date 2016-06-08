@@ -2,11 +2,11 @@
     <ul class="side-nav">
         <li class="heading"><a href="/plaza"><?= __('広場に出る') ?></a></li>
         <li class="heading"><a href="/guilds"><?= __('ギルドの一覧に戻る') ?></a></li>
-        <li class="heading">----</li>
+        <li class="heading"><hr/></li>
 
         <li class="heading"><?= __('ギルド専用板') ?></li>
         <li><a href="/boards/view/<?= $board->id ?>"><?= $board->name ?></a></li>
-        <li class="heading">----</li>
+        <li class="heading"><hr/></li>
 
         <li class="heading"><?= __('ギルド専用板のスレッド一覧') ?></li>
     <?php foreach ($threads as $el) : ?>

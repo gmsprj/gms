@@ -68,7 +68,7 @@ class UsersController extends AppController
     {
         $user = $this->Auth->user();
         if (!$user) {
-            return $this->redirect(['controller' => 'Plaza', 'action' => 'index']);
+            return $this->redirect(['controller' => 'Users', 'action' => 'signin']);
         }
 
         return $this->redirect(['controller' => 'Guilds', 'action' => 'view', $user['guild_id']]);

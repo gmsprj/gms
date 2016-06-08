@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# DB のテーブルをすべてドロップする
+#
+DBUSER="$FWU_DBUSER"
+DBNAME="$FWU_DBNAME"
+
+echo db-user: $DBUSER
+echo db-name: $DBNAME
+
+fwu-confirm "上記 DB のテーブルをすべて破棄します。本当に実行しますか？"
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+
+mysql -u $DBUSER -p $DBNAME <<EOF
+
+DROP TABLE posts;
+DROP TABLE threads;
+DROP TABLE boards;
+
+DROP TABLE users;
+DROP TABLE guilds;
+
+EOF
+

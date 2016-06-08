@@ -16,6 +16,20 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `configs`
+--
+
+DROP TABLE IF EXISTS `configs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `configs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'サイトのID',
+  `site_name` varchar(512) NOT NULL COMMENT 'サイトの名前',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='サイトの設定リスト';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `boards`
 --
 

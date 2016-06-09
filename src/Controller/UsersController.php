@@ -73,6 +73,18 @@ class UsersController extends AppController
 
         return $this->redirect(['controller' => 'Guilds', 'action' => 'view', $user['guild_id']]);
     }
+
+    public function view($id = null)
+    {
+        if (!$this->request->is('get')) {
+                return $this->redirect(['controller' => 'Plaza', 'action' => 'index']);
+        }
+
+        $user = $this->Auth->user();
+        if (!$user) {
+            return $this->redirect(['controller' => 'Plaza', 'action' => 'index']);
+        }
+    }
 }
 
 ?>

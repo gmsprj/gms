@@ -17,4 +17,21 @@
 <div class="boards index large-9 medium-8 columns content">
     <h3><?= h($guild->name) ?><?= __('ギルド') ?></h3>
     <p><?= h($guild->name) ?><?= __('ギルドへようこそ！') ?></p>
+
+    <h4><?= __('入会受付') ?></h4>
+    <?php if ($user && $user['guild_id'] != $guild->id) : ?>
+        <p><?= __('') ?></p>
+        <?= $this->Form->create(null, [
+            'type' => 'post',
+            'url' => ['controller' => 'Guilds', 'action' => 'entry']]
+        ) ?>
+        <?= $this->Form->hidden('userId', ['value' => h($user['id'])]) ?>
+        <?= $this->Form->hidden('guildId', ['value' => h($guild->id)]) ?>
+        <?= $this->Form->submit(__('このギルドに入会する')) ?>
+        <?= $this->Form->end() ?>
+    <?php elseif ($user['guild_id'] == $guild->id) : ?>
+        <p><?= __('入会中。') ?></p>
+    <?php else : ?>
+        <p><?= __('サインアップしてください。') ?></p>
+    <?php endif; ?>
 </div>

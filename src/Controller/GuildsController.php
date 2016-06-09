@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
+use Cake\Log\Log;
 
 /**
  * Guilds Controller
@@ -15,8 +17,10 @@ class GuildsController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('fwu-default');
+        $this->Auth->allow(['entry']);
         $this->loadModel('Boards');
         $this->loadModel('Threads');
+        $this->loadModel('Users');
     }
 
     /**
@@ -48,5 +52,20 @@ class GuildsController extends AppController
         $this->set('guild', $guild);
         $this->set('board', $board);
         $this->set('threads', $threads);
+    }
+
+    public function entry()
+    {
+        $userId = $this->request->data('userId');
+        $guildId = $this->request->data('guildId');
+
+        $usersTable = TableRegistry::get('Users');
+        $user = $usersTable->get($userId);
+        $user->guild_id = $guildId;
+        $usersTable->save($user);
+        $this->Auth->setUser($user->toArray()); // セッションの更新
+
+        $this->Flash->success('入会しました。');
+        return $this->redirect(['action' => 'view', $guildId]);
     }
 }

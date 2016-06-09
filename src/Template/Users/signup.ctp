@@ -4,6 +4,8 @@
     </ul>
 </nav>
 <div class="boards index large-9 medium-8 columns content">
+    <h3><?= __('サインアップ') ?></h3>
+
     <div class="users form">
         <?= $this->Flash->render('auth') ?>
         <?= $this->Form->create() ?>

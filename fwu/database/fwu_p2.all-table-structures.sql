@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `configs`;
 CREATE TABLE `configs` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'サイトのID',
   `site_name` varchar(512) NOT NULL COMMENT 'サイトの名前',
-  `site_desc` varchar(1024) NOT NULL COMMENT 'サイトの説明',
+  `site_description` varchar(1024) NOT NULL COMMENT 'サイトの説明',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='サイトの設定リスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -40,6 +40,7 @@ DROP TABLE IF EXISTS `boards`;
 CREATE TABLE `boards` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '板のID',
   `name` varchar(128) NOT NULL COMMENT '板の名前',
+  `description` text COMMENT '板の説明',
   `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の作成日',
   `modified` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の更新日',
   `parent_name` varchar(32) NOT NULL DEFAULT 'plaza' COMMENT '板の親の名前（plaza, guilds等）',
@@ -58,6 +59,7 @@ DROP TABLE IF EXISTS `guilds`;
 CREATE TABLE `guilds` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ギルドのID',
   `name` varchar(128) NOT NULL COMMENT 'ギルドの名前',
+  `description` text COMMENT '板の説明',
   `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの作成日',
   `modified` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの更新日',
   PRIMARY KEY (`id`)

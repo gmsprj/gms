@@ -53,9 +53,11 @@ INSERT INTO configs (
 
 INSERT INTO boards (
     name,
+    description,
     parent_name
 ) VALUES (
     'ロビー',
+    '広場のロビー板です。',
     'plaza'
 );
 SET @board_id = LAST_INSERT_ID();

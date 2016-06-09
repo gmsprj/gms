@@ -3,7 +3,7 @@
         <?php if ($board->parent_name == 'guilds') : ?>
             <li class="heading"><a href="/plaza"><?= __('広場に出る') ?></a></li>
             <li class="heading"><a href="/guilds/view/<?= $board->parent_id ?>"><?= __('ギルドに戻る') ?></a></li>
-            <li class="heading"><a href="/boards/view/<?= $board->id ?>"><?= h($board->name) ?><?= __('ギルド専用板のトップに戻る') ?></a></li>
+            <li class="heading"><a href="/boards/view/<?= $board->id ?>"><?= h($board->name) ?><?= __('板のトップに戻る') ?></a></li>
             <li class="heading"><hr/></li>
             <li class="heading"><?= h($board->name) ?><?= __('ギルドのスレッド一覧') ?></li>
             <?php foreach ($threads as $el) : ?>
@@ -19,18 +19,14 @@
             <li class="heading"><?= h($board->name) ?><?= __('板のスレッド一覧') ?></li>
             <?php foreach ($threads as $el) : ?>
                 <li>
-                    <?= $this->Html->link($el->name, ['controller' => 'Boards', 'action' => 'view', $el->id]) ?>
+                    <?= $this->Html->link($el->name, ['controller' => 'Threads', 'action' => 'view', $el->id]) ?>
                 </li>
             <?php endforeach; ?>
         <?php endif; ?>
     </ul>
 </nav>
 <div class="boards index large-9 medium-8 columns content">
-    <?php if ($board->parent_name == 'guilds') : ?>
-        <h3><?= $board->name ?><?= __('ギルド') ?> &gt; <?= $thread->name ?></h3>
-    <?php else : ?>
-        <h3><?= $board->name ?> &gt; <?= $thread->name ?></h3>
-    <?php endif; ?>
+    <h3><?= $board->name ?> &gt; <?= $thread->name ?></h3>
 
     <ul style="list-style:none;">
     <?php $i = 1; foreach ($posts as $el) : ?>

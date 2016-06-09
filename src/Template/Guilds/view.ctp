@@ -16,7 +16,7 @@
 </nav>
 <div class="boards index large-9 medium-8 columns content">
     <h3><?= h($guild->name) ?><?= __('ギルド') ?></h3>
-    <p><?= h($guild->name) ?><?= __('ギルドへようこそ！') ?></p>
+    <p><?= h($guild->description) ?></p>
 
     <h4><?= __('入会受付') ?></h4>
     <?php if ($user && $user['guild_id'] != $guild->id) : ?>

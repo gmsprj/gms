@@ -22,13 +22,8 @@
     </ul>
 </nav>
 <div class="boards index large-9 medium-8 columns content">
-    <?php if ($board->parent_name == 'guilds') : ?>
-        <h3><?= h($board->name) ?><?= __('ギルド専用板') ?></h3>
-        <p><?= __('この板はギルドのものです。') ?></p>
-    <?php else: ?>
-        <h3><?= h($board->name) ?><?= __('板') ?></h3>
-        <p><?= __('この板は広場のものです。') ?></p>
-    <?php endif; ?>
+    <h3><?= h($board->name) ?></h3>
+    <p><?= h($board->description) ?></p>
 
     <!-- 新規スレッド投稿フォーム -->
     <?php if ($board->parent_name != 'guilds' || $user) : ?>

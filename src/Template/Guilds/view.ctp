@@ -15,7 +15,7 @@
     </ul>
 </nav>
 <div class="boards index large-9 medium-8 columns content">
-    <h3><?= h($guild->name) ?><?= __('ギルド') ?></h3>
+    <h3><?= h($guild->name) ?></h3>
     <p><?= h($guild->description) ?></p>
 
     <h4><?= __('入会受付') ?></h4>
@@ -32,6 +32,6 @@
     <?php elseif ($user['guild_id'] == $guild->id) : ?>
         <p><?= __('入会中。') ?></p>
     <?php else : ?>
-        <p><?= __('入会にはサインインが必要です。') ?></p>
+        <p><?= __('入会には') ?><a href="/users/signin"><?= __('サインイン') ?></a><?= __('が必要です。') ?></p>
     <?php endif; ?>
 </div>

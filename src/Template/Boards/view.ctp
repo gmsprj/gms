@@ -11,7 +11,7 @@
             <li class="heading"><a href="/boards"><?= __('板の一覧に戻る') ?></a></li>
             <li class="heading"><hr/></li>
 
-            <li class="heading"><?= h($board->name) ?><?= __('板のスレッド一覧') ?></li>
+            <li class="heading"><?= h($board->name) ?><?= __('のスレッド一覧') ?></li>
         <?php endif; ?>
 
         <?php foreach ($threads as $el) : ?>

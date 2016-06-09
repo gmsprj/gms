@@ -90,7 +90,7 @@ INSERT INTO guilds (
     name,
     description
 ) VALUES (
-    '入門用',
+    '入門用ギルド',
     '入門用のギルド（同業組合）です。'
 );
 SET @guild_id = LAST_INSERT_ID();

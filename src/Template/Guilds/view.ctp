@@ -1,7 +1,7 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><a href="/plaza"><?= __('広場に出る') ?></a></li>
-        <li class="heading"><a href="/guilds"><?= __('ギルドの一覧に戻る') ?></a></li>
+        <li class="heading"><a href="/guilds"><?= __('ギルド一覧に戻る') ?></a></li>
         <li class="heading"><hr/></li>
 
         <li class="heading"><?= __('ギルド専用板') ?></li>

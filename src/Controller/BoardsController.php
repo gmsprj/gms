@@ -27,7 +27,8 @@ class BoardsController extends AppController
     public function index()
     {
         // 板のリスト
-        $boards = $this->Boards->find('all');
+        $boards = $this->Boards->find('all')
+            ->where(['parent_name' => 'plaza']);
 
         // テンプレートを設定
         $this->set('user', $this->Auth->user());

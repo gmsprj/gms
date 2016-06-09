@@ -28,6 +28,7 @@
 <div class="boards index large-9 medium-8 columns content">
 	<h3><?= __('広場') ?></h3>
     <p><?= __('広場。ユーザーが入り乱れてワイワイガヤガヤする所。') ?></p>
+    <p><?= __('広場のスレッドはメンバー/ゲスト共に読み書き可能。') ?></p>
 
 	<!-- 閲覧中スレッド -->
 	<h4><?= $dispBoard->name ?> &gt; <?= $dispThread->name ?></h4>

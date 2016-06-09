@@ -9,6 +9,6 @@
 </nav>
 <div class="boards index large-9 medium-8 columns content">
 	<h3><?= __('広場の板一覧') ?></h3>
-    <p><?= __('') ?></p>
+    <p><?= __('広場の板は自由に使えますが迷惑行為はだめぜったい。みたいな説明。') ?></p>
 </div>
 

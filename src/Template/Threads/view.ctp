@@ -38,7 +38,7 @@
         <?php
             echo '<div>';
             echo '<p style="margin:0;">' . $i++ . ': ' . h($el->name) . ': ' . h($el->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) . ': ' . '</p>';
-            echo '<p>' . h($el->content) . '</p>';
+            echo '<p>' . nl2br(h($el->content)) . '</p>';
             echo '</div>';
         ?>
         </li>

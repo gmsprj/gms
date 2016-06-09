@@ -59,6 +59,8 @@ INSERT INTO posts (name, content, thread_id) VALUES ('名無し', '雑談スレ�
 
 -- Guilds と板、スレッド、ポストを作成
 
+-- 入門者ギルド
+
 INSERT INTO guilds (name) VALUES ('入門者');
 SET @guild_id = LAST_INSERT_ID();
 
@@ -66,6 +68,19 @@ INSERT INTO boards (name, parent_name, parent_id) VALUES ('入門者', 'guilds',
 SET @board_id = LAST_INSERT_ID();
 
 INSERT INTO threads (name, board_id) VALUES ('ギルド・雑談スレ', @board_id);
+SET @thread_id = LAST_INSERT_ID();
+
+INSERT INTO posts (name, content, thread_id) VALUES ('Name Not Found', 'ギルドの雑談スレです。', @thread_id);
+
+-- Web制作管理ギルド
+
+INSERT INTO guilds (name) VALUES ('Web制作管理');
+SET @guild_id = LAST_INSERT_ID();
+
+INSERT INTO boards (name, parent_name, parent_id) VALUES ('Web制作管理', 'guilds', @guild_id);
+SET @board_id = LAST_INSERT_ID();
+
+INSERT INTO threads (name, board_id) VALUES ('Web制作管理・雑談スレ', @board_id);
 SET @thread_id = LAST_INSERT_ID();
 
 INSERT INTO posts (name, content, thread_id) VALUES ('Name Not Found', 'ギルドの雑談スレです。', @thread_id);

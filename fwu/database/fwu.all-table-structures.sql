@@ -169,7 +169,7 @@ CREATE TABLE `users` (
   `password` varchar(256) NOT NULL COMMENT 'ユーザーのログイン・パスワード',
   `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ユーザーの作成日',
   `modified` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ユーザーの更新日',
-  `guild_id` int(11) NOT NULL COMMENT '所属ギルドの外部キー',
+  `guild_id` int(11) NOT NULL DEFAULT 1 COMMENT '所属ギルドの外部キー',
   PRIMARY KEY (`id`),
   KEY `guild_id` (`guild_id`),
   CONSTRAINT `guild_ibfk_1` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`)

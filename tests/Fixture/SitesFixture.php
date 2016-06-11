@@ -4,10 +4,10 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * ConfigsFixture
+ * SitesFixture
  *
  */
-class ConfigsFixture extends TestFixture
+class SitesFixture extends TestFixture
 {
 
     /**
@@ -18,7 +18,8 @@ class ConfigsFixture extends TestFixture
     // @codingStandardsIgnoreStart
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => 'サイトのID', 'autoIncrement' => true, 'precision' => null],
-        'site_name' => ['type' => 'string', 'length' => 512, 'null' => false, 'default' => null, 'comment' => 'サイトの名前', 'precision' => null, 'fixed' => null],
+        'name' => ['type' => 'string', 'length' => 512, 'null' => false, 'default' => null, 'comment' => 'サイトの名前', 'precision' => null, 'fixed' => null],
+        'description' => ['type' => 'string', 'length' => 1024, 'null' => false, 'default' => null, 'comment' => 'サイトの説明', 'precision' => null, 'fixed' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -37,7 +38,8 @@ class ConfigsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'site_name' => 'Lorem ipsum dolor sit amet'
+            'name' => 'Lorem ipsum dolor sit amet',
+            'description' => 'Lorem ipsum dolor sit amet'
         ],
     ];
 }

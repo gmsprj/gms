@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\ConfigsTable;
+use App\Model\Table\SitesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\ConfigsTable Test Case
+ * App\Model\Table\SitesTable Test Case
  */
-class ConfigsTableTest extends TestCase
+class SitesTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\ConfigsTable
+     * @var \App\Model\Table\SitesTable
      */
-    public $Configs;
+    public $Sites;
 
     /**
      * Fixtures
@@ -24,7 +24,7 @@ class ConfigsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.configs'
+        'app.sites'
     ];
 
     /**
@@ -35,8 +35,8 @@ class ConfigsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Configs') ? [] : ['className' => 'App\Model\Table\ConfigsTable'];
-        $this->Configs = TableRegistry::get('Configs', $config);
+        $config = TableRegistry::exists('Sites') ? [] : ['className' => 'App\Model\Table\SitesTable'];
+        $this->Sites = TableRegistry::get('Sites', $config);
     }
 
     /**
@@ -46,7 +46,7 @@ class ConfigsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Configs);
+        unset($this->Sites);
 
         parent::tearDown();
     }

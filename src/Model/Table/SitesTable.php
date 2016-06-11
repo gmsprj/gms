@@ -1,17 +1,17 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Config;
+use App\Model\Entity\Site;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Configs Model
+ * Sites Model
  *
  */
-class ConfigsTable extends Table
+class SitesTable extends Table
 {
 
     /**
@@ -24,8 +24,8 @@ class ConfigsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('configs');
-        $this->displayField('id');
+        $this->table('sites');
+        $this->displayField('name');
         $this->primaryKey('id');
     }
 
@@ -42,8 +42,12 @@ class ConfigsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('site_name', 'create')
-            ->notEmpty('site_name');
+            ->requirePresence('name', 'create')
+            ->notEmpty('name');
+
+        $validator
+            ->requirePresence('description', 'create')
+            ->notEmpty('description');
 
         return $validator;
     }

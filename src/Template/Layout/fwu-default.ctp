@@ -3,7 +3,7 @@
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= h($config->site_name) ?> - <?= $this->fetch('title') ?></title>
+    <title><?= h($site->name) ?> - <?= $this->fetch('title') ?></title>
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->Html->css('base.css') ?>
@@ -18,7 +18,7 @@
     <nav class="top-bar expanded" data-topbar role="navigation">
         <ul class="title-area large-3 medium-4 columns">
             <li class="name">
-                <h1><a href="/plaza"><?= h($config->site_name) ?></a></h1>
+                <h1><a href="/plaza"><?= h($site->name) ?></a></h1>
             </li>
         </ul>
         <div class="top-bar-section">

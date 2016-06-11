@@ -4,12 +4,13 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Config Entity.
+ * Site Entity.
  *
  * @property int $id
- * @property string $site_name
+ * @property string $name
+ * @property string $description
  */
-class Config extends Entity
+class Site extends Entity
 {
 
     /**

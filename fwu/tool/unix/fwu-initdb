@@ -19,8 +19,8 @@ mysql -u $DBUSER -p $DBNAME <<EOF
 
 -- テーブルのクリア
 
-DELETE FROM configs;
-ALTER TABLE configs AUTO_INCREMENT = 1;
+DELETE FROM sites;
+ALTER TABLE sites AUTO_INCREMENT = 1;
 
 DELETE FROM posts;
 ALTER TABLE posts AUTO_INCREMENT = 1;
@@ -40,9 +40,9 @@ ALTER TABLE guilds AUTO_INCREMENT = 1;
 
 -- サイトの設定
 
-INSERT INTO configs (
-  site_name,
-  site_description
+INSERT INTO sites (
+  name,
+  description
 ) VALUES (
   'FWU（仮）',
   '労働者のユニオン・サイト'

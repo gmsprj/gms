@@ -31,7 +31,7 @@
                 <li><a href="/users/signup"><?= __('サインアップ') ?></a></li>
                 <li><a href="/users/signin"><?= __('サインイン') ?></a></li>
                 <li><a href="/users/signout"><?= __('サインアウト') ?></a></li>
-                <li><a href="/entrance"><?= __('トップページ') ?></a></li>
+                <li><a href="/entrances"><?= __('トップページ') ?></a></li>
             </ul>
         </div>
     </nav>

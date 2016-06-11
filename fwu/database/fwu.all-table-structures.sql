@@ -56,10 +56,10 @@ CREATE TABLE `sites` (
  *
  *     <- 依存方向
  *
- *     (plaza or guilds) <- boards <- threads <- posts
+ *     (plazas or guilds) <- boards <- threads <- posts
  *
- * parent_name には文字列の "plaza" か "guilds" が保存される。
- * parent_name が "plaza" であれば、parent_id は無意味になる（plaza のテーブル構造は存在しない）。
+ * parent_name には文字列の "plazas" か "guilds" が保存される。
+ * parent_name が "plazas" であれば、parent_id は無意味になる（plazas のテーブル構造は存在しない）。
  * parent_name が "guilds" であれば、parent_id は guilds.id を指す。
  */
 
@@ -72,7 +72,7 @@ CREATE TABLE `boards` (
   `description` text COMMENT '板の説明',
   `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の作成日',
   `modified` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の更新日',
-  `parent_name` varchar(32) NOT NULL DEFAULT 'plaza' COMMENT '板の親の名前（plaza, guilds等）',
+  `parent_name` varchar(32) NOT NULL DEFAULT 'plazas' COMMENT '板の親の名前（plazas, guilds等）',
   `parent_id` int(11) NOT NULL DEFAULT 0 COMMENT '板の親のID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のリスト';

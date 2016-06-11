@@ -21,7 +21,7 @@ class BoardsFixture extends TestFixture
         'name' => ['type' => 'string', 'length' => 128, 'null' => false, 'default' => null, 'comment' => '板の名前', 'precision' => null, 'fixed' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => '板の作成日', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => '板の更新日', 'precision' => null],
-        'parent_name' => ['type' => 'string', 'length' => 32, 'null' => false, 'default' => 'plaza', 'comment' => '板の親の名前（plaza, guilds等）', 'precision' => null, 'fixed' => null],
+        'parent_name' => ['type' => 'string', 'length' => 32, 'null' => false, 'default' => 'plazas', 'comment' => '板の親の名前（plazas, guilds等）', 'precision' => null, 'fixed' => null],
         'parent_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => '板の親のID', 'precision' => null, 'autoIncrement' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],

@@ -61,7 +61,7 @@ class AppController extends Controller
                 'action' => 'signinRedirect',
             ],
             'logoutRedirect' => [ // ログアウト後に遷移するアクションを指定
-                'controller' => 'Plaza',
+                'controller' => 'Plazas',
                 'action' => 'index',
             ],
             'authError' => 'ログインできませんでした。ログインしてください。',

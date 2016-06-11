@@ -1,6 +1,6 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><a href="/plaza"><?= __('広場に戻る') ?></a></li>
+        <li class="heading"><a href="/plazas"><?= __('広場に戻る') ?></a></li>
         <li class="heading"><hr/></li>
         <li class="heading"><?= __('ギルド一覧') ?></li>
         <?php foreach ($guilds as $el) : ?>

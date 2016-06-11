@@ -8,7 +8,7 @@ use Cake\ORM\TableRegistry;
 use DateTime;
 use Exception;
 
-class PlazaController extends AppController
+class PlazasController extends AppController
 {
     public function initialize()
     {
@@ -25,9 +25,9 @@ class PlazaController extends AppController
 
     public function index()
     {
-        // Plaza の板のリスト
+        // Plazas の板のリスト
         $boards = $this->Boards->find('all')
-            ->where(['parent_name' => 'plaza'])
+            ->where(['parent_name' => 'plazas'])
             ->order(['name' => 'DESC']);
 
         if ($boards->count() == 0) {
@@ -36,7 +36,7 @@ class PlazaController extends AppController
         
         // 表示板
         $dispBoard = $this->Boards->find()
-            ->where(['name' => 'ロビー', 'parent_name' => 'plaza'])
+            ->where(['name' => 'ロビー', 'parent_name' => 'plazas'])
             ->first();
 
         if ($dispBoard == null) {

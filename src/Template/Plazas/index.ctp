@@ -48,7 +48,7 @@
 	<?php /* TODO: Threads/thread.ctp と重複 */ ?>
 	<?= $this->Form->create(null, [
 		'type' => 'post',
-		'url' => ['controller' => 'Plaza', 'action' => 'post']]
+		'url' => ['controller' => 'Plazas', 'action' => 'post']]
 	) ?>
 	<?= $this->Form->label('name', '名前：') ?>
 	<?= $this->Form->hidden('threadId', ['value' => h($dispThread->id)]) ?>

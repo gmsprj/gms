@@ -18,7 +18,7 @@
     <nav class="top-bar expanded" data-topbar role="navigation">
         <ul class="title-area large-3 medium-4 columns">
             <li class="name">
-                <h1><a href="/plaza"><?= h($site->name) ?></a></h1>
+                <h1><a href="/plazas"><?= h($site->name) ?></a></h1>
             </li>
         </ul>
         <div class="top-bar-section">
@@ -26,7 +26,7 @@
                 <?php if ($user) : ?>
                     <li><a href="/users/view/<?= h($user['id']) ?>"><?= __('ようこそ ') ?><?= h($user['name']) ?><?= __(' さん') ?></a></li>
                 <?php endif; ?>
-                <li><a href="/plaza"><?= __('広場') ?></a></li>
+                <li><a href="/plazas"><?= __('広場') ?></a></li>
                 <li><a href="/guilds"><?= __('ギルド一覧') ?></a></li>
                 <li><a href="/users/signup"><?= __('サインアップ') ?></a></li>
                 <li><a href="/users/signin"><?= __('サインイン') ?></a></li>

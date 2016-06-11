@@ -1,6 +1,6 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><a href="/plaza"><?= __('広場に戻る') ?></a></li>
+        <li class="heading"><a href="/plazas"><?= __('広場に戻る') ?></a></li>
         <li class="heading"><?= __('広場の板一覧') ?></li>
         <?php foreach ($boards as $board) : ?>
             <li><a href="/boards/view/<?= h($board->id) ?>"><?= h($board->name) ?></a></li>

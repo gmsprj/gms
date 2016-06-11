@@ -58,7 +58,7 @@ INSERT INTO boards (
 ) VALUES (
     'ロビー',
     '広場のロビー板です。',
-    'plaza'
+    'plazas'
 );
 SET @board_id = LAST_INSERT_ID();
 

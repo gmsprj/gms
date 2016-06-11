@@ -68,7 +68,7 @@ class ThreadsController extends AppController
         $this->set('postName', $postName);
     }
 
-    /* TODO: PlazaController.php: post() と重複 */
+    /* TODO: PlazasController.php: post() と重複 */
     public function post()
     {
         if (!$this->request->is('post')) {

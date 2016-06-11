@@ -1,12 +1,12 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <?php if ($board->parent_name == 'guilds') : ?>
-            <li class="heading"><a href="/plaza"><?= __('広場に出る') ?></a></li>
+            <li class="heading"><a href="/plazas"><?= __('広場に出る') ?></a></li>
             <li class="heading"><a href="/guilds/view/<?= h($board->parent_id) ?>"><?= __('ギルドに戻る') ?></a></li>
             <li class="heading"><hr/></li>
             <li class="heading"><?= h($board->name) ?><?= __('のスレッド一覧') ?></li>
         <?php else: ?>
-            <li class="heading"><a href="/plaza"><?= __('広場に戻る') ?></a></li>
+            <li class="heading"><a href="/plazas"><?= __('広場に戻る') ?></a></li>
             <li class="heading"><a href="/boards"><?= __('板の一覧に戻る') ?></a></li>
             <li class="heading"><hr/></li>
             <li class="heading"><?= h($board->name) ?><?= __('のスレッド一覧') ?></li>

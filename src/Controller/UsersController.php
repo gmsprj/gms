@@ -77,12 +77,12 @@ class UsersController extends AppController
     public function view($id = null)
     {
         if (!$this->request->is('get')) {
-                return $this->redirect(['controller' => 'Plaza', 'action' => 'index']);
+                return $this->redirect(['controller' => 'Plazas', 'action' => 'index']);
         }
 
         $user = $this->Auth->user();
         if (!$user) {
-            return $this->redirect(['controller' => 'Plaza', 'action' => 'index']);
+            return $this->redirect(['controller' => 'Plazas', 'action' => 'index']);
         }
     }
 }

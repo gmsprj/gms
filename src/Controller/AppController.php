@@ -41,7 +41,6 @@ class AppController extends Controller
     {
         parent::initialize();
         $this->loadComponent('Flash');
-        //認証
         $this->loadComponent('Auth',[
             'authorize' => 'Controller',
             'authenticate' => [
@@ -56,11 +55,11 @@ class AppController extends Controller
                 'controller' => 'Users',
                 'action' => 'signin'
             ],
-            'loginRedirect' => [ // ログイン後に遷移するアクションを指定
+            'loginRedirect' => [
                 'controller' => 'Users',
                 'action' => 'signinRedirect',
             ],
-            'logoutRedirect' => [ // ログアウト後に遷移するアクションを指定
+            'logoutRedirect' => [
                 'controller' => 'Plazas',
                 'action' => 'index',
             ],

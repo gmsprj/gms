@@ -35,46 +35,46 @@ class PlazasController extends AppController
         }
         
         // 表示板
-        $dispBoard = $this->Boards->find()
+        $board = $this->Boards->find()
             ->where(['name' => 'ロビー', 'parent_name' => 'plazas'])
             ->first();
 
-        if ($dispBoard == null) {
+        if ($board == null) {
             throw new Exception('ロビー板を作成してください。');
         }
         
         // 表示板スレッドリスト
-        $dispThreads = $this->Threads->find('all')
-            ->where(['board_id' => $dispBoard->id]);
+        $threads = $this->Threads->find('all')
+            ->where(['board_id' => $board->id]);
 
-        if ($dispThreads->count() == 0) {
-            throw new Exception($dispBoard->name . '板にスレッドがありません。最低１スレッド必要です。');
+        if ($threads->count() == 0) {
+            throw new Exception($board->name . '板にスレッドがありません。最低１スレッド必要です。');
         }
         
         // 表示スレッド
-        $dispThread = $this->Threads->find('all')
-            ->where(['board_id' => $dispBoard->id])
+        $thread = $this->Threads->find('all')
+            ->where(['board_id' => $board->id])
             ->first();
         
         // 表示スレッドのポストリスト
-        $dispPosts = $this->Posts->find('all')
-            ->where(['thread_id' => $dispThread->id]);
+        $posts = $this->Posts->find('all')
+            ->where(['thread_id' => $thread->id]);
 
 
         // ギルドのリスト
-        $dispGuilds = $this->Guilds->find('all');
+        $guilds = $this->Guilds->find('all');
 
         // 認証ユーザーを取得して投稿者ネームを得る
         $authUser = $this->Auth->user();
         $postName = ($authUser == null ? '名無しさん' : $authUser['name']);
 
         // テンプレートに設定
+        $this->set('board', $board);
         $this->set('boards', $boards);
-        $this->set('dispBoard', $dispBoard);
-        $this->set('dispThreads', $dispThreads);
-        $this->set('dispThread', $dispThread);
-        $this->set('dispPosts', $dispPosts);
-        $this->set('dispGuilds', $dispGuilds);
+        $this->set('thread', $thread);
+        $this->set('threads', $threads);
+        $this->set('posts', $posts);
+        $this->set('guilds', $guilds);
         $this->set('postName', $postName);
     }
 
@@ -87,14 +87,14 @@ class PlazasController extends AppController
         $created = new DateTime(date('Y-m-d H:i:s'));
 
         // ポストの作成
-        $postTable = TableRegistry::get('Posts');
-        $newPost = $postTable->newEntity([
+        $postsTable = TableRegistry::get('Posts');
+        $newPost = $postsTable->newEntity([
             'name' => $name,
             'content' => $content,
             'thread_id' => $threadId,
         ]);
         
-        if ($postTable->save($newPost)) {
+        if ($postsTable->save($newPost)) {
             Log::write('debug', $newPost->toString());
         } else {
             $this->Flash->error('入力が不正です。');

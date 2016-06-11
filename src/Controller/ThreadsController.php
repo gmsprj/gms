@@ -9,6 +9,14 @@ use Cake\Event\Event;
 use Exception;
 use DateTime;
 
+/**
+ * Threads
+ *
+ * スレッドを管理するアプリケーション。
+ *
+ * @see src/Controller/Boards.php
+ * @see src/Controller/Posts.php
+ */
 class ThreadsController extends AppController
 {
     public function initialize()

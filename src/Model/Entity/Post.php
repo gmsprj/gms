@@ -31,9 +31,23 @@ class Post extends Entity
         'id' => false,
     ];
  
-    public function toString() {
+    public function toString()
+    {
         return sprintf('id[%d] name[%s] created[%s] modified[%s] content[%s] errors[%s]',
                 $this->id, $this->name, json_encode($this->created), json_encode($this->modified), $this->content, json_encode($this->errors()));
     }
 
+    public function render($params = ['index' => 0])
+    {
+?>
+        <li>
+        <?php
+            echo '<div>';
+            echo '<p style="margin:0;">' . $params['index'] . ': ' . h($this->name) . ': ' . h($this->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) . ': ' . '</p>';
+            echo '<p>' . nl2br(h($this->content)) . '</p>';
+            echo '</div>';
+        ?>
+        </li>
+<?php
+    }
 }

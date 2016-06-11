@@ -8,6 +8,14 @@ use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 use DateTime;
 
+/**
+ * Boards
+ *
+ * 板を管理するアプリケーション。
+ *
+ * @see src/Controller/Threads.php
+ * @see src/Controller/Posts.php
+ */
 class BoardsController extends AppController
 {
     public function initialize()
@@ -16,6 +24,8 @@ class BoardsController extends AppController
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('fwu-default');
         $this->Auth->allow(['index', 'view', 'post']);
+        $this->loadModel('Boards');
+        $this->loadModel('Threads');
     }
 
     public function beforeFilter(Event $event)
@@ -37,9 +47,6 @@ class BoardsController extends AppController
 
     public function view($boardId)
     {
-        $this->loadModel('Boards');
-        $this->loadModel('Threads');
-
         // 板
         $board = $this->Boards->find()
             ->where(['id' => $boardId])
@@ -77,14 +84,12 @@ class BoardsController extends AppController
         $boardId = $this->request->data('boardId');
         $redirect = ['action' => 'view', $boardId];
 
-        // 板の親が guilds でかつ、認証ユーザーがそのギルド・メンバーでないなら書き込み不可
+        // 板の親が guilds でかつ、認証ユーザーでないなら書き込み不可
         $board = $this->Boards->get($boardId);
-        if ($board && $board->parent_name == 'guilds') {
-            if ($authUser && $authUser['guild_id'] != $board->parent_id) {
-                $this->Flash->error(__('書込みできません。'));
-                $this->redirect($redirect);
-                return;
-            }
+        if ($board && $board->parent_name == 'guilds' && !$authUser) {
+            $this->Flash->error(__('書込みできません。'));
+            $this->redirect($redirect);
+            return;
         }
         
         // スレッドの作成

@@ -1,8 +1,22 @@
+/**
+ * プロジェクトのデータベース、テーブル構造を定義した SQL ファイル。
+ *
+ * サービスのデータベースは以下のテーブル名、構造で定義される。
+ * 開発で使用するフレームワークは CakePHP3 だが、テーブル構造の定義は別途必要になる為この SQL ファイルが作成された。
+ *
+ * シェルを使える環境であれば、このファイルは以下のように使用する。
+ *
+ *     $ mysql -u your_name -p your_database < fwu.all-table-structures.sql
+ *
+ * 以上のコマンドで your_database にテーブルが構築される。
+ * この時、同名のテーブルは構築前に破棄される。
+ */
+
 -- MySQL dump 10.13  Distrib 5.7.12, for Linux (x86_64)
 --
--- Host: localhost    Database: fwu_p2
+-- Host: localhost    Database: 
 -- ------------------------------------------------------
--- Server version	5.7.12-0ubuntu1
+-- Server version
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -15,24 +29,39 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Table structure for table `configs`
---
+/**
+ * sites
+ *
+ * sites テーブルには Web サイトの名前や説明が保存される。
+ */
 
-DROP TABLE IF EXISTS `configs`;
+DROP TABLE IF EXISTS `sites`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `configs` (
+CREATE TABLE `sites` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'サイトのID',
-  `site_name` varchar(512) NOT NULL COMMENT 'サイトの名前',
-  `site_description` varchar(1024) NOT NULL COMMENT 'サイトの説明',
+  `name` varchar(512) NOT NULL COMMENT 'サイトの名前',
+  `description` varchar(1024) NOT NULL COMMENT 'サイトの説明',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='サイトの設定リスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `boards`
---
+/**
+ * boards
+ *
+ * boards テーブルには「板/スレッド/ポスト」の内、板の情報が保存される。
+ * 「板/スレッド/ポスト」の概念については 2ch を参照。
+ *
+ * 依存関係:
+ *
+ *     <- 依存方向
+ *
+ *     (plaza or guilds) <- boards <- threads <- posts
+ *
+ * parent_name には文字列の "plaza" か "guilds" が保存される。
+ * parent_name が "plaza" であれば、parent_id は無意味になる（plaza のテーブル構造は存在しない）。
+ * parent_name が "guilds" であれば、parent_id は guilds.id を指す。
+ */
 
 DROP TABLE IF EXISTS `boards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -49,26 +78,34 @@ CREATE TABLE `boards` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `guilds`
---
+/**
+ * threads
+ *
+ * threads テーブルには「板/スレッド/ポスト」の内、スレッドの情報が保存される。
+ * 依存関係は boards を参照。
+ */
 
-DROP TABLE IF EXISTS `guilds`;
+DROP TABLE IF EXISTS `threads`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `guilds` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ギルドのID',
-  `name` varchar(128) NOT NULL COMMENT 'ギルドの名前',
-  `description` text COMMENT '板の説明',
-  `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの作成日',
-  `modified` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの更新日',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ギルドのリスト';
+CREATE TABLE `threads` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'スレッドのID',
+  `name` varchar(128) NOT NULL COMMENT 'スレッドの名前',
+  `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'スレッドの作成日',
+  `modified` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'スレッドの更新日',
+  `board_id` int(11) NOT NULL COMMENT '所属する板のID',
+  PRIMARY KEY (`id`),
+  KEY `board_id` (`board_id`),
+  CONSTRAINT `threads_ibfk_1` FOREIGN KEY (`board_id`) REFERENCES `boards` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のスレッド';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `posts`
---
+/**
+ * posts
+ *
+ * posts テーブルには「板/スレッド/ポスト」の内、ポストの情報が保存される。
+ * 依存関係は boards を参照。
+ */
 
 DROP TABLE IF EXISTS `posts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -86,28 +123,41 @@ CREATE TABLE `posts` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='スレッドへのポスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `threads`
---
+/**
+ * guilds
+ *
+ * guilds テーブルにはギルドの情報が保存される。
+ *
+ * 依存関係:
+ *
+ *     <- 依存方向
+ *
+ *     guilds <- users
+ *            <- boards
+ *
+ * users はユーザーの新規作成時に users.guild_id の参照先が必要になるため、サービス起動時に最低 1 つ以上のギルド(ID は 1)が必要。
+ * boards は boards.parent_name が "guilds" である時、boards.parent_id が guilds.id を参照するので、ギルドの削除時などに boards の走査/削除も必要になる。
+ */
 
-DROP TABLE IF EXISTS `threads`;
+DROP TABLE IF EXISTS `guilds`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `threads` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'スレッドのID',
-  `name` varchar(128) NOT NULL COMMENT 'スレッドの名前',
-  `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'スレッドの作成日',
-  `modified` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'スレッドの更新日',
-  `board_id` int(11) NOT NULL COMMENT '所属する板のID',
-  PRIMARY KEY (`id`),
-  KEY `board_id` (`board_id`),
-  CONSTRAINT `threads_ibfk_1` FOREIGN KEY (`board_id`) REFERENCES `boards` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のスレッド';
+CREATE TABLE `guilds` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ギルドのID',
+  `name` varchar(128) NOT NULL COMMENT 'ギルドの名前',
+  `description` text COMMENT '板の説明',
+  `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの作成日',
+  `modified` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの更新日',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ギルドのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `users`
---
+/**
+ * users
+ *
+ * users テーブルには登録ユーザーの情報が保存される。
+ * 依存関係は guilds を参照。
+ */
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

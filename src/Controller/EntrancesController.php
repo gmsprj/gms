@@ -22,6 +22,11 @@ class EntrancesController extends AppController
         $this->viewBuilder()->layout('fwu-entrances');
     }
 
+    /**
+     * Index method
+     *
+     * @return \Cake\Network\Response|null
+     */
     public function index()
     {
     }

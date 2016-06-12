@@ -63,7 +63,7 @@ class AppController extends Controller
                 'controller' => 'Plazas',
                 'action' => 'index',
             ],
-            'authError' => 'ログインできませんでした。ログインしてください。',
+            'authError' => __('ログインできませんでした。ログインしてください。'),
         ]);
         $this->loadModel('Sites');
     }

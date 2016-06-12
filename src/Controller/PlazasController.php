@@ -8,6 +8,11 @@ use Cake\ORM\TableRegistry;
 use DateTime;
 use Exception;
 
+/**
+ * Plazas Controller
+ *
+ * 広場を管理するアプリケーション。
+ */
 class PlazasController extends AppController
 {
     public function initialize()
@@ -23,12 +28,16 @@ class PlazasController extends AppController
         $this->loadModel('Guilds');
     }
 
+    /**
+     * Index method
+     *
+     * @return \Cake\Network\Response|null
+     */
     public function index()
     {
         // Plazas の板のリスト
         $boards = $this->Boards->find('all')
-            ->where(['parent_name' => 'plazas'])
-            ->order(['name' => 'DESC']);
+            ->where(['parent_name' => 'plazas']);
 
         if ($boards->count() == 0) {
             throw new Exception('板がありません。');
@@ -76,32 +85,6 @@ class PlazasController extends AppController
         $this->set('posts', $posts);
         $this->set('guilds', $guilds);
         $this->set('postName', $postName);
-    }
-
-    /* TODO: ThreadsController.php: post() と重複 */
-    public function post()
-    {
-        $name = $this->request->data('name');
-        $content = $this->request->data('content');
-        $threadId = $this->request->data('threadId');
-        $created = new DateTime(date('Y-m-d H:i:s'));
-
-        // ポストの作成
-        $postsTable = TableRegistry::get('Posts');
-        $newPost = $postsTable->newEntity([
-            'name' => $name,
-            'content' => $content,
-            'thread_id' => $threadId,
-        ]);
-        
-        if ($postsTable->save($newPost)) {
-            Log::write('debug', $newPost->toString());
-        } else {
-            $this->Flash->error('入力が不正です。');
-            Log::write('error', $newPost->toString());
-        }
-        
-        $this->redirect(['action' => 'index']);
     }
 }
 

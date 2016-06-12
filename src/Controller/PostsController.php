@@ -36,35 +36,41 @@ class PostsController extends AppController
      */
     public function index()
     {
-        $threads = $this->Threads->find('all');
-        $this->set('threads', $threads);
+        return new NotFoundException(__('見つかりません。'));
     }
 
     /**
      * View method
      *
-     * @param string|null $postId Posts id.
+     * @param string|null $id Posts id.
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($postId)
+    public function view($id = null)
     {
-        return new NotFoundException(__('ポストが見つかりません。'));
+        return new NotFoundException(__('見つかりません。'));
     }
 
     /**
      * Add method
      *
+     * ポストを追加する。
+     * 追加に成功したら threads/view/threadId にリダイレクト。
+     * 失敗したら plazas/index にリダイレクト。
      *
-     * 
+     * @param string request->data('name') 
+     * @param string request->data('content') 
+     * @param string request->data('threadId') 
      */
     public function add()
     {
+        // メソッド名をチェック
         if (!$this->request->is('post')) {
             Log::write('error', 'Invalid method of ' . $this->request->method());
             return $this->redirect(['controller' => 'Plazas', 'action' => 'index']);
         }
 
+        // パラメーターを取得
         $authUser = $this->Auth->user();
         $name = $this->request->data('name');
         $content = $this->request->data('content');
@@ -94,9 +100,7 @@ class PostsController extends AppController
             return $this->redirect($redirect);
         }
 
-        if ($postsTable->save($newPost)) {
-            Log::write('debug', $newPost->toString());
-        } else {
+        if (!$postsTable->save($newPost)) {
             $this->Flash->error(__('入力が不正です。'));
             Log::write('error', $newPost->toString());
         }

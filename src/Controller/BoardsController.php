@@ -26,14 +26,8 @@ class BoardsController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('fwu-default');
-        $this->Auth->allow(['index', 'view', 'post']);
+        $this->Auth->allow(['index', 'view']);
         $this->loadModel('Threads');
-    }
-
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-        $this->Auth->allow(['post']);
     }
 
     /**
@@ -58,11 +52,11 @@ class BoardsController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($boardId = null)
+    public function view($id = null)
     {
         // 板
         $board = $this->Boards->find()
-            ->where(['id' => $boardId])
+            ->where(['id' => $id])
             ->first();
         if (!$board) {
             throw new NotFoundException(__('板が見つかりません。'));
@@ -72,7 +66,7 @@ class BoardsController extends AppController
 
         // スレッドのリスト
         $threads = $this->Threads->find('all')
-            ->where(['board_id' => $boardId]);
+            ->where(['board_id' => $id]);
 
         // 認証ユーザーから投稿者ネームを得る
         // TODO: 板毎にデフォルトの「名無しさん」等が必要になった場合はここを変更

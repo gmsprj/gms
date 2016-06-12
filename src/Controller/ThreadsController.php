@@ -43,14 +43,14 @@ class ThreadsController extends AppController
     /**
      * View method
      *
-     * @param string|null $threadId Threads id.
+     * @param string|null $id Threads id.
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($threadId)
+    public function view($id)
     {
         $thread = $this->Threads->find()
-            ->where(['id' => $threadId])
+            ->where(['id' => $id])
             ->first();
         if (!$thread) {
             throw new NotFoundException(__('スレッドが見つかりません。'));

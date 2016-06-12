@@ -9,12 +9,14 @@ use Cake\Event\Event;
 use DateTime;
 
 /**
- * Boards
+ * Boards Controller
  *
  * 板を管理するアプリケーション。
  *
  * @see src/Controller/Threads.php
  * @see src/Controller/Posts.php
+ *
+ * @property \App\Model\Table\BoardsTable $Boards
  */
 class BoardsController extends AppController
 {
@@ -24,16 +26,20 @@ class BoardsController extends AppController
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('fwu-default');
         $this->Auth->allow(['index', 'view', 'post']);
-        $this->loadModel('Boards');
         $this->loadModel('Threads');
     }
 
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['view', 'post']);
+        $this->Auth->allow(['post']);
     }
 
+    /**
+     * Index method
+     *
+     * @return \Cake\Network\Response|null
+     */
     public function index()
     {
         // 板のリスト
@@ -41,11 +47,17 @@ class BoardsController extends AppController
             ->where(['parent_name' => 'plazas']);
 
         // テンプレートを設定
-        $this->set('user', $this->Auth->user());
         $this->set('boards', $boards);
     }
 
-    public function view($boardId)
+    /**
+     * View method
+     *
+     * @param string|null $id Boards id.
+     * @return \Cake\Network\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function view($boardId = null)
     {
         // 板
         $board = $this->Boards->find()

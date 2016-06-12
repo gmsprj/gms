@@ -59,12 +59,11 @@ class GuildsController extends AppController
      * Entry method
      *
      * ギルドへの入会を処理する。
+     * 入会に失敗した場合、/plazas/index へリダイレクト。
+     * 入会に成功した場合、入会先のギルドへリダイレクト。
      *
      * @param string request->data('userId') ユーザーID
      * @param string request->data('guildId') ギルドID
-     *
-     * 入会に失敗した場合、/plazas/index へリダイレクト。
-     * 入会に成功した場合、入会先のギルドへリダイレクト。
      */
     public function entry()
     {

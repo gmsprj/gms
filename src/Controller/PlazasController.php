@@ -5,8 +5,8 @@ use App\Controller\AppController;
 use App\Model\Table;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
+use Cake\Network\Exception\NotFoundException;
 use DateTime;
-use Exception;
 
 /**
  * Plazas Controller
@@ -40,7 +40,7 @@ class PlazasController extends AppController
             ->where(['parent_name' => 'plazas']);
 
         if ($boards->count() == 0) {
-            throw new Exception('板がありません。');
+            throw new NotFoundException(__('板がありません。'));
         }
         
         // 表示板
@@ -49,7 +49,7 @@ class PlazasController extends AppController
             ->first();
 
         if ($board == null) {
-            throw new Exception('ロビー板を作成してください。');
+            throw new NotFoundException(__('ロビー板を作成してください。'));
         }
         
         // 表示板スレッドリスト
@@ -57,7 +57,7 @@ class PlazasController extends AppController
             ->where(['board_id' => $board->id]);
 
         if ($threads->count() == 0) {
-            throw new Exception($board->name . '板にスレッドがありません。最低１スレッド必要です。');
+            throw new NotFoundException($board->name . __('板にスレッドがありません。最低１スレッド必要です。'));
         }
         
         // 表示スレッド

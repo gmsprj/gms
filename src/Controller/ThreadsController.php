@@ -10,7 +10,7 @@ use Cake\Network\Exception\NotFoundException;
 use DateTime;
 
 /**
- * Threads
+ * Threads Controller
  *
  * スレッドを管理するアプリケーション。
  *

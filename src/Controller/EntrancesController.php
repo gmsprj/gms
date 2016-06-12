@@ -6,7 +6,7 @@ use App\Model\Table;
 use Cake\Log\Log;
 
 /**
- * Entrances
+ * Entrances Controller
  *
  * Web サイトの入り口を管理するアプリケーション。
  *

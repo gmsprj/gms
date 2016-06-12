@@ -46,17 +46,21 @@ class User extends Entity
     /**
      * 引数のパスワードをハッシュ化して返す。
      * ハッシュで使われる salt は config/app.php: Security/salt を参照。
+     * この関数は Auth の認証時に使用される。
      *
      * @param string $password パスワード文字列
      * @return string ハッシュ化されたパスワード
      */
     protected function _setPassword($password)
     {
-        $hash = (new DefaultPasswordHasher)->hash($password);
-        Log::write('debug', '_setPassword: ' + $hash);
-        return $hash;
+        return (new DefaultPasswordHasher)->hash($password);
     }
 
+    /**
+     * モデルを文字列に変換する。
+     *
+     * @return string 変換後の文字列。
+     */
     public function toString()
     {
         return sprintf('name[%s] email[%s] password[****] created[%s] modified[%s] errors[%s]',

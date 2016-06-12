@@ -30,13 +30,25 @@ class Post extends Entity
         '*' => true,
         'id' => false,
     ];
- 
+
+    /**
+     * モデルを文字列に変換する。
+     *
+     * @return string 変換後の文字列。
+     */
     public function toString()
     {
         return sprintf('id[%d] name[%s] created[%s] modified[%s] content[%s] errors[%s]',
                 $this->id, $this->name, json_encode($this->created), json_encode($this->modified), $this->content, json_encode($this->errors()));
     }
 
+    /**
+     * モデルを描画する。
+     *
+     * @param array $params 
+     * @param $params index ポストの番号。
+     * @return void
+     */
     public function render($params = ['index' => 0])
     {
 ?>

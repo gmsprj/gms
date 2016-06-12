@@ -32,12 +32,22 @@ class Thread extends Entity
         'id' => false,
     ];
 
+    /**
+     * モデルを文字列に変換する。
+     *
+     * @return string 変換後の文字列。
+     */
     public function toString()
     {
         return sprintf("id[%d] name[%s] created[%s] modified[%s] board_id[%d] errors[%s]",
                 $this->id, $this->name, json_encode($this->created), json_encode($this->modified), $this->board_id, json_encode($this->errors()));
     }
 
+    /**
+     * このスレッドに属しているポストをカウントして返す。
+     *
+     * @return int ポストのカウント数
+     */
     public function countPosts()
     {
         $this->Posts = TableRegistry::get('Posts');

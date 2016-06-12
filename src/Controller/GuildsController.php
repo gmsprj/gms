@@ -8,6 +8,8 @@ use Cake\Log\Log;
 /**
  * Guilds Controller
  *
+ * ギルドを管理するアプリケーション
+ *
  * @property \App\Model\Table\GuildsTable $Guilds
  */
 class GuildsController extends AppController
@@ -20,7 +22,6 @@ class GuildsController extends AppController
         $this->Auth->allow(['entry']);
         $this->loadModel('Boards');
         $this->loadModel('Threads');
-        $this->loadModel('Users');
     }
 
     /**
@@ -54,18 +55,52 @@ class GuildsController extends AppController
         $this->set('threads', $threads);
     }
 
+    /**
+     * Entry method
+     *
+     * ギルドへの入会を処理する。
+     *
+     * @param string request->data('userId') ユーザーID
+     * @param string request->data('guildId') ギルドID
+     *
+     * 入会に失敗した場合、/plazas/index へリダイレクト。
+     * 入会に成功した場合、入会先のギルドへリダイレクト。
+     */
     public function entry()
     {
+        // エラー時のリダイレクト先
+        $toPlazas = ['controller' => 'Plazas', 'action' => 'index'];
+
+        // メソッド名をチェック
+        if (!$this->request->is('post')) {
+            Log::write('error', __('Invalid method of '. $this->request->method()));
+            return $this->redirect($toPlazas);
+        }
+
+        // パラメーターの取得
         $userId = $this->request->data('userId');
         $guildId = $this->request->data('guildId');
 
+        // ユーザーの取得/チェック
         $usersTable = TableRegistry::get('Users');
         $user = $usersTable->get($userId);
-        $user->guild_id = $guildId;
-        $usersTable->save($user);
-        $this->Auth->setUser($user->toArray()); // セッションの更新
+        if (!$user) {
+            Log::write('error', __('Invalid Users ID of ' . $userId));
+            return $this->redirect($toPlazas);
+        }
 
-        $this->Flash->success('入会しました。');
+        // 入会
+        $user->guild_id = $guildId;
+        if (!$usersTable->save($user)) {
+            Log::write('error', __('Failed to save Users of ID ' . $user->id));
+            Log::write('error', json_encode($user->errors()));
+            return $this->redirect($toPlazas);
+        }
+
+        // セッションの更新
+        $this->Auth->setUser($user->toArray());
+
+        $this->Flash->success(__('入会しました。'));
         return $this->redirect(['action' => 'view', $guildId]);
     }
 }

@@ -3,7 +3,7 @@
 * ./database/ ... データベース関連のファイル。
 * ./tool/ ... 開発ツール（UNIX 系 であれば ./tool/unix, Windows であれば ./tool/windows）。
 
-## tool/
+## tool/unix/
 
 ツール。ファイル名の接頭辞は 'fwu-' 。スクリプトの多くは環境変数を使用する。環境変数の接頭辞は 'FWU_' 。
 

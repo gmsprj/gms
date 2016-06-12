@@ -39,7 +39,7 @@
     <?php if ($board->parent_name != 'guilds' || $user) : ?>
         <?= $this->Form->create(null, [
             'type' => 'post',
-            'url' => ['controller' => 'Threads', 'action' => 'post']]
+            'url' => ['controller' => 'Posts', 'action' => 'add']]
         ) ?>
         <?= $this->Form->label('name', __('名前：')) ?>
         <?= $this->Form->hidden('threadId', ['value' => h($thread->id)]) ?>

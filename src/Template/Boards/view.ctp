@@ -28,7 +28,7 @@
         <h4><?= __('新規スレッド') ?></h4>
         <?= $this->Form->create(null, [
             'type' => 'post',
-            'url' => ['controller' => 'Boards', 'action' => 'post']]
+            'url' => ['controller' => 'Threads', 'action' => 'add']]
         ) ?>
         <?= $this->Form->hidden('boardId', ['value' => h($board->id)]) ?>
         <?= $this->Form->label('threadName', __('スレッド名：')) ?>

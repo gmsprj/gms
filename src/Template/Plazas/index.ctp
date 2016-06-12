@@ -42,7 +42,7 @@
     <p><?= __('広場のスレッドはメンバー/ゲスト共に読み書き可能。') ?></p>
 
 	<?php /* 閲覧中スレッド */ ?>
-	<h4><?= $board->name ?> &gt; <?= $thread->name ?></h4>
+	<h4><?= h($board->name) ?> &gt; <?= h($thread->name) ?></h4>
     <ul style="list-style:none;">
     <?php $i = 1; foreach ($posts as $el) : ?>
         <?= $el->render(['index' => $i++]) ?>
@@ -52,11 +52,11 @@
 	<?php /* TODO: Threads/thread.ctp と重複 */ ?>
 	<?= $this->Form->create(null, [
 		'type' => 'post',
-		'url' => ['controller' => 'Plazas', 'action' => 'post']]
+		'url' => ['controller' => 'Posts', 'action' => 'add']]
 	) ?>
 	<?= $this->Form->label('name', __('名前：')) ?>
 	<?= $this->Form->hidden('threadId', ['value' => h($thread->id)]) ?>
-	<?= $this->Form->text('name', ['value' => $postName]) ?>
+	<?= $this->Form->text('name', ['value' => h($postName)]) ?>
 	<?= $this->Form->label('name', __('内容：')) ?>
 	<?= $this->Form->textarea('content', ['value' => __('内容なし')]) ?>
 	<?= $this->Form->submit(__('投稿')) ?>

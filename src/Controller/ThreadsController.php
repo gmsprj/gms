@@ -6,7 +6,7 @@ use App\Model\Table;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
-use Exception;
+use Cake\Network\Exception\NotFoundException;
 use DateTime;
 
 /**
@@ -24,106 +24,139 @@ class ThreadsController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('fwu-default');
-        $this->Auth->allow(['index', 'view', 'post']);
+        $this->Auth->allow(['index', 'view', 'add']);
         $this->loadModel('Boards');
-        $this->loadModel('Threads');
         $this->loadModel('Posts');
     }
 
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-        $this->Auth->allow(['view', 'post']);
-    }
-
+    /**
+     * Index method
+     *
+     * @return \Cake\Network\Response|null
+     */
     public function index()
     {
         $threads = $this->Threads->find('all');
-
-        $this->set('user', $this->Auth->user());
         $this->set('threads', $threads);
     }
 
+    /**
+     * View method
+     *
+     * @param string|null $threadId Threads id.
+     * @return \Cake\Network\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
     public function view($threadId)
     {
-
         $thread = $this->Threads->find()
             ->where(['id' => $threadId])
             ->first();
-
-        $threads = $this->Threads->find('all')
-            ->where(['board_id' => $thread->board_id]);
-
         if (!$thread) {
-            throw new Exception(__('そんなスレッドありません。'));
+            throw new NotFoundException(__('スレッドが見つかりません。'));
         }
-        
+
         $board = $this->Boards->find()
             ->where(['id' => $thread->board_id])
             ->first();
 
+        $threads = $this->Threads->find('all')
+            ->where(['board_id' => $thread->board_id]);
+        
         $posts = $this->Posts->find('all')
             ->where(['thread_id' => $thread->id]);
 
+        // TODO: 板毎にデフォルトの「名無しさん」等が必要になった場合はここを変更
         $authUser = $this->Auth->user();
         $postName = ($authUser ? $authUser['name'] : '名無しさん');
 
         // テンプレートに設定
-        $this->set('board', $board);
         $this->set('thread', $thread);
+        $this->set('board', $board);
         $this->set('threads', $threads);
         $this->set('posts', $posts);
         $this->set('postName', $postName);
     }
 
-    /* TODO: PlazasController.php: post() と重複 */
-    public function post()
+    /**
+     * Add method
+     *
+     * 新規スレッドの作成。
+     */
+    public function add()
     {
+        // メソッド名のチェック
         if (!$this->request->is('post')) {
-            return;
+            Log::write('error', 'Invalid method of ' . $this->request->method());
+            return $this->redirect(['controller' => 'Plazas', 'action' => 'index']);
         }
 
+        // パラメーターの取得
+        $threadName = $this->request->data('threadName');
+        $postName = $this->request->data('postName');
+        $postContent = $this->request->data('postContent');
+        $boardId = $this->request->data('boardId');
         $authUser = $this->Auth->user();
-        $name = $this->request->data('name');
-        $content = $this->request->data('content');
-        $threadId = $this->request->data('threadId');
-        $thread = $this->Threads->get($threadId);
         $created = new DateTime(date('Y-m-d H:i:s'));
-        $redirect = ['action' => 'view', $threadId];
+        $redirect = ['controller' => 'Boards', 'action' => 'view', $boardId];
 
-        // 板の親が guilds でかつ、認証ユーザーがサインイン・ユーザーでないなら書き込み不可
-        $board = $this->Boards->get($thread->board_id);
-        if ($board && $board->parent_name == 'guilds') {
-            if (!$authUser) {
-                $this->Flash->error(__('書込みできません。'));
-                $this->redirect($redirect);
-                return;
-            }
+        // 板の親が guilds でかつ、認証ユーザーでないなら書き込み不可
+        $board = $this->Boards->get($boardId);
+        if ($board && $board->parent_name == 'guilds' && !$authUser) {
+            $this->Flash->error(__('書込みできません。'));
+            $this->redirect($redirect);
+            return;
+        }
+        
+        // スレッドの作成
+        $threadsTable = TableRegistry::get('Threads');
+        $newThread = $threadsTable->newEntity([
+            'name' => $threadName,
+            'created' => $created,
+            'modified' => $created,
+            'board_id' => $boardId,
+        ]);
+
+        if ($newThread->errors()) {
+            $this->Flash->error(__('入力が不正です。'));
+            Log::write('error', $newThread->toString());
+            return $this->redirect($redirect);
+        }
+        
+        if ($threadsTable->save($newThread)) {
+            Log::write('debug', $newThread->toString());
+        } else {
+            $this->Flash->error(__('登録に失敗しました。'));
+            Log::write('error', $newThread->toString());
+            return $this->redirect($redirect);
         }
 
         // ポストの作成
         $postsTable = TableRegistry::get('Posts');
         $newPost = $postsTable->newEntity([
-            'name' => $name,
-            'content' => $content,
-            'thread_id' => $threadId,
+            'name' => $postName,
+            'content' => $postContent,
+            'created' => $created,
+            'modified' => $created,
+            'thread_id' => $newThread->id,
         ]);
         
         if ($newPost->errors()) {
             $this->Flash->error(__('入力が不正です。'));
             Log::write('error', $newPost->toString());
-            $this->redirect($redirect);
-            return;
+            $threadsTable->delete($newThread);
+            return $this->redirect($redirect);
         }
-
+        
         if ($postsTable->save($newPost)) {
             Log::write('debug', $newPost->toString());
         } else {
-            $this->Flash->error(__('入力が不正です。'));
+            $this->Flash->error(__('登録に失敗しました。'));
             Log::write('error', $newPost->toString());
+            $threadsTable->delete($newThread);
         }
-        
-        $this->redirect($redirect);
+
+        return $this->redirect($redirect);
     }
 }
 

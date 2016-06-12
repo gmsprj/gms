@@ -82,6 +82,11 @@ class ThreadsController extends AppController
      * Add method
      *
      * 新規スレッドの作成。
+     *
+     * @param string request->data('threadName') 新規スレッド名
+     * @param string request->data('postName') 新規スレッドのポストの投稿者名
+     * @param string request->data('postContent') 新規スレッドのポストの内容
+     * @param string request->data('boardId') 新規スレッドが属する板のID
      */
     public function add()
     {

@@ -8,7 +8,7 @@ use Cake\Log\Log;
 /**
  * Guilds Controller
  *
- * ギルドを管理するアプリケーション
+ * ギルドを管理するアプリケーション。
  *
  * @property \App\Model\Table\GuildsTable $Guilds
  */

@@ -71,7 +71,7 @@ class BoardsController extends AppController
         // 認証ユーザーから投稿者ネームを得る
         // TODO: 板毎にデフォルトの「名無しさん」等が必要になった場合はここを変更
         $authUser = $this->Auth->user();
-        $postName = ($authUser ? $authUser['name'] : '名無しさん');
+        $postName = $authUser ? $authUser['name'] : __('名無しさん');
 
         // テンプレートに設定
         $this->set('board', $board);

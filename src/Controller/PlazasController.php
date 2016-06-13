@@ -38,7 +38,6 @@ class PlazasController extends AppController
         // Plazas の板のリスト
         $boards = $this->Boards->find('all')
             ->where(['parent_name' => 'plazas']);
-
         if ($boards->count() == 0) {
             throw new NotFoundException(__('板がありません。'));
         }
@@ -47,7 +46,6 @@ class PlazasController extends AppController
         $board = $this->Boards->find()
             ->where(['name' => 'ロビー', 'parent_name' => 'plazas'])
             ->first();
-
         if ($board == null) {
             throw new NotFoundException(__('ロビー板を作成してください。'));
         }
@@ -55,7 +53,6 @@ class PlazasController extends AppController
         // 表示板スレッドリスト
         $threads = $this->Threads->find('all')
             ->where(['board_id' => $board->id]);
-
         if ($threads->count() == 0) {
             throw new NotFoundException($board->name . __('板にスレッドがありません。最低１スレッド必要です。'));
         }
@@ -74,8 +71,9 @@ class PlazasController extends AppController
         $guilds = $this->Guilds->find('all');
 
         // 認証ユーザーを取得して投稿者ネームを得る
+        // TODO: 板毎にデフォルトの「名無しさん」等が必要になった場合はここを変更
         $authUser = $this->Auth->user();
-        $postName = ($authUser == null ? '名無しさん' : $authUser['name']);
+        $postName = $authUser ? $authUser['name'] : __('名無しさん');
 
         // テンプレートに設定
         $this->set('board', $board);

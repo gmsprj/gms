@@ -8,6 +8,15 @@ use Cake\Event\Event;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\TableRegistry;
 
+/**
+ * Users Controller
+ *
+ * ユーザーを管理するアプリケーション。
+ *
+ * @see src/Controller/Guilds.php
+ *
+ * @property \App\Model\Table\BoardsTable $Boards
+ */
 class UsersController extends AppController
 {
     public function initialize()
@@ -15,11 +24,6 @@ class UsersController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('fwu-default');
-    }
-
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
         $this->Auth->allow([
             'signup',
             'signin',
@@ -28,6 +32,11 @@ class UsersController extends AppController
         ]);
     }
 
+    /**
+     * サインアップする。
+     *
+     * @see src/Controller/AppController.php
+     */
     public function signup()
     {
         if ($this->request->is('post')) {
@@ -42,6 +51,11 @@ class UsersController extends AppController
         }
     }
 
+    /**
+     * サインインする。
+     *
+     * @see src/Controller/AppController.php
+     */
     public function signin()
     {
         if ($this->request->is('post')) {
@@ -55,12 +69,22 @@ class UsersController extends AppController
         }
     }
 
+    /**
+     * サインアウトする。
+     *
+     * @see src/Controller/AppController.php
+     */
     public function signout()
     {
         $this->Flash->success(__('サインアウトました。'));
         return $this->redirect($this->Auth->logout());
     }
 
+    /**
+     * サインイン時のリダイレクト先の定義。
+     *
+     * @see src/Controller/AppController.php
+     */
     public function signinRedirect()
     {
         $user = $this->Auth->user();
@@ -71,6 +95,11 @@ class UsersController extends AppController
         return $this->redirect(['controller' => 'Guilds', 'action' => 'view', $user['guild_id']]);
     }
 
+    /**
+     * View method
+     *
+     * @param string|null $id Users ID.
+     */
     public function view($id = null)
     {
         if (!$this->request->is('get')) {

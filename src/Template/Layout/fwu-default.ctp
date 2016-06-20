@@ -11,6 +11,7 @@
     <?= $this->Html->css('bootstrap/bootstrap-theme.min.css') ?>
     <?= $this->Html->css('bootstrap/bootstrap.min.css') ?>
     <?= $this->Html->css('fwu/bootstrap.css') ?>
+    <?= $this->Html->css('fwu/style.css') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -41,20 +42,15 @@
                 <li role="separator" class="divider"></li>
                 <li><a href="/entrances"><?= __('トップページ') ?></a></li>
             </ul>
-          <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
+            <!--
+              <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
+              -->
           <ul class="nav navbar-nav navbar-right">
-            <?php if ($user): ?>
-                <li>
-                    <a href="/users/view/<?= h($user['id']) ?>">
-                        <?= __('ようこそ ') ?><?= h($user['name']) ?><?= __(' さん') ?>
-                    </a>
-                </li>
-            <?php endif; ?>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 <?php if ($user): ?>
@@ -83,11 +79,6 @@
 
     <?= $this->Flash->render() ?>
     <div class="container">
-        <div class="row">
-            <div class="col-md-3">aaa</div>
-            <div class="col-md-6">aaa</div>
-            <div class="col-md-3">aaa</div>
-        </div>
         <?= $this->fetch('content') ?>
     </div>
     <footer>

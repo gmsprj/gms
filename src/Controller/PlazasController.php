@@ -26,6 +26,7 @@ class PlazasController extends AppController
         $this->loadModel('Threads');
         $this->loadModel('Posts');
         $this->loadModel('Guilds');
+        $this->loadModel('Plazas');
     }
 
     /**
@@ -76,6 +77,7 @@ class PlazasController extends AppController
         $postName = $authUser ? $authUser['name'] : __('名無しさん');
 
         // テンプレートに設定
+        $this->set('plaza', $this->Plazas->find()->first());
         $this->set('board', $board);
         $this->set('boards', $boards);
         $this->set('thread', $thread);

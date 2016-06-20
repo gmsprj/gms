@@ -47,6 +47,23 @@ CREATE TABLE `sites` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /**
+ * plazas
+ *
+ * plazas テーブルには「広場」の情報が保存される。
+ */
+
+DROP TABLE IF EXISTS `plazas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `plazas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '広場のID',
+  `name` varchar(512) NOT NULL COMMENT '広場の名前',
+  `description` varchar(1024) NOT NULL COMMENT '広場の説明',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='広場の設定リスト';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+/**
  * boards
  *
  * boards テーブルには「板/スレッド/ポスト」の内、板の情報が保存される。

@@ -48,8 +48,17 @@ INSERT INTO sites (
   '労働者のユニオン・サイト'
 );
 
+-- 広場の設定
 
--- Plaza 用の板、スレッド、ポストを作成
+INSERT INTO plazas (
+  name,
+  description
+) VALUES (
+  '広場',
+  'ゆっくりしていってね！'
+);
+
+-- 広場用の板、スレッド、ポストを作成
 
 INSERT INTO boards (
     name,

@@ -76,7 +76,7 @@ CREATE TABLE `plazas` (
  *     (plazas or guilds) <- boards <- threads <- posts
  *
  * parent_name には文字列の "plazas" か "guilds" が保存される。
- * parent_name が "plazas" であれば、parent_id は無意味になる（plazas のテーブル構造は存在しない）。
+ * parent_name が "plazas" であれば、parent_id は plazas.id を、
  * parent_name が "guilds" であれば、parent_id は guilds.id を指す。
  */
 

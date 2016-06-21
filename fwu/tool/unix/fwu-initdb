@@ -22,6 +22,12 @@ mysql -u $DBUSER -p $DBNAME <<EOF
 DELETE FROM sites;
 ALTER TABLE sites AUTO_INCREMENT = 1;
 
+DELETE FROM plazas;
+ALTER TABLE plazas AUTO_INCREMENT = 1;
+
+DELETE FROM guilds;
+ALTER TABLE guilds AUTO_INCREMENT = 1;
+
 DELETE FROM posts;
 ALTER TABLE posts AUTO_INCREMENT = 1;
 
@@ -33,9 +39,6 @@ ALTER TABLE boards AUTO_INCREMENT = 1;
 
 DELETE FROM users;
 ALTER TABLE users AUTO_INCREMENT = 1;
-
-DELETE FROM guilds;
-ALTER TABLE guilds AUTO_INCREMENT = 1;
 
 
 -- サイトの設定
@@ -49,16 +52,29 @@ INSERT INTO sites (
 );
 
 
--- Plaza 用の板、スレッド、ポストを作成
+-- 広場の設定
+
+INSERT INTO plazas (
+  name,
+  description
+) VALUES (
+  '広場',
+  'ゆっくりしていってね！'
+);
+SET @plaza_id = LAST_INSERT_ID();
+
+-- 広場用の板、スレッド、ポストを作成
 
 INSERT INTO boards (
     name,
     description,
-    parent_name
+    parent_name,
+    parent_id
 ) VALUES (
     'ロビー',
     '広場のロビー板です。',
-    'plazas'
+    'plazas',
+    @plaza_id
 );
 SET @board_id = LAST_INSERT_ID();
 

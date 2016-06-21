@@ -4,6 +4,7 @@
 #
 DBUSER="$FWU_DBUSER"
 DBNAME="$FWU_DBNAME"
+BASEDIR=$(dirname "$0")
 
 echo db-user:$DBUSER
 echo db-name:$DBNAME
@@ -15,8 +16,8 @@ fi
 
 mysql -u $DBUSER -p $DBNAME <<EOF
 
-`cat ../../database/fwu-builddb.sql`
-`cat ../../database/fwu-initdb.sql`
+`cat $BASEDIR/../../database/fwu-builddb.sql`
+`cat $BASEDIR/../../database/fwu-initdb.sql`
 
 EOF
 

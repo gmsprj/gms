@@ -4,6 +4,8 @@
 #
 DBUSER="$FWU_DBUSER"
 DBNAME="$FWU_DBNAME"
+BASEDIR=$(dirname "$0")
+INITDBSQL=$BASEDIR/../../database/fwu-initdb.sql
 
 echo db-user:$DBUSER
 echo db-name:$DBNAME
@@ -15,5 +17,5 @@ fi
 
 NOW=`date +%Y-%m-%d`
 
-mysql -u $DBUSER -p $DBNAME < ../../database/fwu-initdb.sql
+mysql -u $DBUSER -p $DBNAME < $INITDBSQL
 

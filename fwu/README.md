@@ -1,11 +1,19 @@
 # fwu/
 
-* ./database/ ... データベース関連のファイル。
+* ./database/ ... データベース関連のファイル。tool/ からも参照される。
 * ./tool/ ... 開発ツール（UNIX 系 であれば ./tool/unix, Windows であれば ./tool/windows）。
+
+## tool/php/
+
+PHP用ツール。ファイル名の接頭辞は 'fwu-' 。
+各スクリプトはコマンド・ラインのオプションで設定後、実行される。
+
+    $ # オプションで設定された DB を初期化。
+    $ php fwu-initdb --db-name=your_database --db-user=your_name
 
 ## tool/unix/
 
-ツール。ファイル名の接頭辞は 'fwu-' 。スクリプトの多くは環境変数を使用する。環境変数の接頭辞は 'FWU_' 。
+UNIX用ツール。ファイル名の接頭辞は 'fwu-' 。スクリプトの多くは環境変数を使用する。環境変数の接頭辞は 'FWU_' 。
 
 環境変数:
 

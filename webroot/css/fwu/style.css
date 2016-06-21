@@ -3,6 +3,13 @@
 }
 
 .fwu-post {
+    padding: 0.5em;
     margin-left: -40px;
+    margin-bottom: 8px;
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+
+.fwu-post .header {
 }
 

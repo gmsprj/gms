@@ -62,7 +62,9 @@
 
         <ul class="fwu-posts">
         <?php $i = 1; foreach ($posts as $el) : ?>
-            <?= $el->render(['index' => $i++]) ?>
+            <li>
+                <?= $el->render(['index' => $i++]) ?>
+            </li>
         <?php endforeach; ?>
         </ul>
 

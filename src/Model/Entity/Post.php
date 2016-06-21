@@ -52,16 +52,16 @@ class Post extends Entity
     public function render($params = ['index' => 0])
     {
 ?>
-        <li class="fwu-post">
-            <div class="col-md-12" style="border: 1px solid red;">
-                <p class="header">
-                    <span class="index"><?= h($params['index']) ?></span>
-                    <span class="name"><?= h($this->name) ?></span>
-                    <span class="date"><?= h($this->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></span>
-                </p>
+        <div class="fwu-post col-md-12">
+            <div class="header">
+                <span class="index"><?= h($params['index']) ?></span>
+                <span class="name"><?= h($this->name) ?></span>
+                <span class="date"><?= h($this->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></span>
+            </div>
+            <div class="body">
                 <p class="content"><?= nl2br(h($this->content)) ?></p>
             </div>
-        </li>
+        </div>
 <?php
     }
 }

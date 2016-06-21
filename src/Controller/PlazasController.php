@@ -36,9 +36,15 @@ class PlazasController extends AppController
      */
     public function index()
     {
+        // Plaza
+        $plaza = $this->Plazas->find()->first();
+        if (!$plaza) {
+            throw new NotFoundException(__('広場がありません。最低１つ必要です。'));
+        }
+
         // Plazas の板のリスト
         $boards = $this->Boards->find('all')
-            ->where(['parent_name' => 'plazas']);
+            ->where(['parent_name' => 'plazas', 'parent_id' => $plaza->id]);
         if ($boards->count() == 0) {
             throw new NotFoundException(__('板がありません。'));
         }
@@ -47,7 +53,7 @@ class PlazasController extends AppController
         $board = $this->Boards->find()
             ->where(['name' => 'ロビー', 'parent_name' => 'plazas'])
             ->first();
-        if ($board == null) {
+        if (!$board) {
             throw new NotFoundException(__('ロビー板を作成してください。'));
         }
         
@@ -55,7 +61,7 @@ class PlazasController extends AppController
         $threads = $this->Threads->find('all')
             ->where(['board_id' => $board->id]);
         if ($threads->count() == 0) {
-            throw new NotFoundException($board->name . __('板にスレッドがありません。最低１スレッド必要です。'));
+            throw new NotFoundException($board->name . __('板にスレッドがありません。最低１つ必要です。'));
         }
         
         // 表示スレッド
@@ -67,7 +73,6 @@ class PlazasController extends AppController
         $posts = $this->Posts->find('all')
             ->where(['thread_id' => $thread->id]);
 
-
         // ギルドのリスト
         $guilds = $this->Guilds->find('all');
 
@@ -77,7 +82,7 @@ class PlazasController extends AppController
         $postName = $authUser ? $authUser['name'] : __('名無しさん');
 
         // テンプレートに設定
-        $this->set('plaza', $this->Plazas->find()->first());
+        $this->set('plaza', $plaza);
         $this->set('board', $board);
         $this->set('boards', $boards);
         $this->set('thread', $thread);

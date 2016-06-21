@@ -1,0 +1,47 @@
+<?php
+namespace FWU;
+
+require dirname(__FILE__) . '/SqlCommand.php';
+
+use FWU\SqlCommand;
+
+class InitDatabaseCommand extends SqlCommand
+{
+    public function getCommandName()
+    {
+        return basename(__FILE__, ".php");
+    }
+
+    public function getYNPromptMessage()
+    {
+        return <<<EOT
+Database name: $this->dbName
+Database user: $this->dbUser
+
+上記の DB を初期化します。テーブルは再構築されません。
+本当に実行しますか？
+EOT;
+    }
+
+    public function getCommandLine()
+    {
+        $sql = file_get_contents(dirname(__FILE__) . "/../../database/fwu-initdb.sql");
+
+        return <<<EOT
+mysql -u $this->dbUser -p $this->dbName <<EOF
+
+$sql;
+
+EOF
+EOT;
+    }
+
+};
+
+if (php_sapi_name() == "cli") {
+    $cmd = new InitDatabaseCommand();
+    $cmd->run();
+}
+
+?>
+

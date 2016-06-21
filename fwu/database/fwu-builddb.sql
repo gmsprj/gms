@@ -6,7 +6,7 @@
  *
  * シェルを使える環境であれば、このファイルは以下のように使用する。
  *
- *     $ mysql -u your_name -p your_database < fwu.all-table-structures.sql
+ *     $ mysql -u your_name -p your_database < fwu-builddb.sql
  *
  * 以上のコマンドで your_database にテーブルが構築される。
  * この時、同名のテーブルは構築前に破棄される。
@@ -35,14 +35,14 @@
  * sites テーブルには Web サイトの名前や説明が保存される。
  */
 
-DROP TABLE IF EXISTS `sites`;
+DROP TABLE IF EXISTS sites;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sites` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'サイトのID',
-  `name` varchar(512) NOT NULL COMMENT 'サイトの名前',
-  `description` varchar(1024) NOT NULL COMMENT 'サイトの説明',
-  PRIMARY KEY (`id`)
+CREATE TABLE sites (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'サイトのID',
+  name varchar(512) NOT NULL COMMENT 'サイトの名前',
+  description varchar(1024) NOT NULL COMMENT 'サイトの説明',
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='サイトの設定リスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,14 +52,14 @@ CREATE TABLE `sites` (
  * plazas テーブルには「広場」の情報が保存される。
  */
 
-DROP TABLE IF EXISTS `plazas`;
+DROP TABLE IF EXISTS plazas;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `plazas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '広場のID',
-  `name` varchar(512) NOT NULL COMMENT '広場の名前',
-  `description` varchar(1024) NOT NULL COMMENT '広場の説明',
-  PRIMARY KEY (`id`)
+CREATE TABLE plazas (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT '広場のID',
+  name varchar(512) NOT NULL COMMENT '広場の名前',
+  description varchar(1024) NOT NULL COMMENT '広場の説明',
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='広場の設定リスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -80,18 +80,18 @@ CREATE TABLE `plazas` (
  * parent_name が "guilds" であれば、parent_id は guilds.id を指す。
  */
 
-DROP TABLE IF EXISTS `boards`;
+DROP TABLE IF EXISTS boards;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `boards` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '板のID',
-  `name` varchar(128) NOT NULL COMMENT '板の名前',
-  `description` text COMMENT '板の説明',
-  `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の作成日',
-  `modified` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の更新日',
-  `parent_name` varchar(32) NOT NULL DEFAULT 'plazas' COMMENT '板の親の名前（plazas, guilds等）',
-  `parent_id` int(11) NOT NULL DEFAULT 0 COMMENT '板の親のID',
-  PRIMARY KEY (`id`)
+CREATE TABLE boards (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT '板のID',
+  name varchar(128) NOT NULL COMMENT '板の名前',
+  description text COMMENT '板の説明',
+  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の作成日',
+  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の更新日',
+  parent_name varchar(32) NOT NULL DEFAULT 'plazas' COMMENT '板の親の名前（plazas, guilds等）',
+  parent_id int(11) NOT NULL DEFAULT 0 COMMENT '板の親のID',
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -102,18 +102,18 @@ CREATE TABLE `boards` (
  * 依存関係は boards を参照。
  */
 
-DROP TABLE IF EXISTS `threads`;
+DROP TABLE IF EXISTS threads;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `threads` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'スレッドのID',
-  `name` varchar(128) NOT NULL COMMENT 'スレッドの名前',
-  `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'スレッドの作成日',
-  `modified` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'スレッドの更新日',
-  `board_id` int(11) NOT NULL COMMENT '所属する板のID',
-  PRIMARY KEY (`id`),
-  KEY `board_id` (`board_id`),
-  CONSTRAINT `threads_ibfk_1` FOREIGN KEY (`board_id`) REFERENCES `boards` (`id`)
+CREATE TABLE threads (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'スレッドのID',
+  name varchar(128) NOT NULL COMMENT 'スレッドの名前',
+  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'スレッドの作成日',
+  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'スレッドの更新日',
+  board_id int(11) NOT NULL COMMENT '所属する板のID',
+  PRIMARY KEY (id),
+  KEY board_id (board_id),
+  CONSTRAINT threads_ibfk_1 FOREIGN KEY (board_id) REFERENCES boards (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のスレッド';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -124,19 +124,19 @@ CREATE TABLE `threads` (
  * 依存関係は boards を参照。
  */
 
-DROP TABLE IF EXISTS `posts`;
+DROP TABLE IF EXISTS posts;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `posts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ポストのID',
-  `name` varchar(128) NOT NULL COMMENT 'ポストの投稿者名',
-  `content` text NOT NULL COMMENT 'ポストの投稿内容',
-  `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ポストの作成日',
-  `modified` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ポストの更新日',
-  `thread_id` int(11) NOT NULL COMMENT '所属するスレッドのID',
-  PRIMARY KEY (`id`),
-  KEY `thread_id` (`thread_id`),
-  CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`thread_id`) REFERENCES `threads` (`id`)
+CREATE TABLE posts (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ポストのID',
+  name varchar(128) NOT NULL COMMENT 'ポストの投稿者名',
+  content text NOT NULL COMMENT 'ポストの投稿内容',
+  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ポストの作成日',
+  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ポストの更新日',
+  thread_id int(11) NOT NULL COMMENT '所属するスレッドのID',
+  PRIMARY KEY (id),
+  KEY thread_id (thread_id),
+  CONSTRAINT posts_ibfk_1 FOREIGN KEY (thread_id) REFERENCES threads (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='スレッドへのポスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -156,16 +156,16 @@ CREATE TABLE `posts` (
  * boards は boards.parent_name が "guilds" である時、boards.parent_id が guilds.id を参照するので、ギルドの削除時などに boards の走査/削除も必要になる。
  */
 
-DROP TABLE IF EXISTS `guilds`;
+DROP TABLE IF EXISTS guilds;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `guilds` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ギルドのID',
-  `name` varchar(128) NOT NULL COMMENT 'ギルドの名前',
-  `description` text COMMENT '板の説明',
-  `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの作成日',
-  `modified` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの更新日',
-  PRIMARY KEY (`id`)
+CREATE TABLE guilds (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ギルドのID',
+  name varchar(128) NOT NULL COMMENT 'ギルドの名前',
+  description text COMMENT '板の説明',
+  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの作成日',
+  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの更新日',
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ギルドのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -176,20 +176,20 @@ CREATE TABLE `guilds` (
  * 依存関係は guilds を参照。
  */
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS users;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ユーザーのID',
-  `name` varchar(64) NOT NULL COMMENT 'ユーザーの名前',
-  `email` varchar(256) NOT NULL COMMENT 'ユーザーのメールアドレス',
-  `password` varchar(256) NOT NULL COMMENT 'ユーザーのログイン・パスワード',
-  `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ユーザーの作成日',
-  `modified` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ユーザーの更新日',
-  `guild_id` int(11) NOT NULL DEFAULT 1 COMMENT '所属ギルドの外部キー',
-  PRIMARY KEY (`id`),
-  KEY `guild_id` (`guild_id`),
-  CONSTRAINT `guild_ibfk_1` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`)
+CREATE TABLE users (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ユーザーのID',
+  name varchar(64) NOT NULL COMMENT 'ユーザーの名前',
+  email varchar(256) NOT NULL COMMENT 'ユーザーのメールアドレス',
+  password varchar(256) NOT NULL COMMENT 'ユーザーのログイン・パスワード',
+  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ユーザーの作成日',
+  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ユーザーの更新日',
+  guild_id int(11) NOT NULL DEFAULT 1 COMMENT '所属ギルドの外部キー',
+  PRIMARY KEY (id),
+  KEY guild_id (guild_id),
+  CONSTRAINT guild_ibfk_1 FOREIGN KEY (guild_id) REFERENCES guilds (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ユーザーのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

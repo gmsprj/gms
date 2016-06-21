@@ -1,0 +1,55 @@
+<?php
+namespace FWU;
+
+require dirname(__FILE__) . '/SqlCommand.php';
+
+use FWU\SqlCommand;
+
+class BuildDatabaseCommand extends SqlCommand
+{
+    public function getCommandName()
+    {
+        return basename(__FILE__, ".php");
+    }
+
+    public function getYNPromptMessage()
+    {
+        return <<<EOT
+Database name: $this->dbName
+Database user: $this->dbUser
+
+上記の DB のテーブルを再構築して初期化します。
+現在のテーブルは全て破棄されます。
+本当に実行しますか？
+EOT;
+    }
+
+    public function getCommandLine()
+    {
+        $buildFname = dirname(__FILE__) . "/../../database/fwu-builddb.sql";
+        $initFname = dirname(__FILE__) . "/../../database/fwu-initdb.sql";
+
+        $buildSql = file_get_contents($buildFname);
+        $initSql = file_get_contents($initFname);
+//mysql -u $this->dbUser -p $this->dbName < $buildFname
+//mysql -u $this->dbUser -p $this->dbName < $initFname
+
+        return <<<EOT
+mysql -u $this->dbUser -p $this->dbName <<EOF
+
+$buildSql;
+$initSql;
+
+EOF
+EOT;
+    }
+
+};
+
+if (php_sapi_name() == "cli") {
+    $cmd = new BuildDatabaseCommand();
+    $cmd->run();
+}
+
+?>
+

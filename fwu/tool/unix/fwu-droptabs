@@ -16,6 +16,7 @@ fi
 mysql -u $DBUSER -p $DBNAME <<EOF
 
 DROP TABLE sites;
+DROP TABLE plazas;
 
 DROP TABLE posts;
 DROP TABLE threads;

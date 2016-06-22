@@ -4,6 +4,7 @@
 #
 DBUSER="$FWU_DBUSER"
 DBNAME="$FWU_DBNAME"
+BASEDIR=$(dirname "$0")
 
 echo db-user: $DBUSER
 echo db-name: $DBNAME
@@ -13,17 +14,5 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-mysql -u $DBUSER -p $DBNAME <<EOF
-
-DROP TABLE sites;
-DROP TABLE plazas;
-
-DROP TABLE posts;
-DROP TABLE threads;
-DROP TABLE boards;
-
-DROP TABLE users;
-DROP TABLE guilds;
-
-EOF
+mysql -u $DBUSER -p $DBNAME < $BASEDIR/../../database/fwu-droptabs.sql
 

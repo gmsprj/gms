@@ -1,16 +1,8 @@
-<div class="boards index large-9 medium-8 columns content">
+<div>
     <h3><?= __('サインイン') ?></h3>
-    <!-- TODO: debug -->
-    <p>皆には内緒やけどこのデバッグ用のユーザーでサインインできるで。</p>
-    <ul>
-        <li>Email: aaa@aaa.com</li>
-        <li>Password: aaa</li>
-    </ul>
-    <ul>
-        <li>Email: bbb@bbb.com</li>
-        <li>Password: bbb</li>
-    </ul>
-    <div class="users form">
+    <hr/>
+
+    <div>
         <?= $this->Flash->render('auth') ?>
         <?= $this->Form->create() ?>
         <fieldset>
@@ -22,3 +14,4 @@
         <?= $this->Form->end() ?>
     </div>
 </div>
+

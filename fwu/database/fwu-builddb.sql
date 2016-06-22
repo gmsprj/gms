@@ -56,10 +56,11 @@ CREATE TABLE sites (
  *
  *     <- 依存方向
  *
- *     (plazas or guilds) <- boards <- threads <- posts
+ *     (guilds or etc...) <- boards <- threads <- posts
  *
- * parent_name には小文字のオブジェクト名("guilds" 等)が保存される。
+ * parent_name には板の親を表す小文字のオブジェクト名("guilds" 等)が保存される。
  * parent_name が "guilds" であれば、parent_id は guilds.id を指す。
+ * parent_name が "null" なら親は存在せず、parent_id の値も無意味になる。
  */
 
 DROP TABLE IF EXISTS boards;
@@ -71,7 +72,7 @@ CREATE TABLE boards (
   description text COMMENT '板の説明',
   created datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の作成日',
   modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の更新日',
-  parent_name varchar(32) NOT NULL DEFAULT 'plazas' COMMENT '板の親の名前（guilds等）',
+  parent_name varchar(32) NOT NULL DEFAULT 'null' COMMENT '板の親の名前（guilds等）',
   parent_id int(11) NOT NULL DEFAULT 0 COMMENT '板の親のID',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のリスト';

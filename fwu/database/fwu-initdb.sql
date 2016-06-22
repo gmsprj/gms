@@ -118,3 +118,38 @@ INSERT INTO posts (
     @thread_id
 );
 
+
+-- ロビー板
+
+INSERT INTO boards (
+    name,
+    description,
+    parent_name,
+    parent_id
+) VALUES (
+    'ロビー板',
+    'ロビー板です。',
+    'null',
+    0
+);
+SET @board_id = LAST_INSERT_ID();
+
+INSERT INTO threads (
+    name,
+    board_id
+) VALUES (
+    '雑談スレ',
+    @board_id
+);
+SET @thread_id = LAST_INSERT_ID();
+
+INSERT INTO posts (
+    name,
+    content,
+    thread_id
+) VALUES (
+    '名無しさん',
+    '雑談スレです。',
+    @thread_id
+);
+

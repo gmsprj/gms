@@ -8,7 +8,5 @@
        <li><a href="/guilds/view/<?= $el->id ?>"><?= __(h($el->name)) ?></a></li> 
     <?php endforeach; ?>
     </ul>
-
-    <?= $board->name ?>
 </div>
 

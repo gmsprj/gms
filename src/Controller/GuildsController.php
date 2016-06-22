@@ -32,7 +32,6 @@ class GuildsController extends AppController
     public function index()
     {
         $this->set('guilds', $this->Guilds->find('all'));
-        $this->set('board', $this->Boards->find()->where(['parent_name' => 'null'])->first());
     }
 
     /**

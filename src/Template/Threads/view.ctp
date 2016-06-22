@@ -1,32 +1,9 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <?php if ($board->parent_name == 'guilds') : ?>
-            <li class="heading"><a href="/guilds/view/<?= $board->parent_id ?>"><?= __('ギルドに戻る') ?></a></li>
-            <li class="heading"><a href="/boards/view/<?= $board->id ?>"><?= h($board->name) ?><?= __('のトップに戻る') ?></a></li>
-            <li class="heading"><hr/></li>
-            <li class="heading"><?= h($board->name) ?><?= __('ギルドのスレッド一覧') ?></li>
-            <?php foreach ($threads as $el) : ?>
-                <li>
-                    <?= $this->Html->link($el->name, ['controller' => 'Threads', 'action' => 'view', $el->id]) ?>
-                </li>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <li class="heading"><a href="/boards"><?= __('板の一覧に戻る') ?></a></li>
-            <li class="heading"><a href="/boards/view/<?= $board->id ?>"><?= h($board->name) ?><?= __('のトップに戻る') ?></a></li>
-            <li class="heading"><hr/></li>
-            <li class="heading"><?= h($board->name) ?><?= __('板のスレッド一覧') ?></li>
-            <?php foreach ($threads as $el) : ?>
-                <li>
-                    <?= $this->Html->link($el->name, ['controller' => 'Threads', 'action' => 'view', $el->id]) ?>
-                </li>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </ul>
-</nav>
-<div class="boards index large-9 medium-8 columns content">
+<div>
     <h3><?= $board->name ?> &gt; <?= $thread->name ?></h3>
+    <hr/>
 
-    <ul style="list-style:none;">
+    <!-- ポスト -->
+    <ul>
     <?php $i = 1; foreach ($posts as $el) : ?>
         <?= $el->render(['index' => $i++]) ?>
     <?php endforeach; ?>

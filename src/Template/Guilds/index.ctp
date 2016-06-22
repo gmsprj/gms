@@ -10,3 +10,8 @@
     </ul>
 </div>
 
+<div>
+    <input type="text" ng-model="name">
+    <h2>Hello {{name}}!</h2>
+</div>
+

@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= h($site->name) ?> - <?= $this->fetch('title') ?></title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->script('jquery.min.js') ?>
-    <?= $this->Html->script('bootstrap/bootstrap.min.js') ?>
-    <?= $this->Html->css('bootstrap/bootstrap-theme.min.css') ?>
-    <?= $this->Html->css('bootstrap/bootstrap.min.css') ?>
+    <?= $this->Html->script('lib/jquery.min.js') ?>
+    <?= $this->Html->script('lib/bootstrap/bootstrap.min.js') ?>
+
+    <?= $this->Html->script('lib/angular.min.js') ?>
+
+    <?= $this->Html->css('lib/bootstrap/bootstrap-theme.min.css') ?>
+    <?= $this->Html->css('lib/bootstrap/bootstrap.min.css') ?>
+
     <?= $this->Html->css('fwu/bootstrap.css') ?>
     <?= $this->Html->css('fwu/style.css') ?>
 
@@ -19,7 +23,6 @@
     <?= $this->fetch('script') ?>
 </head>
 <body>
-
     <!-- Copy from http://getbootstrap.com/components/ (Navbar) -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">

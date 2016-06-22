@@ -59,7 +59,7 @@ class GuildsController extends AppController
      * Entry method
      *
      * ギルドへの入会を処理する。
-     * 入会に失敗した場合、/plazas/index へリダイレクト。
+     * 入会に失敗した場合、/guilds/index へリダイレクト。
      * 入会に成功した場合、入会先のギルドへリダイレクト。
      *
      * @param string request->data('userId') ユーザーID
@@ -68,12 +68,12 @@ class GuildsController extends AppController
     public function entry()
     {
         // エラー時のリダイレクト先
-        $toPlazas = ['controller' => 'Plazas', 'action' => 'index'];
+        $redirect = ['controller' => 'Guilds', 'action' => 'index'];
 
         // メソッド名をチェック
         if (!$this->request->is('post')) {
             Log::write('error', __('Invalid method of '. $this->request->method()));
-            return $this->redirect($toPlazas);
+            return $this->redirect($redirect);
         }
 
         // パラメーターの取得
@@ -85,7 +85,7 @@ class GuildsController extends AppController
         $user = $usersTable->get($userId);
         if (!$user) {
             Log::write('error', __('Invalid Users ID of ' . $userId));
-            return $this->redirect($toPlazas);
+            return $this->redirect($redirect);
         }
 
         // 入会
@@ -93,7 +93,7 @@ class GuildsController extends AppController
         if (!$usersTable->save($user)) {
             Log::write('error', __('Failed to save Users of ID ' . $user->id));
             Log::write('error', json_encode($user->errors()));
-            return $this->redirect($toPlazas);
+            return $this->redirect($redirect);
         }
 
         // セッションの更新

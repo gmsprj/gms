@@ -39,7 +39,7 @@ class BoardsController extends AppController
     {
         // 板のリスト
         $boards = $this->Boards->find('all')
-            ->where(['parent_name' => 'plazas']);
+            ->where(['parent_name' => 'guilds']);
 
         // テンプレートを設定
         $this->set('boards', $boards);

@@ -1,6 +1,5 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><a href="/plazas"><?= __('広場に出る') ?></a></li>
         <li class="heading"><a href="/guilds"><?= __('ギルド一覧に戻る') ?></a></li>
         <li class="heading"><hr/></li>
 

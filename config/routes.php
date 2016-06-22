@@ -46,7 +46,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     /**
      * Entrances に繋げる。
      */
-    $routes->connect('/', ['controller' => 'Entrances', 'action' => 'index']);
+    $routes->connect('/', ['controller' => 'Guilds', 'action' => 'index']);
 
     /**
      * Connect catchall routes for all controllers.

@@ -1,8 +1,3 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><a href="/plazas"><?= __('広場に出る') ?></a></li>
-    </ul>
-</nav>
 <div class="boards index large-9 medium-8 columns content">
     <h3><?= __('サインイン') ?></h3>
     <!-- TODO: debug -->

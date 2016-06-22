@@ -37,10 +37,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="/plazas"><?= __('広場') ?></a></li>
                 <li><a href="/guilds"><?= __('ギルド一覧') ?></a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="/entrances"><?= __('トップページ') ?></a></li>
             </ul>
             <!--
               <form class="navbar-form navbar-left" role="search">
@@ -79,6 +76,7 @@
 
     <?= $this->Flash->render() ?>
     <div class="container">
+        <!-- コンテンツ -->
         <?= $this->fetch('content') ?>
     </div>
     <footer>

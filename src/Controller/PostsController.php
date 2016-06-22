@@ -56,7 +56,7 @@ class PostsController extends AppController
      *
      * ポストを追加する。
      * 追加に成功したら threads/view/threadId にリダイレクト。
-     * 失敗したら plazas/index にリダイレクト。
+     * 失敗したら guilds/index にリダイレクト。
      *
      * @param string request->data('name') 
      * @param string request->data('content') 
@@ -67,7 +67,7 @@ class PostsController extends AppController
         // メソッド名をチェック
         if (!$this->request->is('post')) {
             Log::write('error', 'Invalid method of ' . $this->request->method());
-            return $this->redirect(['controller' => 'Plazas', 'action' => 'index']);
+            return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
         }
 
         // パラメーターを取得

@@ -3,9 +3,6 @@
 DELETE FROM sites;
 ALTER TABLE sites AUTO_INCREMENT = 1;
 
-DELETE FROM plazas;
-ALTER TABLE plazas AUTO_INCREMENT = 1;
-
 DELETE FROM posts;
 ALTER TABLE posts AUTO_INCREMENT = 1;
 
@@ -29,57 +26,11 @@ INSERT INTO sites (
   description
 ) VALUES (
   'FWU（仮）',
-  '労働者のユニオン・サイト'
+  '労働者のユニオン・サイトです。ギルド（同業者組合）に参加することで議論に参加可能です。'
 );
 
 
--- 広場の設定
-
-INSERT INTO plazas (
-  name,
-  description
-) VALUES (
-  '広場',
-  'ゆっくりしていってね！'
-);
-SET @plaza_id = LAST_INSERT_ID();
-
--- 広場用の板、スレッド、ポストを作成
-
-INSERT INTO boards (
-    name,
-    description,
-    parent_name,
-    parent_id
-) VALUES (
-    'ロビー',
-    '広場のロビー板です。',
-    'plazas',
-    @plaza_id
-);
-SET @board_id = LAST_INSERT_ID();
-
-INSERT INTO threads (
-    name,
-    board_id
-) VALUES (
-    '雑談スレ',
-    @board_id
-);
-SET @thread_id = LAST_INSERT_ID();
-
-INSERT INTO posts (
-    name,
-    content,
-    thread_id
-) VALUES (
-    '名無し',
-    '雑談スレです。',
-    @thread_id
-);
-
-
--- Guilds と板、スレッド、ポストを作成
+-- ギルドと板、スレッド、ポストを作成
 
 -- 入門者ギルド
 
@@ -124,14 +75,14 @@ INSERT INTO posts (
     @thread_id
 );
 
--- Web制作管理ギルド
+-- フリーランス・ギルド
 
 INSERT INTO guilds (
     name,
     description
 ) VALUES (
-    'web制作管理',
-    'web制作管理ギルドです。'
+    'フリーランス',
+    'フリーランス・ギルドです。'
 );
 SET @guild_id = LAST_INSERT_ID();
 
@@ -141,8 +92,8 @@ INSERT INTO boards (
     parent_name,
     parent_id
 ) VALUES (
-    'web制作管理ギルド専用板',
-    'web制作管理ギルドの専用板です。書き込みはギルドメンバーのみが行えます。',
+    'フリーランスギルド専用板',
+    'フリーランスギルドの専用板です。',
     'guilds',
     @guild_id
 );
@@ -152,7 +103,7 @@ INSERT INTO threads (
     name,
     board_id
 ) VALUES (
-    'web制作管理・雑談スレ',
+    'フリーランス・雑談スレ',
     @board_id
 );
 SET @thread_id = LAST_INSERT_ID();

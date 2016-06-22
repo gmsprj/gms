@@ -60,7 +60,7 @@ class AppController extends Controller
                 'action' => 'signinRedirect',
             ],
             'logoutRedirect' => [
-                'controller' => 'Plazas',
+                'controller' => 'Guilds',
                 'action' => 'index',
             ],
             'authError' => __('ログインできませんでした。ログインしてください。'),

@@ -32,6 +32,7 @@ class GuildsController extends AppController
     public function index()
     {
         $this->set('guilds', $this->Guilds->find('all'));
+        $this->set('_serialize', ['guilds']);
     }
 
     /**
@@ -50,9 +51,10 @@ class GuildsController extends AppController
         $threads = $this->Threads->find('all')
             ->where(['board_id' => $board->id]);
 
-        $this->set('guild', $guild);
         $this->set('board', $board);
         $this->set('threads', $threads);
+        $this->set('guild', $guild);
+        $this->set('_serialize', ['guild']);
     }
 
     /**

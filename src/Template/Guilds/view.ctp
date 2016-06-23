@@ -1,3 +1,8 @@
+<div ng-app="guilds">
+    <guilds-view></guilds-view>
+</div>
+<?= $this->Html->script('fwu/guilds.js') ?>
+
 <div>
     <h3><?= h($guild->name) ?></h3>
     <p><?= h($guild->description) ?></p>

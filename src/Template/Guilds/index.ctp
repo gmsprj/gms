@@ -1,6 +1,5 @@
 <div ng-app="guilds">
-    <site></site>
-    <guild-list></guild-list>
+    <guilds></guilds>
 </div>
 <?= $this->Html->script('fwu/guilds.js') ?>
 

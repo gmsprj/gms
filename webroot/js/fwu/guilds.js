@@ -12,15 +12,14 @@ mod.component('guilds', {
     template:
         '<h3>{{$ctrl.site.name}}</h3>' +
         '<p>{{$ctrl.site.description}}</p>' +
-
         '<hr/>' +
-
         '<h3>ギルド一覧</h3>' + 
         '<ul>' +
             '<li ng-repeat="el in $ctrl.guilds">' +
                 '<a href="/guilds/view/{{el.id}}">{{el.name}}</a>' + 
             '</li>' +
         '</ul>',
+
     controller: function GuildListController($http) {
         var self = this;
 
@@ -43,8 +42,8 @@ mod.component('guilds', {
  */
 mod.component('guildsView', {
     template:
-        '<h3>guild.name: {{ $ctrl.guild.name }}</h3>' +
-        '<p>guild.desc: {{ $ctrl.guild.description }}</p>' +
+        '<h3>{{ $ctrl.guild.name }}</h3>' +
+        '<p>{{ $ctrl.guild.description }}</p>' +
         '<hr/>' +
         '<h4>入会受付</h4>' +
         '<p>入会には<a href="/users/signin">サインイン</a>が必要です。</p>' + 
@@ -60,8 +59,8 @@ mod.component('guildsView', {
         var self = this;
 
         $http.get('/guilds/view/1.json').then(function(res) {
-            console.log(res.data);
-            self.guilds = res.data.guilds;
+            //console.log(res.data);
+            self.guild = res.data.guild;
         });
     }
 });

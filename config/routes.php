@@ -44,9 +44,15 @@ Router::defaultRouteClass('DashedRoute');
 
 Router::scope('/', function (RouteBuilder $routes) {
     /**
-     * Entrances に繋げる。
+     * ルートの委譲先
      */
     $routes->connect('/', ['controller' => 'Guilds', 'action' => 'index']);
+
+    /**
+     * JSON
+     * /guilds.json 等で JSON を取得出来るようにする
+     */
+    $routes->extensions(['json']);
 
     /**
      * Connect catchall routes for all controllers.

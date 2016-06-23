@@ -1,13 +1,5 @@
-<div>
-    <h3><?= $board->name ?> &gt; <?= $thread->name ?></h3>
-    <hr/>
-
-    <!-- ポスト -->
-    <ul>
-    <?php $i = 1; foreach ($posts as $el) : ?>
-        <?= $el->render(['index' => $i++]) ?>
-    <?php endforeach; ?>
-    </ul>
+<div ng-app="threads">
+    <threads-view></threads-view>
 
     <!-- 投稿フォーム -->
     <?php if ($board->parent_name != 'guilds' || $user) : ?>
@@ -24,4 +16,5 @@
         <?= $this->Form->end() ?>
     <?php endif; ?>
 </div>
+<?= $this->Html->script('fwu/threads.js') ?>
 

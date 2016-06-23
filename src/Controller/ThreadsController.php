@@ -47,7 +47,7 @@ class ThreadsController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id)
+    public function view($id = null)
     {
         $thread = $this->Threads->find()
             ->where(['id' => $id])
@@ -72,11 +72,11 @@ class ThreadsController extends AppController
         $postName = $authUser ? $authUser['name'] : __('名無しさん');
 
         // テンプレートに設定
-        $this->set('thread', $thread);
         $this->set('board', $board);
-        $this->set('threads', $threads);
+        $this->set('thread', $thread);
         $this->set('posts', $posts);
         $this->set('postName', $postName);
+        $this->set('_serialize', ['board', 'thread', 'posts', 'postName']);
     }
 
     /**

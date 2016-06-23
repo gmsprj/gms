@@ -38,6 +38,7 @@ class ThreadsController extends AppController
     {
         $threads = $this->Threads->find('all');
         $this->set('threads', $threads);
+        $this->set('_serialize', ['threads']);
     }
 
     /**

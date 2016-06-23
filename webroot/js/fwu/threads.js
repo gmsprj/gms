@@ -18,6 +18,30 @@ mod.config(['$locationProvider', '$routeProvider',
 ]);
 
 /**
+ * Threads component
+ *
+ * /threads のコンポーネント
+ */
+mod.component('threads', {
+    template:
+        '<ul>' +
+            '<li ng-repeat="el in $ctrl.threads">' +
+                '<a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a>' + 
+            '</li>' +
+        '</ul>',
+
+    controller: ['$http', '$location',
+        function ThreadsViewController($http, $location) {
+            var self = this;
+
+            $http.get('/threads.json').then(function(res) {
+                //console.log(res.data);
+                self.threads = res.data.threads;
+            });
+        }
+    ]
+});
+/**
  * ThreadsView component
  *
  * /threads/view/id のコンポーネント

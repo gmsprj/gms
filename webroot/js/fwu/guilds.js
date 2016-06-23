@@ -63,7 +63,7 @@ mod.component('guildsView', {
         '<p>{{ $ctrl.guild.description }}</p>' +
         '<hr/>' +
         '<h4>入会受付</h4>' +
-        '<p>入会には<a href="/users/signin">サインイン</a>が必要です。</p>' + 
+        '<p>入会には<a target="_self" href="/users/signin">サインイン</a>が必要です。</p>' + 
         '<hr/>' +
         '<h4>ギルドのスレッド一覧</h4>' +
         '<ul>' +

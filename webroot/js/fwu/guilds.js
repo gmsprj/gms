@@ -1,7 +1,21 @@
 (function() {
 'use strict';
 
-var mod = angular.module('guilds', []);
+var mod = angular.module('guilds', [
+    'ngRoute',
+]);
+
+mod.config(['$locationProvider', '$routeProvider',
+    function config($locationProvider, $routeProvider) {
+      $locationProvider.hashPrefix('!');
+
+      //$locationProvider.html5Mode(true); // $location.search()
+      $locationProvider.html5Mode({
+          enabled: true,
+          requireBase: false
+      });
+    }
+]);
 
 /**
  * Guilds Component
@@ -16,23 +30,26 @@ mod.component('guilds', {
         '<h3>ギルド一覧</h3>' + 
         '<ul>' +
             '<li ng-repeat="el in $ctrl.guilds">' +
-                '<a href="/guilds/view/{{el.id}}">{{el.name}}</a>' + 
+                '<a target="_self" href="/guilds/view/{{el.id}}">{{el.name}}</a>' + 
             '</li>' +
         '</ul>',
 
-    controller: function GuildListController($http) {
-        var self = this;
+    controller: ['$http',
+        function GuildListController($http) {
+            //console.log($routeParams);
+            var self = this;
 
-        $http.get('/guilds.json').then(function(res) {
-            //console.log(res.data);
-            self.guilds = res.data.guilds;
-        });
+            $http.get('/guilds.json').then(function(res) {
+                //console.log(res.data);
+                self.guilds = res.data.guilds;
+            });
 
-        $http.get('/sites/view/1.json').then(function(res) {
-            //console.log(res.data);
-            self.site = res.data.site;
-        });
-    }
+            $http.get('/sites/view/1.json').then(function(res) {
+                //console.log(res.data);
+                self.site = res.data.site;
+            });
+        }
+    ]
 });
 
 /**
@@ -50,19 +67,29 @@ mod.component('guildsView', {
         '<hr/>' +
         '<h4>ギルドのスレッド一覧</h4>' +
         '<ul>' +
-            '<li>' +
-                '<a href="/guilds/view/"></a>' +
+            '<li ng-repeat="el in $ctrl.threads">' +
+                '<a target="_self" href="/threads/view/{{el.id}}">{{el.name}}</a>' + 
             '</li>' +
         '</ul>',
 
-    controller: function GuildViewController($http) {
-        var self = this;
+    controller: ['$http', '$location',
+        function GuildViewController($http, $location) {
+            var self = this;
 
-        $http.get('/guilds/view/1.json').then(function(res) {
-            //console.log(res.data);
-            self.guild = res.data.guild;
-        });
-    }
+            // URL からギルド ID を取得して GET 先のパスを作成
+            var path = $location.$$path;
+            var guildId = path.substr(path.lastIndexOf('/') + 1);
+            var getUrl = '/guilds/view/' + guildId + '.json';
+            //console.log(getUrl);
+
+            $http.get(getUrl).then(function(res) {
+                //console.log(res.data);
+                self.guild = res.data.guild;
+                self.threads = res.data.threads;
+                self.board = res.data.board;
+            });
+        }
+    ]
 });
 
 }());

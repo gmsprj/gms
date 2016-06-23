@@ -54,7 +54,7 @@ class GuildsController extends AppController
         $this->set('board', $board);
         $this->set('threads', $threads);
         $this->set('guild', $guild);
-        $this->set('_serialize', ['guild']);
+        $this->set('_serialize', ['guild', 'board', 'threads']);
     }
 
     /**

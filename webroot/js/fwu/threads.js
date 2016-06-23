@@ -1,12 +1,10 @@
 (function() {
 'use strict';
 
-var mod = angular.module('threads', [
-    'ngRoute',
-]);
+var mod = angular.module('threads', []);
 
-mod.config(['$locationProvider', '$routeProvider',
-    function config($locationProvider, $routeProvider) {
+mod.config(['$locationProvider',
+    function config($locationProvider) {
       $locationProvider.hashPrefix('!');
 
       $locationProvider.html5Mode({
@@ -29,8 +27,8 @@ mod.component('threads', {
             '</li>' +
         '</ul>',
 
-    controller: ['$http', '$location',
-        function ThreadsViewController($http, $location) {
+    controller: ['$http',
+        function ThreadsViewController($http) {
             var self = this;
 
             $http.get('/threads.json').then(function(res) {

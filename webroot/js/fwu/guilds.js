@@ -1,12 +1,10 @@
 (function() {
 'use strict';
 
-var mod = angular.module('guilds', [
-    'ngRoute',
-]);
+var mod = angular.module('guilds', []);
 
-mod.config(['$locationProvider', '$routeProvider',
-    function config($locationProvider, $routeProvider) {
+mod.config(['$locationProvider',
+    function config($locationProvider) {
         $locationProvider.hashPrefix('!');
 
         $locationProvider.html5Mode({

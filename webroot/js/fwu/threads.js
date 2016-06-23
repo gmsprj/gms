@@ -9,7 +9,6 @@ mod.config(['$locationProvider', '$routeProvider',
     function config($locationProvider, $routeProvider) {
       $locationProvider.hashPrefix('!');
 
-      //$locationProvider.html5Mode(true); // $location.search()
       $locationProvider.html5Mode({
           enabled: true,
           requireBase: false
@@ -41,6 +40,7 @@ mod.component('threads', {
         }
     ]
 });
+
 /**
  * ThreadsView component
  *

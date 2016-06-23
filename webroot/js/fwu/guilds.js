@@ -7,13 +7,12 @@ var mod = angular.module('guilds', [
 
 mod.config(['$locationProvider', '$routeProvider',
     function config($locationProvider, $routeProvider) {
-      $locationProvider.hashPrefix('!');
+        $locationProvider.hashPrefix('!');
 
-      //$locationProvider.html5Mode(true); // $location.search()
-      $locationProvider.html5Mode({
-          enabled: true,
-          requireBase: false
-      });
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
     }
 ]);
 
@@ -24,13 +23,13 @@ mod.config(['$locationProvider', '$routeProvider',
  */
 mod.component('guilds', {
     template:
-        '<h3>{{$ctrl.site.name}}</h3>' +
-        '<p>{{$ctrl.site.description}}</p>' +
+        '<h3>{{ $ctrl.site.name }}</h3>' +
+        '<p>{{ $ctrl.site.description }}</p>' +
         '<hr/>' +
         '<h3>ギルド一覧</h3>' + 
         '<ul>' +
             '<li ng-repeat="el in $ctrl.guilds">' +
-                '<a target="_self" href="/guilds/view/{{el.id}}">{{el.name}}</a>' + 
+                '<a target="_self" href="/guilds/view/{{ el.id }}">{{ el.name }}</a>' + 
             '</li>' +
         '</ul>',
 
@@ -68,7 +67,7 @@ mod.component('guildsView', {
         '<h4>ギルドのスレッド一覧</h4>' +
         '<ul>' +
             '<li ng-repeat="el in $ctrl.threads">' +
-                '<a target="_self" href="/threads/view/{{el.id}}">{{el.name}}</a>' + 
+                '<a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a>' + 
             '</li>' +
         '</ul>',
 
@@ -78,8 +77,8 @@ mod.component('guildsView', {
 
             // URL からギルド ID を取得して GET 先のパスを作成
             var path = $location.$$path;
-            var guildId = path.substr(path.lastIndexOf('/') + 1);
-            var getUrl = '/guilds/view/' + guildId + '.json';
+            var id= path.substr(path.lastIndexOf('/') + 1);
+            var getUrl = '/guilds/view/' + id + '.json';
             //console.log(getUrl);
 
             $http.get(getUrl).then(function(res) {

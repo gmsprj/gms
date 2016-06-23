@@ -9,7 +9,8 @@
     <?= $this->Html->script('lib/jquery.min.js') ?>
     <?= $this->Html->script('lib/bootstrap/bootstrap.min.js') ?>
 
-    <?= $this->Html->script('lib/angular.min.js') ?>
+    <?= $this->Html->script('lib/angular/angular.min.js') ?>
+    <?= $this->Html->script('lib/angular/angular-route.js') ?>
 
     <?= $this->Html->css('lib/bootstrap/bootstrap-theme.min.css') ?>
     <?= $this->Html->css('lib/bootstrap/bootstrap.min.css') ?>

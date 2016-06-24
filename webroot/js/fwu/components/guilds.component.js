@@ -24,14 +24,14 @@ mod.component('guilds', {
         '<h3>{{ $ctrl.site.name }}</h3>' +
         '<p>{{ $ctrl.site.description }}</p>' +
         '<hr/>' +
-        '<h3>ギルド一覧</h3>' + 
+        '<h3><a href="/guilds">ギルド一覧</a></h3>' + 
         '<ul>' +
             '<li ng-repeat="el in $ctrl.guilds">' +
                 '<a target="_self" href="/guilds/view/{{ el.id }}">{{ el.name }}</a>' + 
             '</li>' +
         '</ul>' +
         '<hr/>' +
-        '<h3>{{ $ctrl.guestBoard.name }}</h3>' +
+        '<h3><a href="/boards/view/{{ $ctrl.guestBoard.id }}">{{ $ctrl.guestBoard.name }}</a></h3>' +
         '<a href="/threads/view/{{ $ctrl.guestThread.id }}">{{ $ctrl.guestThread.name }}</a>' +
         '',
 

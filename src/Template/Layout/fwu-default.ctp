@@ -18,9 +18,9 @@
 
     <!-- js/fwu -->
     <?= $this->Html->script('fwu/fwu.js') ?>
-    <?= $this->Html->script('fwu/components/threads.components.js') ?>
-    <?= $this->Html->script('fwu/components/boards.components.js') ?>
-    <?= $this->Html->script('fwu/components/guilds.components.js') ?>
+    <?= $this->Html->script('fwu/components/threads.component.js') ?>
+    <?= $this->Html->script('fwu/components/boards.component.js') ?>
+    <?= $this->Html->script('fwu/components/guilds.component.js') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

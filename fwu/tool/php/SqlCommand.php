@@ -22,6 +22,9 @@ abstract class SqlCommand
             "ynPrompt" => true,
         ];
         $this->name = $this->getCommandName();
+
+        // TODO: Remove me
+        die("Sorry!\nこのツールは現在使えません。fwu/database/ にある SQL ファイルを使ってください。\n\n");
     }
 
     public function getCommandName()

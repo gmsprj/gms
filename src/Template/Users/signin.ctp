@@ -1,6 +1,5 @@
 <div>
     <h3><?= __('サインイン') ?></h3>
-    <hr/>
 
     <div>
         <?= $this->Flash->render('auth') ?>

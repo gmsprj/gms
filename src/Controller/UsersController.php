@@ -6,6 +6,7 @@ use App\Model\Table;
 use Cake\Log\Log;
 use Cake\Event\Event;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -93,6 +94,14 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['controller' => 'Guilds', 'action' => 'view', $user['guild_id']]);
+    }
+
+    /**
+     * Index method
+     */
+    public function index()
+    {
+        throw new NotFoundException(__('見つかりません。'));
     }
 
     /**

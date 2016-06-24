@@ -32,7 +32,11 @@ mod.component('guilds', {
         '</ul>' +
         '<hr/>' +
         '<h3><a href="/boards/view/{{ $ctrl.guestBoard.id }}">{{ $ctrl.guestBoard.name }}</a></h3>' +
-        '<a href="/threads/view/{{ $ctrl.guestThread.id }}">{{ $ctrl.guestThread.name }}</a>' +
+        '<ul>' +
+            '<li ng-repeat="el in $ctrl.guestThreads">' +
+                '<a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a>' + 
+            '</li>' +
+        '</ul>' +
         '',
 
     controller: ['$http',
@@ -57,10 +61,10 @@ mod.component('guilds', {
              * boards/?name="ロビー"&parent_name="null"
              * threads/?board_id=xxx
              */
-            $http.get('/threads/view/3.json').then(function(res) {
+            $http.get('/boards/view/3.json').then(function(res) {
                 //console.log(res.data);
-                self.guestThread = res.data.thread;
                 self.guestBoard = res.data.board;
+                self.guestThreads = res.data.threads;
             });
         }
     ]

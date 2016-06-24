@@ -31,7 +31,7 @@ mod.component('guilds', {
             '</li>' +
         '</ul>' +
         '<hr/>' +
-        '<h3>ゲスト</h3>' +
+        '<h3>{{ $ctrl.guestBoard.name }}</h3>' +
         '<a href="/threads/view/{{ $ctrl.guestThread.id }}">{{ $ctrl.guestThread.name }}</a>' +
         '',
 
@@ -60,6 +60,7 @@ mod.component('guilds', {
             $http.get('/threads/view/3.json').then(function(res) {
                 //console.log(res.data);
                 self.guestThread = res.data.thread;
+                self.guestBoard = res.data.board;
             });
         }
     ]

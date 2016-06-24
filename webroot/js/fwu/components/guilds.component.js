@@ -29,7 +29,11 @@ mod.component('guilds', {
             '<li ng-repeat="el in $ctrl.guilds">' +
                 '<a target="_self" href="/guilds/view/{{ el.id }}">{{ el.name }}</a>' + 
             '</li>' +
-        '</ul>',
+        '</ul>' +
+        '<hr/>' +
+        '<h3>ゲスト</h3>' +
+        '<a href="/threads/view/{{ $ctrl.guestThread.id }}">{{ $ctrl.guestThread.name }}</a>' +
+        '',
 
     controller: ['$http',
         function GuildListController($http) {
@@ -41,9 +45,21 @@ mod.component('guilds', {
                 self.guilds = res.data.guilds;
             });
 
+            /* パラメータによる絞り込みが必要 */
             $http.get('/sites/view/1.json').then(function(res) {
                 //console.log(res.data);
                 self.site = res.data.site;
+            });
+
+            /**
+             * TODO: パラメータによる絞り込みが必要
+             *
+             * boards/?name="ロビー"&parent_name="null"
+             * threads/?board_id=xxx
+             */
+            $http.get('/threads/view/3.json').then(function(res) {
+                //console.log(res.data);
+                self.guestThread = res.data.thread;
             });
         }
     ]

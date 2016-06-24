@@ -64,7 +64,8 @@ mod.component('boardsView', {
             '<li ng-repeat="el in $ctrl.threads">' +
                 '<a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a>' + 
             '</li>' +
-        '</ul>',
+        '</ul>' +
+        '<hr/>',
 
     controller: ['$http', '$location',
         function BoardViewController($http, $location) {

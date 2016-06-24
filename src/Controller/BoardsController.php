@@ -37,12 +37,7 @@ class BoardsController extends AppController
      */
     public function index()
     {
-        // 板のリスト
-        $boards = $this->Boards->find('all');
-
-        // テンプレートを設定
-        $this->set('boards', $boards);
-        $this->set('_serialize', ['boards']);
+        throw new NotFoundException(__('見つかりません。'));
     }
 
     /**

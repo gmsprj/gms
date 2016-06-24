@@ -15,7 +15,7 @@ mod.config(['$locationProvider',
 ]);
 
 /**
- * Guilds Component
+ * Boards Component
  *
  * /boards/ のコンポーネント
  */
@@ -32,7 +32,7 @@ mod.component('boards', {
         '</ul>',
 
     controller: ['$http',
-        function GuildListController($http) {
+        function BoardListController($http) {
             //console.log($routeParams);
             var self = this;
 
@@ -50,7 +50,7 @@ mod.component('boards', {
 });
 
 /**
- * GuildsView component
+ * BoardsView component
  *
  * /boards/view/id のコンポーネント
  */
@@ -67,10 +67,10 @@ mod.component('boardsView', {
         '</ul>',
 
     controller: ['$http', '$location',
-        function GuildViewController($http, $location) {
+        function BoardViewController($http, $location) {
             var self = this;
 
-            // URL からギルド ID を取得して GET 先のパスを作成
+            // URL から ID を取得して GET 先のパスを作成
             var path = $location.$$path;
             var id= path.substr(path.lastIndexOf('/') + 1);
             var getUrl = '/boards/view/' + id + '.json';

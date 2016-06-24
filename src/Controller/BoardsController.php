@@ -42,6 +42,7 @@ class BoardsController extends AppController
 
         // テンプレートを設定
         $this->set('boards', $boards);
+        $this->set('_serialize', ['boards']);
     }
 
     /**
@@ -77,6 +78,7 @@ class BoardsController extends AppController
         $this->set('threads', $threads);
         $this->set('postName', $postName);
         $this->set('boards', $boards);
+        $this->set('_serialize', ['boards', 'board', 'threads', 'postName']);
     }
 }
 

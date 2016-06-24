@@ -110,6 +110,9 @@ class UsersController extends AppController
         if (!$user) {
             return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
         }
+
+        $this->set('user', $user);
+        $this->set('_serialize', ['user']);
     }
 }
 

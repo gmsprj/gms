@@ -62,8 +62,6 @@ class BoardsController extends AppController
             throw new NotFoundException(__('板が見つかりません。'));
         }
 
-        $boards = $this->Boards->find();
-
         // スレッドのリスト
         $threads = $this->Threads->find('all')
             ->where(['board_id' => $id]);
@@ -77,8 +75,7 @@ class BoardsController extends AppController
         $this->set('board', $board);
         $this->set('threads', $threads);
         $this->set('postName', $postName);
-        $this->set('boards', $boards);
-        $this->set('_serialize', ['boards', 'board', 'threads', 'postName']);
+        $this->set('_serialize', ['board', 'threads', 'postName']);
     }
 }
 

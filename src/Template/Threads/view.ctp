@@ -16,5 +16,4 @@
         <?= $this->Form->end() ?>
     <?php endif; ?>
 </div>
-<?= $this->Html->script('fwu/threads.js') ?>
 

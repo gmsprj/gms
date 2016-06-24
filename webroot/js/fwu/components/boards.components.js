@@ -1,7 +1,7 @@
 (function() {
 'use strict';
 
-var mod = angular.module('guilds', []);
+var mod = angular.module('boards', []);
 
 mod.config(['$locationProvider',
     function config($locationProvider) {
@@ -17,17 +17,17 @@ mod.config(['$locationProvider',
 /**
  * Guilds Component
  *
- * /guilds/ のコンポーネント
+ * /boards/ のコンポーネント
  */
-mod.component('guilds', {
+mod.component('boards', {
     template:
         '<h3>{{ $ctrl.site.name }}</h3>' +
         '<p>{{ $ctrl.site.description }}</p>' +
         '<hr/>' +
         '<h3>ギルド一覧</h3>' + 
         '<ul>' +
-            '<li ng-repeat="el in $ctrl.guilds">' +
-                '<a target="_self" href="/guilds/view/{{ el.id }}">{{ el.name }}</a>' + 
+            '<li ng-repeat="el in $ctrl.boards">' +
+                '<a target="_self" href="/boards/view/{{ el.id }}">{{ el.name }}</a>' + 
             '</li>' +
         '</ul>',
 
@@ -36,9 +36,9 @@ mod.component('guilds', {
             //console.log($routeParams);
             var self = this;
 
-            $http.get('/guilds.json').then(function(res) {
+            $http.get('/boards.json').then(function(res) {
                 //console.log(res.data);
-                self.guilds = res.data.guilds;
+                self.boards = res.data.boards;
             });
 
             $http.get('/sites/view/1.json').then(function(res) {
@@ -52,17 +52,14 @@ mod.component('guilds', {
 /**
  * GuildsView component
  *
- * /guilds/view/id のコンポーネント
+ * /boards/view/id のコンポーネント
  */
-mod.component('guildsView', {
+mod.component('boardsView', {
     template:
-        '<h3>{{ $ctrl.guild.name }}</h3>' +
-        '<p>{{ $ctrl.guild.description }}</p>' +
+        '<h3>{{ $ctrl.board.name }}</h3>' +
+        '<p>{{ $ctrl.board.description }}</p>' +
         '<hr/>' +
-        '<h4>入会受付</h4>' +
-        '<p>入会には<a target="_self" href="/users/signin">サインイン</a>が必要です。</p>' + 
-        '<hr/>' +
-        '<h4>ギルドのスレッド一覧</h4>' +
+        '<h4>スレッド一覧(<a target="_self" href="/boards/view/{{ $ctrl.board.id }}">{{ $ctrl.board.name }}</a>)</h4>' +
         '<ul>' +
             '<li ng-repeat="el in $ctrl.threads">' +
                 '<a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a>' + 
@@ -76,14 +73,13 @@ mod.component('guildsView', {
             // URL からギルド ID を取得して GET 先のパスを作成
             var path = $location.$$path;
             var id= path.substr(path.lastIndexOf('/') + 1);
-            var getUrl = '/guilds/view/' + id + '.json';
+            var getUrl = '/boards/view/' + id + '.json';
             //console.log(getUrl);
 
             $http.get(getUrl).then(function(res) {
                 //console.log(res.data);
-                self.guild = res.data.guild;
-                self.threads = res.data.threads;
                 self.board = res.data.board;
+                self.threads = res.data.threads;
             });
         }
     ]

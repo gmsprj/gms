@@ -6,15 +6,23 @@
     <title><?= h($site->name) ?> - <?= $this->fetch('title') ?></title>
     <?= $this->Html->meta('icon') ?>
 
+    <!-- js/ライブラリ -->
     <?= $this->Html->script('lib/jquery.min.js') ?>
     <?= $this->Html->script('lib/bootstrap/bootstrap.min.js') ?>
-
     <?= $this->Html->script('lib/angular/angular.min.js') ?>
     <?= $this->Html->script('lib/angular/angular-route.js') ?>
 
+    <!-- js/fwu -->
+    <?= $this->Html->script('fwu/fwu.js') ?>
+    <?= $this->Html->script('fwu/components/threads.components.js') ?>
+    <?= $this->Html->script('fwu/components/boards.components.js') ?>
+    <?= $this->Html->script('fwu/components/guilds.components.js') ?>
+
+    <!-- css/ライブラリ -->
     <?= $this->Html->css('lib/bootstrap/bootstrap-theme.min.css') ?>
     <?= $this->Html->css('lib/bootstrap/bootstrap.min.css') ?>
 
+    <!-- css/fwu -->
     <?= $this->Html->css('fwu/bootstrap.css') ?>
     <?= $this->Html->css('fwu/style.css') ?>
 

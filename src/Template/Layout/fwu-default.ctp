@@ -10,10 +10,6 @@
     <?= $this->Html->css('lib/bootstrap/bootstrap-theme.min.css') ?>
     <?= $this->Html->css('lib/bootstrap/bootstrap.min.css') ?>
 
-    <!-- css/fwu -->
-    <?= $this->Html->css('fwu/bootstrap.css') ?>
-    <?= $this->Html->css('fwu/style.css') ?>
-
     <!-- js/ライブラリ -->
     <?= $this->Html->script('lib/jquery/jquery.min.js') ?>
     <?= $this->Html->script('lib/bootstrap/bootstrap.min.js') ?>

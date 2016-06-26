@@ -2,6 +2,7 @@
 
 * ./database/ ... データベース関連のファイル。tool/ からも参照される。
 * ./tool/ ... 開発ツール（UNIX 系 であれば ./tool/unix, Windows であれば ./tool/windows）。
+* ./doc/ ... 開発用ドキュメント。
 
 ## tool/php/
 

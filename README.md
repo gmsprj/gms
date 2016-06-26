@@ -14,10 +14,17 @@
 
 ## 導入
 
+### 基本
+
 * fwu 最新ブランチをクローン
 * データベースを作成
 * ``` fwu/ ```以下のツールでデータベースを構築・初期化
 * CakePHP3 の開発用サーバーで動作確認
+
+### XAMPP
+
+* https://omikujio.github.io/fwu-support/manual/ 
+
 
 ## 履歴
 

@@ -2,8 +2,8 @@
 #
 # サイト名を設定する
 #
-DBUSER="$FWU_DBUSER"
-DBNAME="$FWU_DBNAME"
+DBUSER="$GM_DBUSER"
+DBNAME="$GM_DBNAME"
 
 echo db-user: $DBUSER
 echo db-name: $DBNAME

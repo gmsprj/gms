@@ -24,7 +24,7 @@ class UsersController extends AppController
     {
         parent::initialize();
         $this->loadComponent('Csrf');
-        $this->viewBuilder()->layout('fwu-default');
+        $this->viewBuilder()->layout('gm-default');
         $this->Auth->allow([
             'signup',
             'signin',

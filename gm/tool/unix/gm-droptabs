@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# DB のテーブルをすべてドロップする
+#
+DBUSER="$GM_DBUSER"
+DBNAME="$GM_DBNAME"
+BASEDIR=$(dirname "$0")
+
+echo db-user: $DBUSER
+echo db-name: $DBNAME
+
+gm-confirm "上記 DB のテーブルをすべて破棄します。本当に実行しますか？"
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+
+mysql -u $DBUSER -p $DBNAME < $BASEDIR/../../db/gm-droptabs.sql
+

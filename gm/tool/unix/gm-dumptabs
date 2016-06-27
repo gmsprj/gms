@@ -2,16 +2,16 @@
 #
 # DBの全てのテーブル定義を出力する。
 #
-DBUSER="$FWU_DBUSER"
-DBNAME="$FWU_DBNAME"
+DBUSER="$GM_DBUSER"
+DBNAME="$GM_DBNAME"
 
 if [ -z $DBUSER ]; then
-	echo "Need database user name."
+	echo "Need db user name."
 	exit 1
 fi
 
 if [ -z $DBNAME ]; then
-	echo "Need database name."
+	echo "Need db name."
 	exit 1
 fi
 

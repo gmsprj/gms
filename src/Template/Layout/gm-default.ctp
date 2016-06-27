@@ -16,12 +16,12 @@
     <?= $this->Html->script('lib/angular/angular.min.js') ?>
     <?= $this->Html->script('lib/angular/angular-route.js') ?>
 
-    <!-- js/fwu -->
-    <?= $this->Html->script('fwu/fwu.js') ?>
-    <?= $this->Html->script('fwu/components/threads.component.js') ?>
-    <?= $this->Html->script('fwu/components/boards.component.js') ?>
-    <?= $this->Html->script('fwu/components/guilds.component.js') ?>
-    <?= $this->Html->script('fwu/components/users.component.js') ?>
+    <!-- js/gm -->
+    <?= $this->Html->script('gm/gm.js') ?>
+    <?= $this->Html->script('gm/components/threads.component.js') ?>
+    <?= $this->Html->script('gm/components/boards.component.js') ?>
+    <?= $this->Html->script('gm/components/guilds.component.js') ?>
+    <?= $this->Html->script('gm/components/users.component.js') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

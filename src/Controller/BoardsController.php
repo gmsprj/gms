@@ -25,7 +25,7 @@ class BoardsController extends AppController
     {
         parent::initialize();
         $this->loadComponent('Csrf');
-        $this->viewBuilder()->layout('fwu-default');
+        $this->viewBuilder()->layout('gm-default');
         $this->Auth->allow(['index', 'view']);
         $this->loadModel('Threads');
     }

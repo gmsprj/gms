@@ -52,7 +52,7 @@ class Post extends Entity
     public function render($params = ['index' => 0])
     {
 ?>
-        <div class="fwu-post col-md-12">
+        <div class="gm-post col-md-12">
             <div class="header">
                 <span class="index"><?= h($params['index']) ?></span>
                 <span class="name"><?= h($this->name) ?></span>

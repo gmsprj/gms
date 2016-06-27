@@ -25,7 +25,7 @@ INSERT INTO sites (
   name,
   description
 ) VALUES (
-  'FWU（仮） 0.0.3',
+  'GM（仮） 0.0.3',
   '労働者のユニオン・サイトです。
 ギルド（同業者組合）に参加することで議論に参加可能です。'
 );

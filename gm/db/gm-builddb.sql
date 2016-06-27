@@ -6,7 +6,7 @@
  *
  * シェルを使える環境であれば、このファイルは以下のように使用する。
  *
- *     $ mysql -u your_name -p your_database < fwu-builddb.sql
+ *     $ mysql -u your_name -p your_database < gm-builddb.sql
  *
  * 以上のコマンドで your_database にテーブルが構築される。
  * この時、同名のテーブルは構築前に破棄される。

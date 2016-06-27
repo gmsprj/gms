@@ -2,8 +2,8 @@
 #
 # DBのテーブル定義を表示する。
 #
-DBUSER="$FWU_DBUSER"
-DBNAME="$FWU_DBNAME"
+DBUSER="$GM_DBUSER"
+DBNAME="$GM_DBNAME"
 TABNAME="$1"
 
 echo db-user: $DBUSER

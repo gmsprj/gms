@@ -18,7 +18,7 @@ class GuildsController extends AppController
     {
         parent::initialize();
         $this->loadComponent('Csrf');
-        $this->viewBuilder()->layout('fwu-default');
+        $this->viewBuilder()->layout('gm-default');
         $this->Auth->allow(['entry']);
         $this->loadModel('Boards');
         $this->loadModel('Threads');

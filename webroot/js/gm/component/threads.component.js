@@ -45,16 +45,7 @@ mod.component('threads', {
  * /threads/view/id のコンポーネント
  */
 mod.component('threadsView', {
-    template:
-        '<h3>{{ $ctrl.board.name }} &gt; {{ $ctrl.thread.name }}</h3>' +
-        '<hr/>' +
-        '<ul>' +
-            '<li ng-repeat="el in $ctrl.posts">' +
-                '<p>{{ el.name }}: {{ el.created }}: {{ el.content }}</p>' + 
-            '</li>' +
-        '</ul>' +
-        '<hr/>',
-
+    templateUrl: '/js/gm/template/threads-view.html',
     controller: ['$http', '$location',
         function ThreadsViewController($http, $location) {
             var self = this;

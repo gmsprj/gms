@@ -10,6 +10,9 @@
     <?= $this->Html->css('lib/bootstrap/bootstrap-theme.min.css') ?>
     <?= $this->Html->css('lib/bootstrap/bootstrap.min.css') ?>
 
+    <!-- css/gm -->
+    <?= $this->Html->css('gm/style.css') ?>
+
     <!-- js/ライブラリ -->
     <?= $this->Html->script('lib/jquery/jquery.min.js') ?>
     <?= $this->Html->script('lib/bootstrap/bootstrap.min.js') ?>
@@ -18,10 +21,10 @@
 
     <!-- js/gm -->
     <?= $this->Html->script('gm/gm.js') ?>
-    <?= $this->Html->script('gm/components/threads.component.js') ?>
-    <?= $this->Html->script('gm/components/boards.component.js') ?>
-    <?= $this->Html->script('gm/components/guilds.component.js') ?>
-    <?= $this->Html->script('gm/components/users.component.js') ?>
+    <?= $this->Html->script('gm/component/threads.component.js') ?>
+    <?= $this->Html->script('gm/component/boards.component.js') ?>
+    <?= $this->Html->script('gm/component/guilds.component.js') ?>
+    <?= $this->Html->script('gm/component/users.component.js') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

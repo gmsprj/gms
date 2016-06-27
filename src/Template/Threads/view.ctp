@@ -1,6 +1,8 @@
 <div ng-app="threads">
     <threads-view></threads-view>
 
+    <?php
+    /*
     <!-- 投稿フォーム -->
     <?php if ($board->parent_name != 'guilds' || $user) : ?>
         <?= $this->Form->create(null, [
@@ -15,5 +17,7 @@
         <?= $this->Form->submit(__('投稿')) ?>
         <?= $this->Form->end() ?>
     <?php endif; ?>
+    */
+    ?>
 </div>
 

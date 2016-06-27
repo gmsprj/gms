@@ -77,7 +77,8 @@ class ThreadsController extends AppController
         $this->set('thread', $thread);
         $this->set('posts', $posts);
         $this->set('postName', $postName);
-        $this->set('_serialize', ['board', 'thread', 'posts', 'postName']);
+        $this->set('csrf', $this->Csrf->request->_csrfToken);
+        $this->set('_serialize', ['board', 'thread', 'posts', 'postName', 'csrf']);
     }
 
     /**

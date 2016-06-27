@@ -57,11 +57,12 @@ mod.component('threadsView', {
             //console.log(getUrl);
 
             $http.get(getUrl).then(function(res) {
-                //console.log(res.data);
+                console.log(res.data);
                 self.postName = res.data.postName;
                 self.board = res.data.board;
                 self.thread = res.data.thread;
                 self.posts = res.data.posts;
+                self.csrf = res.data.csrf;
             });
         }
     ]

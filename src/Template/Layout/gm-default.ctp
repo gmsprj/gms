@@ -6,18 +6,20 @@
     <title><?= h($site->name) ?> - <?= $this->fetch('title') ?></title>
     <?= $this->Html->meta('icon') ?>
 
-    <!-- css/ライブラリ -->
+    <!-- css/lib -->
     <?= $this->Html->css('lib/bootstrap/bootstrap-theme.min.css') ?>
     <?= $this->Html->css('lib/bootstrap/bootstrap.min.css') ?>
 
-    <!-- css/gm -->
+    <!-- css -->
     <?= $this->Html->css('style.css') ?>
 
-    <!-- js/ライブラリ -->
+    <!-- js/lib -->
+    <?= $this->Html->script('lib/jquery/jquery.min.js') ?>
+    <?= $this->Html->script('lib/bootstrap/bootstrap.min.js') ?>
     <?= $this->Html->script('lib/angular/angular.min.js') ?>
-    <?= $this->Html->script('lib/angular/angular-route.js') ?>
+    <?= $this->Html->script('lib/angular/ui-bootstrap.min.js') ?>
 
-    <!-- js/gm -->
+    <!-- js -->
     <?= $this->Html->script('app.js') ?>
     <?= $this->Html->script('component/sites.component.js') ?>
     <?= $this->Html->script('component/guilds.component.js') ?>

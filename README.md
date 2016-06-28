@@ -2,8 +2,6 @@
 
 GMS is Guilds Management System.
 
-----
-
 ## Develop tools
 
 | Category       | Names                                                      |
@@ -12,13 +10,9 @@ GMS is Guilds Management System.
 | Frame Work     | CakePHP3, AngularJS1.5, Bootstrap, jQuery                  |
 | Database       | MySQL (InnoDB)                                             |
 
-----
-
 ## State of project
 
 None.
-
-----
 
 ## Install
 
@@ -28,8 +22,6 @@ None.
 * Create database at your machine
 * Initialize database by ``` gms/ ``` tools
 * Run develop server of CakePHP3
-
-----
 
 ## History
 

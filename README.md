@@ -1,32 +1,26 @@
-# fwu
+# GMS
 
-労働者のユニオン・サイト。
+GMS is Guilds Management System.
 
-## 開発
+## Develope
 
-* 言語: PHP7
-* フレームワーク: CakePHP3, AngularJS1.5
-* 鯖: さくらのVPS
+* Language: PHP7
+* Frame Work: CakePHP3, AngularJS1.5
 
-## 状態
+## State of project
 
-* スレッドでの話し合いと開発を継続中
+None.
 
-## 導入
+## Install
 
-### 基本
+### Basic way
 
-* fwu 最新ブランチをクローン
-* データベースを作成
-* ``` fwu/ ```以下のツールでデータベースを構築・初期化
-* CakePHP3 の開発用サーバーで動作確認
+* Clone latest GMS repository.
+* Create database at your machine.
+* Initialize database by ``` gms/ ``` tools.
+* Run develop server of CakePHP3
 
-### XAMPP
-
-* https://omikujio.github.io/fwu-support/manual/ 
-
-
-## 履歴
+## History
 
 | Branch      | Description                                                   |
 | ----------- | -------------------------------------------------------------:|

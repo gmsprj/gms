@@ -24,10 +24,11 @@ None.
 
 | Branch      | Description                                                   |
 | ----------- | -------------------------------------------------------------:|
+| 0.0.4       | Change project name                                           |
 | 0.0.3       | Install AngularJS 1.5.7                                       | 
 | 0.0.2       | Remove Entrances, and Plazas                                  |
 | 0.0.1       | Refactoring tools. And install bootstrap                      |
-| 0.0         | Base of prototype-3                                           |
+| 0.0.0       | Base of prototype-3                                           |
 | prototype-3 | Base of prototype-2                                           |
 | prototype-2 | Base of prototype                                             |
 | prototype   | Start project                                                 |

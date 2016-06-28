@@ -4,8 +4,11 @@ GMS is Guilds Management System.
 
 ## Develop tools
 
-* Language: PHP7
-* Frame Work: CakePHP3, AngularJS1.5
+| Category       | Names                                                      |
+| -------------- | ----------------------------------------------------------:|
+| Language       | PHP7, JavaScript, SQL, CSS, HTML                           |
+| Frame Work     | CakePHP3, AngularJS1.5, Bootstrap, jQuery                  |
+| Database       | MySQL (InnoDB)                                             |
 
 ## State of project
 
@@ -15,9 +18,9 @@ None.
 
 ### Basic way
 
-* Clone latest GMS repository.
-* Create database at your machine.
-* Initialize database by ``` gms/ ``` tools.
+* Clone latest GMS repository
+* Create database at your machine
+* Initialize database by ``` gms/ ``` tools
 * Run develop server of CakePHP3
 
 ## History

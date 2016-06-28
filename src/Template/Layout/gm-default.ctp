@@ -21,6 +21,7 @@
 
     <!-- js/gm -->
     <?= $this->Html->script('gm/gm.js') ?>
+    <?= $this->Html->script('gm/component/navbar.component.js') ?>
     <?= $this->Html->script('gm/component/threads.component.js') ?>
     <?= $this->Html->script('gm/component/boards.component.js') ?>
     <?= $this->Html->script('gm/component/guilds.component.js') ?>
@@ -75,25 +76,13 @@
       </div>
     </nav>
 
-    <?= $this->Flash->render() ?>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                123
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <ul><li>123</li><li>123</li><li>123</li><li>123</li></ul>
-            </div>
-            <div class="col-sm-8">
-                <?= $this->fetch('content') ?>
-            </div>
-            <div class="col-sm-2">
-                <ul><li>123</li><li>123</li><li>123</li><li>123</li></ul>
-            </div>
-        </div>
+    <div ng-app="gmGuilds">
+        <gm-navbar></gm-navbar>
     </div>
+
+    <?= $this->Flash->render() ?>
+    <!--<?= $this->fetch('content') ?>-->
+
     <footer>
     </footer>
 </body>

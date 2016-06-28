@@ -1,7 +1,7 @@
 (function() {
 'use strict';
 
-var mod = angular.module('guilds', []);
+var mod = angular.module('gmGuilds', []);
 
 mod.config(['$locationProvider',
     function config($locationProvider) {
@@ -19,7 +19,7 @@ mod.config(['$locationProvider',
  *
  * /guilds/ のコンポーネント
  */
-mod.component('guilds', {
+mod.component('gmGuilds', {
     template:
         '<h3>{{ $ctrl.site.name }}</h3>' +
         '<p>{{ $ctrl.site.description }}</p>' +
@@ -75,7 +75,7 @@ mod.component('guilds', {
  *
  * /guilds/view/id のコンポーネント
  */
-mod.component('guildsView', {
+mod.component('gmGuildsView', {
     template:
         '<h3>{{ $ctrl.guild.name }}</h3>' +
         '<p>{{ $ctrl.guild.description }}</p>' +

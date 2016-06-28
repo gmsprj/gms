@@ -30,14 +30,19 @@
     <!-- test -->
     <?= $this->fetch('script') ?>
 </head>
-<body ng-app="gm">
-    <gm-sites-header></gm-sites-header>
-    <hr/>
-    <gm-guilds-header></gm-guilds-header>
-    <hr/>
-    <gm-guilds-list></gm-guilds-list>
-    <hr/>
-    <gm-sites-footer></gm-sites-footer>
+<body>
+    <div ng-app="gm">
+        <gm-sites-header></gm-sites-header>
+        <hr/>
+        <gm-guilds-header></gm-guilds-header>
+        <hr/>
+        <gm-guilds-list></gm-guilds-list>
+        <hr/>
+        <gm-boards-list></gm-guilds-list>
+        <hr/>
+        <gm-sites-footer></gm-sites-footer>
+    </div>
+    <?= $this->Flash->
 </body>
 </html>
 

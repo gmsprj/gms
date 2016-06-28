@@ -9,10 +9,7 @@
 angular.module('gm').
     component('gmBoardsList', {
         template:
-            '<h3>{{ $ctrl.site.name }}</h3>' +
-            '<p>{{ $ctrl.site.description }}</p>' +
-            '<hr/>' +
-            '<h3>ギルド一覧</h3>' + 
+            '<h3>板一覧</h3>' + 
             '<ul>' +
                 '<li ng-repeat="el in $ctrl.boards">' +
                     '<a target="_self" href="/boards/view/{{ el.id }}">{{ el.name }}</a>' + 
@@ -25,13 +22,8 @@ angular.module('gm').
                 var self = this;
 
                 $http.get('/boards.json').then(function(res) {
-                    //console.log(res.data);
+                    console.log(res.data);
                     self.boards = res.data.boards;
-                });
-
-                $http.get('/sites/view/1.json').then(function(res) {
-                    //console.log(res.data);
-                    self.site = res.data.site;
                 });
             }
         ]

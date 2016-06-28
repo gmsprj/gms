@@ -5,7 +5,7 @@ GMS is Guilds Management System.
 ## Develop tools
 
 | Category       | Names                                                      |
-| -------------- | ---------------------------------------------------------- |
+| -------------- |:---------------------------------------------------------- |
 | Language       | PHP7, JavaScript, SQL, CSS, HTML                           |
 | Frame Work     | CakePHP3, AngularJS1.5, Bootstrap, jQuery                  |
 | Database       | MySQL (InnoDB)                                             |
@@ -26,7 +26,7 @@ None.
 ## History
 
 | Branch      | Description                                                   |
-| ----------- | ------------------------------------------------------------- |
+| ----------- |:------------------------------------------------------------- |
 | 0.0.4       | Change project name                                           |
 | 0.0.3       | Install AngularJS 1.5.7                                       | 
 | 0.0.2       | Remove Entrances, and Plazas                                  |

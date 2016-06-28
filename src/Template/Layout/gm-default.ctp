@@ -32,10 +32,8 @@
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <!-- Copy from http://getbootstrap.com/components/ (Navbar) -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
@@ -46,7 +44,6 @@
           <a class="navbar-brand" href="/"><?= $site->name ?></a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="/guilds"><?= __('ギルド一覧') ?></a></li>
@@ -74,14 +71,28 @@
               </ul>
             </li>
           </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
+        </div>
+      </div>
     </nav>
 
     <?= $this->Flash->render() ?>
     <div class="container">
-        <!-- コンテンツ -->
-        <?= $this->fetch('content') ?>
+        <div class="row">
+            <div class="col-sm-12">
+                123
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <ul><li>123</li><li>123</li><li>123</li><li>123</li></ul>
+            </div>
+            <div class="col-sm-8">
+                <?= $this->fetch('content') ?>
+            </div>
+            <div class="col-sm-2">
+                <ul><li>123</li><li>123</li><li>123</li><li>123</li></ul>
+            </div>
+        </div>
     </div>
     <footer>
     </footer>

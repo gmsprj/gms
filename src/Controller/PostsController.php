@@ -36,7 +36,7 @@ class PostsController extends AppController
      */
     public function index()
     {
-        return new NotFoundException(__('見つかりません。'));
+        return new NotFoundException(__('Not found'));
     }
 
     /**
@@ -48,19 +48,15 @@ class PostsController extends AppController
      */
     public function view($id = null)
     {
-        return new NotFoundException(__('見つかりません。'));
+        return new NotFoundException(__('Not found'));
     }
 
     /**
      * Add method
      *
-     * ポストを追加する。
-     * 追加に成功したら threads/view/threadId にリダイレクト。
-     * 失敗したら guilds/index にリダイレクト。
-     *
-     * @param string request->data('name') 
-     * @param string request->data('content') 
-     * @param string request->data('threadId') 
+     * @param string request->data('name') post name
+     * @param string request->data('content') post content
+     * @param string request->data('threadId') id of thread for post
      */
     public function add()
     {
@@ -82,7 +78,7 @@ class PostsController extends AppController
         // 板の親が guilds でかつ、認証ユーザーがサインイン・ユーザーでないなら書き込み不可
         $board = $this->Boards->get($thread->board_id);
         if ($board && $board->parent_name == 'guilds' && !$authUser) {
-            $this->Flash->error(__('書込みできません。'));
+            $this->Flash->error(__('Can\'t write'));
             return $this->redirect($redirect);
         }
 
@@ -95,13 +91,13 @@ class PostsController extends AppController
         ]);
         
         if ($newPost->errors()) {
-            $this->Flash->error(__('入力が不正です。'));
+            $this->Flash->error(__('Invalid input data'));
             Log::write('error', $newPost->toString());
             return $this->redirect($redirect);
         }
 
         if (!$postsTable->save($newPost)) {
-            $this->Flash->error(__('入力が不正です。'));
+            $this->Flash->error(__('Invalid input data'));
             Log::write('error', $newPost->toString());
         }
         

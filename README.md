@@ -9,7 +9,7 @@ GMS is Guilds Management System.
 | Language       | PHP7, JavaScript, SQL, CSS, HTML                           |
 | Frame Work     | CakePHP3, AngularJS1.5                                     |
 | Database       | MySQL (InnoDB)                                             |
-| Namespace      | gm, gm_, GM, GM_                                           |
+| Namespace      | gm, GM, gm_, GM_, gm-, GM-                                 |
 
 ## State of project
 

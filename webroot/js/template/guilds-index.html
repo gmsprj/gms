@@ -1,0 +1,10 @@
+<h3>{{ $ctrl.site.name }}</h3>
+<p>{{ $ctrl.site.description }}</p>
+
+<hr/>
+
+<h3>ギルド一覧</h3>
+<ul ng-repeat="el in $ctrl.guilds">
+    <li><a href="/guilds/view/{{ el.id }}">{{ el.name }}</a></li>
+</ul>
+

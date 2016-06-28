@@ -4,7 +4,7 @@
 var gm = angular.module('gm');
 
 gm.component('sitesHeader', {
-    templateUrl: '/js/gm/template/sites-header.html',
+    templateUrl: '/js/template/sites-header.html',
     controller: ['$http',
         function sitesHeaderController($http) {
             var self = this;
@@ -18,7 +18,7 @@ gm.component('sitesHeader', {
 });
 
 gm.component('sitesFooter', {
-    templateUrl: '/js/gm/template/sites-footer.html',
+    templateUrl: '/js/template/sites-footer.html',
     controller: ['$http',
         function sitesFooterController($http) {
             var self = this;

@@ -11,18 +11,16 @@
     <?= $this->Html->css('lib/bootstrap/bootstrap.min.css') ?>
 
     <!-- css/gm -->
-    <?= $this->Html->css('gm/style.css') ?>
+    <?= $this->Html->css('style.css') ?>
 
     <!-- js/ライブラリ -->
-    <!--<?= $this->Html->script('lib/jquery/jquery.min.js') ?>-->
-    <!--<?= $this->Html->script('lib/bootstrap/bootstrap.min.js') ?>-->
     <?= $this->Html->script('lib/angular/angular.min.js') ?>
     <?= $this->Html->script('lib/angular/angular-route.js') ?>
 
     <!-- js/gm -->
-    <?= $this->Html->script('gm/gm.js') ?>
-    <?= $this->Html->script('gm/component/sites.component.js') ?>
-    <?= $this->Html->script('gm/component/guilds.component.js') ?>
+    <?= $this->Html->script('app.js') ?>
+    <?= $this->Html->script('component/sites.component.js') ?>
+    <?= $this->Html->script('component/guilds.component.js') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

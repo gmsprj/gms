@@ -105,3 +105,4 @@ class GuildsController extends AppController
         return $this->redirect(['action' => 'view', $guildId]);
     }
 }
+

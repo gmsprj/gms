@@ -1,32 +1,31 @@
 (function() {
 'use strict';
 
-angular.module('gm').
-    component('gmSitesHeader', {
-        templateUrl: '/js/gm/template/sites-header.html',
-        controller: ['$http',
-            function gmSitessHeaderController($http) {
-                var self = this;
+var gm = angular.module('gm');
 
-                $http.get('/sites/view/1.json').then(function(res) {
-                    console.log(res);
-                    self.site = res.data.site;
-                });
-            }
-        ]
-    });
+gm.component('sitesHeader', {
+    templateUrl: '/js/gm/template/sites-header.html',
+    controller: ['$http',
+        function sitesHeaderController($http) {
+            var self = this;
 
-angular.module('gm').
-    component('gmSitesFooter', {
-        template:
-            '<h3>Footer</h3>',
+            $http.get('/sites/view/1.json').then(function(res) {
+                //console.log(res);
+                self.site = res.data.site;
+            });
+        }
+    ]
+});
 
-        controller: ['$http',
-            function GmSitesFooterController($http) {
-                var self = this;
-            }
-        ]
-    });
+gm.component('sitesFooter', {
+    templateUrl: '/js/gm/template/sites-footer.html',
+    controller: ['$http',
+        function sitesFooterController($http) {
+            var self = this;
+            console.log(self);
+        }
+    ]
+});
 
 }());
 

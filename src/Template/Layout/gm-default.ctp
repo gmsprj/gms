@@ -23,7 +23,6 @@
     <?= $this->Html->script('gm/gm.js') ?>
     <?= $this->Html->script('gm/component/sites.component.js') ?>
     <?= $this->Html->script('gm/component/guilds.component.js') ?>
-    <?= $this->Html->script('gm/component/boards.component.js') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -31,18 +30,8 @@
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <div ng-app="gm">
-        <gm-sites-header></gm-sites-header>
-        <hr/>
-        <gm-guilds-header></gm-guilds-header>
-        <hr/>
-        <gm-guilds-list></gm-guilds-list>
-        <hr/>
-        <gm-boards-list></gm-guilds-list>
-        <hr/>
-        <gm-sites-footer></gm-sites-footer>
-    </div>
-    <?= $this->Flash->
+    <?= $this->Flash->render() ?>
+    <?= $this->fetch('content') ?>
 </body>
 </html>
 

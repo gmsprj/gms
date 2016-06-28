@@ -2,7 +2,7 @@
 
 GMS is Guilds Management System.
 
-## Develop tools
+## Development tools
 
 | Category       | Names                                                      |
 | -------------- |:---------------------------------------------------------- |
@@ -22,7 +22,7 @@ None.
 * Clone latest GMS repository
 * Create database at your machine
 * Initialize database by ``` gm/ ``` tools
-* Run develop server of CakePHP3
+* Run development server of CakePHP3
 
 ## History
 

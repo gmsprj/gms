@@ -28,7 +28,7 @@ None.
 
 | Branch      | Description                                                   |
 | ----------- |:------------------------------------------------------------- |
-| 0.0.5       | Refactoring with AngularJS                                    |
+| 0.0.5       | Implementation Cells, Texts, Images                           |
 | 0.0.4       | Change project name                                           |
 | 0.0.3       | Install AngularJS 1.5.7                                       | 
 | 0.0.2       | Remove Entrances, and Plazas                                  |

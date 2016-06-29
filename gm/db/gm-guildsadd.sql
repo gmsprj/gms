@@ -7,6 +7,8 @@ INSERT INTO guilds (
 );
 SET @guild_id = LAST_INSERT_ID();
 
+-- boards, threads, posts
+
 INSERT INTO boards (
     name,
     description,
@@ -39,6 +41,8 @@ INSERT INTO posts (
     @thread_id
 );
 
+-- guild-symbol
+
 INSERT INTO images (
     url
 ) VALUES (
@@ -54,5 +58,17 @@ INSERT INTO cells (
     'guild-symbol',
     @guild_id,
     @image_id
+);
+
+-- docs
+
+INSERT INTO docs (
+    name,
+    content,
+    guild_id
+) VALUES (
+    'マニュアル',
+    'これはマニュアルです。',
+    @guild_id
 );
 

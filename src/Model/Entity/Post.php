@@ -30,38 +30,4 @@ class Post extends Entity
         '*' => true,
         'id' => false,
     ];
-
-    /**
-     * モデルを文字列に変換する。
-     *
-     * @return string 変換後の文字列。
-     */
-    public function toString()
-    {
-        return sprintf('id[%d] name[%s] created[%s] modified[%s] content[%s] errors[%s]',
-                $this->id, $this->name, json_encode($this->created), json_encode($this->modified), $this->content, json_encode($this->errors()));
-    }
-
-    /**
-     * モデルを描画する。
-     *
-     * @param array $params 
-     * @param $params index ポストの番号。
-     * @return void
-     */
-    public function render($params = ['index' => 0])
-    {
-?>
-        <div class="gm-post col-md-12">
-            <div class="header">
-                <span class="index"><?= h($params['index']) ?></span>
-                <span class="name"><?= h($this->name) ?></span>
-                <span class="date"><?= h($this->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></span>
-            </div>
-            <div class="body">
-                <p class="content"><?= nl2br(h($this->content)) ?></p>
-            </div>
-        </div>
-<?php
-    }
 }

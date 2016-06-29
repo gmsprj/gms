@@ -4,16 +4,16 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Guild Entity.
+ * Doc Entity.
  *
  * @property int $id
  * @property string $name
- * @property string $description
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
- * @property \App\Model\Entity\User[] $users
+ * @property string $content
+ * @property string $state
+ * @property int $guild_id
+ * @property \App\Model\Entity\Guild $guild
  */
-class Guild extends Entity
+class Doc extends Entity
 {
 
     /**

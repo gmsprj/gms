@@ -1,18 +1,18 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Post;
+use App\Model\Entity\Doc;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Posts Model
+ * Docs Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Threads
+ * @property \Cake\ORM\Association\BelongsTo $Guilds
  */
-class PostsTable extends Table
+class DocsTable extends Table
 {
 
     /**
@@ -25,14 +25,12 @@ class PostsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('posts');
+        $this->table('docs');
         $this->displayField('name');
         $this->primaryKey('id');
 
-        $this->addBehavior('Timestamp');
-
-        $this->belongsTo('Threads', [
-            'foreignKey' => 'thread_id',
+        $this->belongsTo('Guilds', [
+            'foreignKey' => 'guild_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -54,8 +52,11 @@ class PostsTable extends Table
             ->notEmpty('name');
 
         $validator
-            ->requirePresence('content', 'create')
-            ->notEmpty('content');
+            ->allowEmpty('content');
+
+        $validator
+            ->requirePresence('state', 'create')
+            ->notEmpty('state');
 
         return $validator;
     }
@@ -69,7 +70,7 @@ class PostsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['thread_id'], 'Threads'));
+        $rules->add($rules->existsIn(['guild_id'], 'Guilds'));
         return $rules;
     }
 }

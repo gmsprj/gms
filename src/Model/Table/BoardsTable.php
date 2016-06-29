@@ -66,7 +66,8 @@ class BoardsTable extends Table
             ->allowEmpty('description');
 
         $validator
-            ->allowEmpty('parent_name');
+            ->requirePresence('parent_name', 'create')
+            ->notEmpty('parent_name');
 
         return $validator;
     }

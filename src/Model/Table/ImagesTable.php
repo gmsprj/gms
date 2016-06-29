@@ -1,19 +1,17 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Guild;
+use App\Model\Entity\Image;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Guilds Model
+ * Images Model
  *
- * @property \Cake\ORM\Association\HasMany $Docs
- * @property \Cake\ORM\Association\HasMany $Users
  */
-class GuildsTable extends Table
+class ImagesTable extends Table
 {
 
     /**
@@ -26,18 +24,11 @@ class GuildsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('guilds');
-        $this->displayField('name');
+        $this->table('images');
+        $this->displayField('id');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
-
-        $this->hasMany('Docs', [
-            'foreignKey' => 'guild_id'
-        ]);
-        $this->hasMany('Users', [
-            'foreignKey' => 'guild_id'
-        ]);
     }
 
     /**
@@ -53,11 +44,7 @@ class GuildsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('name', 'create')
-            ->notEmpty('name');
-
-        $validator
-            ->allowEmpty('description');
+            ->allowEmpty('url');
 
         return $validator;
     }

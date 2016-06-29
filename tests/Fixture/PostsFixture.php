@@ -28,7 +28,7 @@ class PostsFixture extends TestFixture
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-            'posts_ibfk_1' => ['type' => 'foreign', 'columns' => ['thread_id'], 'references' => ['threads', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'thread_posts_ibfk_1' => ['type' => 'foreign', 'columns' => ['thread_id'], 'references' => ['threads', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -47,8 +47,8 @@ class PostsFixture extends TestFixture
             'id' => 1,
             'name' => 'Lorem ipsum dolor sit amet',
             'content' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-            'created' => '2016-06-09 08:15:52',
-            'modified' => '2016-06-09 08:15:52',
+            'created' => '2016-06-30 03:28:35',
+            'modified' => '2016-06-30 03:28:35',
             'thread_id' => 1
         ],
     ];

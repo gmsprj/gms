@@ -27,7 +27,7 @@ class ThreadsFixture extends TestFixture
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-            'threads_ibfk_1' => ['type' => 'foreign', 'columns' => ['board_id'], 'references' => ['boards', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'board_threads_ibfk_1' => ['type' => 'foreign', 'columns' => ['board_id'], 'references' => ['boards', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -45,8 +45,8 @@ class ThreadsFixture extends TestFixture
         [
             'id' => 1,
             'name' => 'Lorem ipsum dolor sit amet',
-            'created' => '2016-06-09 08:16:01',
-            'modified' => '2016-06-09 08:16:01',
+            'created' => '2016-06-30 03:28:35',
+            'modified' => '2016-06-30 03:28:35',
             'board_id' => 1
         ],
     ];

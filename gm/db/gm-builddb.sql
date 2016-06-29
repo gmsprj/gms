@@ -10,6 +10,7 @@
  *
  * 以上のコマンドで your_database にテーブルが構築される。
  * この時、同名のテーブルは構築前に破棄される。
+ *
  */
 
 -- MySQL dump 10.13  Distrib 5.7.12, for Linux (x86_64)
@@ -49,7 +50,7 @@ CREATE TABLE sites (
 /**
  * boards
  *
- * boards テーブルには「板/スレッド/ポスト」の内、板の情報が保存される。
+ * 「板/スレッド/ポスト」の内、板の情報が保存される。
  * 「板/スレッド/ポスト」の概念については 2ch を参照。
  *
  * 依存関係:
@@ -81,7 +82,7 @@ CREATE TABLE boards (
 /**
  * threads
  *
- * threads テーブルには「板/スレッド/ポスト」の内、スレッドの情報が保存される。
+ * 「板/スレッド/ポスト」の内、スレッドの情報が保存される。
  * 依存関係は boards を参照。
  */
 
@@ -96,14 +97,14 @@ CREATE TABLE threads (
   board_id int(11) NOT NULL COMMENT '所属する板のID',
   PRIMARY KEY (id),
   KEY board_id (board_id),
-  CONSTRAINT threads_ibfk_1 FOREIGN KEY (board_id) REFERENCES boards (id)
+  CONSTRAINT board_threads_ibfk_1 FOREIGN KEY (board_id) REFERENCES boards (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のスレッド';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /**
  * posts
  *
- * posts テーブルには「板/スレッド/ポスト」の内、ポストの情報が保存される。
+ * 「板/スレッド/ポスト」の内、ポストの情報が保存される。
  * 依存関係は boards を参照。
  */
 
@@ -119,14 +120,14 @@ CREATE TABLE posts (
   thread_id int(11) NOT NULL COMMENT '所属するスレッドのID',
   PRIMARY KEY (id),
   KEY thread_id (thread_id),
-  CONSTRAINT posts_ibfk_1 FOREIGN KEY (thread_id) REFERENCES threads (id)
+  CONSTRAINT thread_posts_ibfk_1 FOREIGN KEY (thread_id) REFERENCES threads (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='スレッドへのポスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /**
  * guilds
  *
- * guilds テーブルにはギルドの情報が保存される。
+ * ギルドの情報が保存される。
  *
  * 依存関係:
  *
@@ -155,7 +156,7 @@ CREATE TABLE guilds (
 /**
  * users
  *
- * users テーブルには登録ユーザーの情報が保存される。
+ * 登録ユーザーの情報が保存される。
  * 依存関係は guilds を参照。
  */
 
@@ -172,10 +173,40 @@ CREATE TABLE users (
   guild_id int(11) NOT NULL DEFAULT 1 COMMENT '所属ギルドの外部キー',
   PRIMARY KEY (id),
   KEY guild_id (guild_id),
-  CONSTRAINT guild_ibfk_1 FOREIGN KEY (guild_id) REFERENCES guilds (id)
+  CONSTRAINT guild_users_ibfk_1 FOREIGN KEY (guild_id) REFERENCES guilds (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ユーザーのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/**
+ * docs
+ *
+ * state
+ * - published
+ * - draft
+ * - counter
+ * - closed
+ */
+
+DROP TABLE IF EXISTS docs;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE docs (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ドキュメントのID',
+  name varchar(64) NOT NULL DEFAULT '' COMMENT 'ドキュメントの名前',
+  content text COMMENT 'ドキュメントの内容',
+  state varchar(32) NOT NULL DEFAULT 'closed' COMMENT 'ドキュメントの状態',
+  guild_id int(11) NOT NULL DEFAULT 1 COMMENT '所属ギルドの外部キー',
+  PRIMARY KEY (id),
+  KEY guild_id (guild_id),
+  CONSTRAINT guild_docs_ibfk_1 FOREIGN KEY (guild_id) REFERENCES guilds (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ドキュメントのリスト';
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/**
+ * ここから以下は抽象化されたデータ構造と、それを表現するためのテーブル。
+ */
 
 /**
  * cells
@@ -209,8 +240,9 @@ DROP TABLE IF EXISTS texts;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE texts (
   id int(11) NOT NULL AUTO_INCREMENT COMMENT 'テキストのID',
-  content text DEFAULT '' COMMENT 'テキストの内容',
+  content text COMMENT 'テキストの内容',
   created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'テキストの作成日',
+  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'テキストの更新日',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='テキストのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -247,10 +279,46 @@ CREATE TABLE images (
 /**
  * news
  *
- * news は抽象化された構造。
- * news の表現は cells と texts を使う。
- * texts.content に news のテキスト内容。
+ * 抽象化された構造。表現に cells, texts, ??? を使う。
+ * ニュースと、そのソースになるオブジェクトを cells で繋ぐ。
+ *
+ *      cells
+ *    /       \
+ * texts      ???
+ *
+ * cells.name に 'news' が保存される。
  * cells.left_id に texts.id が保存される。
- * cells.right_id に リンク先の id が保存される。
+ * cells.right_id にリンク先の id が保存される。
+ * texts.content に news のテキスト内容。
+ */
+
+/**
+ * site-symbol
+ *
+ * 抽象化された構造。表現に cells, sites, images を使う。
+ * Web サイトと、そのシンボル画像を cells で繋ぐ。
+ *
+ *      cells
+ *    /       \
+ * sites     images
+ *
+ * cells.name に 'site-symbol' が保存される。
+ * cells.left_id に guilds.id が保存される。
+ * cells.right_id に images.id が保存される。
+ */
+
+/**
+ * guild-symbol
+ *
+ * 抽象化された構造。表現に cells, guilds, images を使う。
+ * ギルドと、そのシンボル画像を cells で繋ぐ。
+ *
+ *      cells
+ *    /       \
+ * guilds   images
+ *
+ * cells.name に 'guild-symbol' が保存される。
+ * cells.left_id に guilds.id が保存される。
+ * cells.right_id に images.id が保存される。
  */
 

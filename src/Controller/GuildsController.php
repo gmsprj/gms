@@ -40,7 +40,8 @@ class GuildsController extends AppController
                 'type' => 'INNER',
                 'conditions' => 't.id = Cells.left_id'
             ])->select([
-                'content' => 't.content'
+                'content' => 't.content',
+                'created' => 't.created'
             ])->where([
                 'Cells.name' => 'news'
             ])->all();

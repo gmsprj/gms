@@ -27,6 +27,8 @@ class TextsTable extends Table
         $this->table('texts');
         $this->displayField('id');
         $this->primaryKey('id');
+
+        $this->addBehavior('Timestamp');
     }
 
     /**

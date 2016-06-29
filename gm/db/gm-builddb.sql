@@ -208,6 +208,7 @@ DROP TABLE IF EXISTS texts;
 CREATE TABLE texts (
   id int(11) NOT NULL AUTO_INCREMENT COMMENT 'テキストのID',
   content text DEFAULT '' COMMENT 'テキストの内容',
+  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'テキストの作成日',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='テキストのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;

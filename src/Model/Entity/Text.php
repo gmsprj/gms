@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $content
+ * @property \Cake\I18n\Time $created
  */
 class Text extends Entity
 {

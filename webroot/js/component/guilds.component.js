@@ -37,8 +37,9 @@ mod.component('guildsView', {
             //console.log(path);
 
             $http.get(path).then(function(res) {
-                //console.log(res);
+                console.log(res.data.guildSymbols);
                 self.guild = res.data.guild;
+                self.guildSymbolUrl = res.data.guildSymbols[0].url;
                 self.board = res.data.board;
                 self.threads = res.data.threads;
             });

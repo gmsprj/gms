@@ -66,11 +66,25 @@ class GuildsController extends AppController
             ->first();
         $threads = $this->Threads->find('all')
             ->where(['board_id' => $board->id]);
+        $guildSymbols = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'images',
+                'alias' => 'A',
+                'type' => 'INNER',
+                'conditions' => 'A.id = Cells.right_id',
+            ])->select([
+                'url' => 'A.url',
+            ])->where([
+                'Cells.name' => 'guild-symbol',
+                'Cells.right_id' => $guild->id,
+            ])->all();
 
+        $this->set('guild', $guild);
+        $this->set('guildSymbols', $guildSymbols);
         $this->set('board', $board);
         $this->set('threads', $threads);
-        $this->set('guild', $guild);
-        $this->set('_serialize', ['guild', 'board', 'threads']);
+        $this->set('_serialize', ['guild', 'guildSymbols', 'board', 'threads']);
     }
 
     /**

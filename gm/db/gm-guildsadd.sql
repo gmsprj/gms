@@ -39,3 +39,20 @@ INSERT INTO posts (
     @thread_id
 );
 
+INSERT INTO images (
+    url
+) VALUES (
+    '/img/guilds/symbol.png'
+);
+SET @image_id = LAST_INSERT_ID();
+
+INSERT INTO cells (
+    name,
+    left_id,
+    right_id
+) VALUES (
+    'guild-symbol',
+    @guild_id,
+    @image_id
+);
+

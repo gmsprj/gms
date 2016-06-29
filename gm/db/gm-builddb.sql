@@ -146,7 +146,6 @@ CREATE TABLE guilds (
   id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ギルドのID',
   name varchar(128) NOT NULL COMMENT 'ギルドの名前',
   description text COMMENT '板の説明',
-  symbol_url varchar(256) DEFAULT '/img/guilds/symbol.png' COMMENT 'ギルドのシンボル画像へのURL',
   created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの作成日',
   modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの更新日',
   PRIMARY KEY (id)
@@ -184,6 +183,7 @@ CREATE TABLE users (
  * cells テーブルは異なる２つのオブジェクトを繋ぐ役割を持つ。
  * セルの名前は name に格納され、この名前は検索等で利用される。
  */
+
 DROP TABLE IF EXISTS cells;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -200,8 +200,10 @@ CREATE TABLE cells (
 /**
  * texts
  *
- * texts テーブル
+ * texts テーブル。
+ * 一般に cells と共に使用される。
  */
+
 DROP TABLE IF EXISTS texts;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -211,6 +213,26 @@ CREATE TABLE texts (
   created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'テキストの作成日',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='テキストのリスト';
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/**
+ * images
+ *
+ * images テーブル。
+ * 一般に cells と共に使用される。
+ */
+
+DROP TABLE IF EXISTS images;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE images (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT '画像のID',
+  url varchar(256) DEFAULT '' COMMENT '画像のURL',
+  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT '画像の作成日',
+  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT '画像の更新日',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='画像のリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

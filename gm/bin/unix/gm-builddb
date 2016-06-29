@@ -9,7 +9,10 @@ BASEDIR=$(dirname "$0")
 echo db-user:$DBUSER
 echo db-name:$DBNAME
 
-gm-confirm "上記の DB のテーブルを再構築して初期化します。現在のテーブルは全て破棄されます。本当に実行しますか？"
+echo ""
+echo "上記の DB のテーブルを再構築して初期化します。"
+echo "現在のテーブルは全て破棄されます。"
+gm-confirm "本当に実行しますか？"
 if [ $? -ne 0 ]; then
     exit 0
 fi

@@ -3,10 +3,6 @@
     padding: 1em;
 }
 
-.gm-navbar {
-    border: 1px solid red;
-}
-
 /**
  * body の background は footer の背景色になる
  */
@@ -30,5 +26,9 @@ body .background {
 
 .footer ul {
     list-style: none;
+}
+
+.site-header * {
+    padding: 0.4em;
 }
 

@@ -50,8 +50,8 @@ INSERT INTO boards (
     parent_name,
     parent_id
 ) VALUES (
-    '入門用ギルド専用板',
-    '入門用ギルドの専用板です。ゲストは書き込みできません（他のギルド員はできます）。',
+    'ギルド専用板',
+    'ギルドの専用板です。',
     'guilds',
     @guild_id
 );
@@ -61,7 +61,7 @@ INSERT INTO threads (
     name,
     board_id
 ) VALUES (
-    'ギルド・雑談スレ',
+    'ロビー',
     @board_id
 );
 SET @thread_id = LAST_INSERT_ID();
@@ -71,19 +71,19 @@ INSERT INTO posts (
     content,
     thread_id
 ) VALUES (
-    'Name Not Found',
-    'ギルドの雑談スレです。',
+    '名無しさん',
+    'ギルドのロビースレッドです。',
     @thread_id
 );
 
--- フリーランス・ギルド
+-- 開発者ギルド
 
 INSERT INTO guilds (
     name,
     description
 ) VALUES (
-    'フリーランス',
-    'フリーランス・ギルドです。'
+    'GMS 開発者ギルド',
+    'GMS の開発者ギルドです。'
 );
 SET @guild_id = LAST_INSERT_ID();
 
@@ -93,8 +93,8 @@ INSERT INTO boards (
     parent_name,
     parent_id
 ) VALUES (
-    'フリーランスギルド専用板',
-    'フリーランスギルドの専用板です。',
+    'ギルド専用板',
+    'ギルドの専用板です。',
     'guilds',
     @guild_id
 );
@@ -104,7 +104,7 @@ INSERT INTO threads (
     name,
     board_id
 ) VALUES (
-    'フリーランス・雑談スレ',
+    'ロビー',
     @board_id
 );
 SET @thread_id = LAST_INSERT_ID();
@@ -114,8 +114,8 @@ INSERT INTO posts (
     content,
     thread_id
 ) VALUES (
-    'Name Not Found',
-    'ギルドの雑談スレです。',
+    '名無しさん',
+    'ロビースレッドです。',
     @thread_id
 );
 
@@ -139,7 +139,7 @@ INSERT INTO threads (
     name,
     board_id
 ) VALUES (
-    '雑談スレ',
+    'ロビー',
     @board_id
 );
 SET @thread_id = LAST_INSERT_ID();
@@ -150,7 +150,7 @@ INSERT INTO posts (
     thread_id
 ) VALUES (
     '名無しさん',
-    '雑談スレです。',
+    'ロビーです。',
     @thread_id
 );
 

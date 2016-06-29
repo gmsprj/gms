@@ -10,7 +10,8 @@ INITDBSQL=$BASEDIR/../../db/gm-initdb.sql
 echo db-user:$DBUSER
 echo db-name:$DBNAME
 
-gm-confirm "上記の DB を初期化します。テーブルは再構築されません。本当に実行しますか？"
+echo "上記の DB を初期化します。テーブルは再構築されません。"
+gm-confirm "本当に実行しますか？"
 if [ $? -ne 0 ]; then
     exit 0
 fi

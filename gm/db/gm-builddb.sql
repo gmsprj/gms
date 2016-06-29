@@ -178,6 +178,25 @@ CREATE TABLE users (
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+/**
+ * cells
+ *
+ * cells テーブルは異なる２つのオブジェクトを繋ぐ役割を持つ。
+ * セルの名前は name に格納され、この名前は検索等で利用される。
+ */
+DROP TABLE IF EXISTS cells;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE cells (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ユーザーのID',
+  name varchar(32) NOT NULL COMMENT 'セルの名前',
+  left_id int(11) NOT NULL DEFAULT 1 COMMENT '左のオブジェクト ID',
+  right_id int(11) NOT NULL DEFAULT 1 COMMENT '右のオブジェクト ID',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='セルのリスト';
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

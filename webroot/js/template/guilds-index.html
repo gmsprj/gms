@@ -1,15 +1,30 @@
 <div class="container">
-    <h3>{{ $ctrl.site.name }}</h3>
-    <p>{{ $ctrl.site.description }}</p>
+    <div class="site-header text-center">
+        <h3>{{ $ctrl.site.name }}</h3>
+        <p>{{ $ctrl.site.description }}</p>
+    </div>
     <hr/>
-    <h3>ギルド一覧</h3>
+
+    <h4>ニュース</h4>
+    <ul>
+        <li>20xx/xx/xx ... 入門用ギルドの提案「ゴミはリサイクル」が文書化されました。</li>
+        <li>20xx/xx/xx ... 入門用ギルドで対案「ゴミは燃やす」が提出されました。</li>
+        <li>20xx/xx/xx ... フリーランスギルドが新設されました。</li>
+        <li>20xx/xx/xx ... 入門用ギルドで提案「ゴミはリサイクル」が提出されました。</li>
+        <li>20xx/xx/xx ... 入門用ギルドが新設されました。</li>
+    </ul>
+    <hr/>
+
+    <h4>ギルド一覧</h4>
     <ul ng-repeat="el in $ctrl.guilds">
         <li><a href="/guilds/view/{{ el.id }}">{{ el.name }}</a></li>
     </ul>
     <hr/>
+
     <a href="/threads">スレッド一覧</a>
     <hr/>
-    <h3>ロビーのスレッド一覧</h3>
+
+    <h4>ロビーのスレッド一覧</h4>
     <ul ng-repeat="el in $ctrl.guestThreads">
         <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
     </ul>

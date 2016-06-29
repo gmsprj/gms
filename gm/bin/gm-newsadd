@@ -1,0 +1,18 @@
+#!/bin/bash
+DBNAME=$GM_DBNAME
+DBUSER=$GM_DBUSER
+BASEDIR=$(dirname "$0")
+SQLPATH="$BASEDIR/../db/gm-newsadd.sql"
+
+CONTENT="$1"
+
+if [ -z $CONTENT ]; then
+    CONTENT="No content"
+fi
+
+mysql -u $DBUSER -p $DBNAME <<EOF
+`cat $SQLPATH | sed "s/{{ content }}/$CONTENT/g"`
+EOF
+
+exit 0
+

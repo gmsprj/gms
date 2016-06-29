@@ -2,7 +2,7 @@
 DBNAME=$GM_DBNAME
 DBUSER=$GM_DBUSER
 BASEDIR=$(dirname "$0")
-SQLPATH="$BASEDIR/../../db/gm-guildsadd.sql"
+SQLPATH="$BASEDIR/../db/gm-guildsadd.sql"
 
 NAME="$1"
 DESC="$2"

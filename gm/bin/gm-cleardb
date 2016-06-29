@@ -2,7 +2,7 @@
 DBNAME=$GM_DBNAME
 DBUSER=$GM_DBUSER
 BASEDIR=$(dirname "$0")
-SQLPATH="$BASEDIR/../../db/gm-cleardb.sql"
+SQLPATH="$BASEDIR/../db/gm-cleardb.sql"
 
 echo db-user: $DBUSER
 echo db-name: $DBNAME

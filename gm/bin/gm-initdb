@@ -23,3 +23,8 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+gm-boardsadd 'ロビー' 'ロビー板'
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+

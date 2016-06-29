@@ -36,19 +36,32 @@ class GuildsController extends AppController
             ->hydrate(false)
             ->join([
                 'table' => 'texts',
-                'alias' => 't',
+                'alias' => 'A',
                 'type' => 'INNER',
-                'conditions' => 't.id = Cells.left_id'
+                'conditions' => 'A.id = Cells.left_id'
             ])->select([
-                'content' => 't.content',
-                'created' => 't.created'
+                'content' => 'A.content',
+                'created' => 'A.created'
             ])->where([
                 'Cells.name' => 'news'
             ])->all();
+        $symbol = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'images',
+                'alias' => 'A',
+                'type' => 'INNER',
+                'conditions' => 'A.id = Cells.right_id'
+            ])->select([
+                'url' => 'A.url',
+            ])->where([
+                'Cells.name' => 'site-symbol'
+            ])->first();
 
         $this->set('guilds', $this->Guilds->find('all'));
         $this->set('news', $news);
-        $this->set('_serialize', ['guilds', 'news']);
+        $this->set('symbol', $symbol);
+        $this->set('_serialize', ['guilds', 'news', 'symbol']);
     }
 
     /**
@@ -77,7 +90,7 @@ class GuildsController extends AppController
                 'url' => 'A.url',
             ])->where([
                 'Cells.name' => 'guild-symbol',
-                'Cells.right_id' => $guild->id,
+                'Cells.left_id' => $guild->id,
             ])->all();
 
         $this->set('guild', $guild);

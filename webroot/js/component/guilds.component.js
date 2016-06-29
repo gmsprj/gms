@@ -18,6 +18,8 @@ mod.component('guildsIndex', {
                 //console.log(res);
                 self.guilds = res.data.guilds;
                 self.news = res.data.news;
+                self.symbol = res.data.symbol;
+                console.log(res.data.symbol);
             });
 
             $http.get('/threads.json').then(function(res) {

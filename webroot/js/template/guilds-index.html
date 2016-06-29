@@ -1,6 +1,8 @@
 <div class="container">
     <div class="site-header text-center">
-        <h3>{{ $ctrl.site.name }}</h3>
+        <h3>
+            <img class="img-thumbnail" alt="{{ $ctrl.site.name }}" src="{{ $ctrl.symbol.url }}" />
+        </h3>
         <p>{{ $ctrl.site.description }}</p>
     </div>
     <hr/>

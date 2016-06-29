@@ -1,34 +1,12 @@
 (function() {
 'use strict';
 
-var mod = angular.module('threads', []);
+var mod = angular.module('gm');
 
-mod.config(['$locationProvider',
-    function config($locationProvider) {
-      $locationProvider.hashPrefix('!');
-
-      $locationProvider.html5Mode({
-          enabled: true,
-          requireBase: false
-      });
-    }
-]);
-
-/**
- * Threads component
- *
- * /threads のコンポーネント
- */
-mod.component('threads', {
-    template:
-        '<ul>' +
-            '<li ng-repeat="el in $ctrl.threads">' +
-                '<a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a>' + 
-            '</li>' +
-        '</ul>',
-
+mod.component('threadsIndex', {
+    templateUrl: '/js/template/threads-index.html',
     controller: ['$http',
-        function ThreadsViewController($http) {
+        function ThreadsIndexController($http) {
             var self = this;
 
             $http.get('/threads.json').then(function(res) {
@@ -39,25 +17,16 @@ mod.component('threads', {
     ]
 });
 
-/**
- * ThreadsView component
- *
- * /threads/view/id のコンポーネント
- */
 mod.component('threadsView', {
     templateUrl: '/js/gm/template/threads-view.html',
     controller: ['$http', '$location',
         function ThreadsViewController($http, $location) {
             var self = this;
+            var path = $location.$$path + '.json';
+            //console.log(path);
 
-            // URL から ID を取得して GET 先のパスを作成
-            var path = $location.$$path;
-            var id = path.substr(path.lastIndexOf('/') + 1);
-            var getUrl = '/threads/view/' + id + '.json';
-            //console.log(getUrl);
-
-            $http.get(getUrl).then(function(res) {
-                console.log(res.data);
+            $http.get(path).then(function(res) {
+                //console.log(res.data);
                 self.postName = res.data.postName;
                 self.board = res.data.board;
                 self.thread = res.data.thread;

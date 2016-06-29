@@ -7,3 +7,22 @@
     border: 1px solid red;
 }
 
+body {
+    background: #fefefe;
+}
+
+.background {
+    background: #fff;
+}
+
+.footer {
+    margin-top: 2em;
+    border-top: 1px #eee solid;
+    background: #fefefe;
+    padding: 4em;
+}
+
+.footer ul {
+    list-style: none;
+}
+

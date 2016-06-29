@@ -22,5 +22,23 @@ mod.component('guildsIndex', {
     ]
 });
 
+mod.component('guildsView', {
+    templateUrl: '/js/template/guilds-view.html',
+    controller: ['$http', '$location',
+        function GuildsViewCtrl($http, $location) {
+            var self = this;
+            var path = $location.$$path + '.json';
+            //console.log(path);
+
+            $http.get(path).then(function(res) {
+                //console.log(res);
+                self.guild = res.data.guild;
+                self.board = res.data.board;
+                self.threads = res.data.threads;
+            });
+        }
+    ]
+})
+
 }());
 

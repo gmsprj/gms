@@ -1,0 +1,7 @@
+<div class="container">
+    <h3>スレッド一覧</h3>
+    <ul ng-repeat="el in $ctrl.threads">
+        <li><a href="threads/view/{{ el.id }}">{{ el.name }}</a></li>
+    </ul>
+</div>
+

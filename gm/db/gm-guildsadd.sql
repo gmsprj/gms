@@ -65,10 +65,12 @@ INSERT INTO cells (
 INSERT INTO docs (
     name,
     content,
+    state,
     guild_id
 ) VALUES (
     'マニュアル',
-    'これはマニュアルです。',
+    'これは{{ name }}のマニュアルです。',
+    'published',
     @guild_id
 );
 

@@ -22,6 +22,7 @@ class GuildsController extends AppController
         $this->Auth->allow(['entry']);
         $this->loadModel('Boards');
         $this->loadModel('Threads');
+        $this->loadModel('Docs');
         $this->loadModel('Cells');
     }
 
@@ -74,6 +75,11 @@ class GuildsController extends AppController
     public function view($id = null)
     {
         $guild = $this->Guilds->get($id);
+        $pubDocs = $this->Docs->find()
+            ->where([
+                'guild_id' => $guild->id,
+                'state' => 'published'
+            ])->all();
         $board = $this->Boards->find()
             ->where(['parent_name' => 'guilds', 'parent_id' => $guild->id])
             ->first();
@@ -97,7 +103,14 @@ class GuildsController extends AppController
         $this->set('guildSymbols', $guildSymbols);
         $this->set('board', $board);
         $this->set('threads', $threads);
-        $this->set('_serialize', ['guild', 'guildSymbols', 'board', 'threads']);
+        $this->set('pubDocs', $pubDocs);
+        $this->set('_serialize', [
+            'guild',
+            'guildSymbols',
+            'board',
+            'threads',
+            'pubDocs',
+        ]);
     }
 
     /**

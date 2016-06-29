@@ -44,6 +44,7 @@ mod.component('guildsView', {
                 self.guildSymbolUrl = res.data.guildSymbols[0].url;
                 self.board = res.data.board;
                 self.threads = res.data.threads;
+                self.pubDocs = res.data.pubDocs;
             });
         }
     ]

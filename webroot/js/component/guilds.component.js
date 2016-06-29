@@ -18,6 +18,11 @@ mod.component('guildsIndex', {
                 //console.log(res);
                 self.guilds = res.data.guilds;
             });
+
+            $http.get('/threads.json').then(function(res) {
+                //console.log(res);
+                self.guestThreads = res.data.threads;
+            });
         }
     ]
 });

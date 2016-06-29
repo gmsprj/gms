@@ -74,11 +74,12 @@ class ThreadsController extends AppController
 
         // テンプレートに設定
         $this->set('board', $board);
+        $this->set('threads', $threads);
         $this->set('thread', $thread);
         $this->set('posts', $posts);
         $this->set('postName', $postName);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
-        $this->set('_serialize', ['board', 'thread', 'posts', 'postName', 'csrf']);
+        $this->set('_serialize', ['board', 'threads', 'thread', 'posts', 'postName', 'csrf']);
     }
 
     /**

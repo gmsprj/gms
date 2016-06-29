@@ -8,5 +8,10 @@
     </ul>
     <hr/>
     <a href="/threads">スレッド一覧</a>
+    <hr/>
+    <h3>ロビーのスレッド一覧</h3>
+    <ul ng-repeat="el in $ctrl.guestThreads">
+        <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
+    </ul>
 </div>
 

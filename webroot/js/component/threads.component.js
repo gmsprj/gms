@@ -18,7 +18,7 @@ mod.component('threadsIndex', {
 });
 
 mod.component('threadsView', {
-    templateUrl: '/js/gm/template/threads-view.html',
+    templateUrl: '/js/template/threads-view.html',
     controller: ['$http', '$location',
         function ThreadsViewController($http, $location) {
             var self = this;
@@ -26,9 +26,10 @@ mod.component('threadsView', {
             //console.log(path);
 
             $http.get(path).then(function(res) {
-                //console.log(res.data);
+                console.log(res.data);
                 self.postName = res.data.postName;
                 self.board = res.data.board;
+                self.threads = res.data.threads;
                 self.thread = res.data.thread;
                 self.posts = res.data.posts;
                 self.csrf = res.data.csrf;

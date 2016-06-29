@@ -7,11 +7,17 @@
     border: 1px solid red;
 }
 
+/**
+ * body の background は footer の背景色になる
+ */
 body {
     background: #fefefe;
 }
 
-.background {
+/**
+ * body の background を上書き。これはコンテンツの背景色になる
+ */
+body .background {
     background: #fff;
 }
 

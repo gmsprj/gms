@@ -1,30 +1,33 @@
 <div class="container">
     <div class="site-header text-center">
-        <h3>
-            <img class="img-thumbnail" alt="{{ $ctrl.site.name }}" src="{{ $ctrl.symbol.url }}" />
-        </h3>
+        <h3>{{ $ctrl.site.name }}</h3>
+        <img alt="{{ $ctrl.site.name }}" src="{{ $ctrl.symbol.url }}" />
         <p>{{ $ctrl.site.description }}</p>
     </div>
     <hr/>
 
-    <h4>ニュース</h4>
-    <ul ng-repeat="el in $ctrl.news">
-        <li>{{ el.created }} ... {{ el.content }}</li>
-    </ul>
-    <hr/>
+    <div class="row">
+        <div class="col-sm-6">
+            <h4>ニュース</h4>
+            <ul ng-repeat="el in $ctrl.news">
+                <li>{{ el.created }} ... {{ el.content }}</li>
+            </ul>
+        </div>
 
-    <h4>ギルド一覧</h4>
-    <ul ng-repeat="el in $ctrl.guilds">
-        <li><a href="/guilds/view/{{ el.id }}">{{ el.name }}</a></li>
-    </ul>
-    <hr/>
-
-    <a href="/threads">スレッド一覧</a>
+        <div class="col-sm-6">
+            <h4>ギルド一覧</h4>
+            <ul ng-repeat="el in $ctrl.guilds">
+                <li><a href="/guilds/view/{{ el.id }}">{{ el.name }}</a></li>
+            </ul>
+        </div>
+    </div>
     <hr/>
 
     <h4>ロビーのスレッド一覧</h4>
     <ul ng-repeat="el in $ctrl.guestThreads">
         <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
     </ul>
+    <hr/>
+
 </div>
 

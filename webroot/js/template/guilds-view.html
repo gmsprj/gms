@@ -1,23 +1,10 @@
 <div class="container">
     <div class="row">
-        <div class="col-sm-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <p>同盟</p>
-                </div>
-                <div class="panel-body">
-                    <p>イラストレーターギルド</p>
-                    <p>デザイナーズギルド</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-10">
+        <div class="col-sm-9">
             <div class="row">
                 <div class="col-sm-8">
                     <h3>{{ $ctrl.guild.name }}</h3>
                     <p>{{ $ctrl.guild.description }}</p>
-                    <p>設立日: {{ $ctrl.guild.created }}</p>
                 </div>
                 <div class="col-sm-4">
                     <img class="img-thumbnail" src="{{ $ctrl.guildSymbolUrl }}" />
@@ -77,8 +64,20 @@
             <h4>入会</h4>
             <p>{{ $ctrl.guild.name }}への入会には<a target="_self" href="/users/signin">サインイン</a>が必要です。</p>
             <hr/>
-            
         </div>
-    </div>
-</div>
+
+        <div class="col-sm-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <p>{{ $ctrl.guild.name }}</p>
+                </div>
+                <div class="panel-body">
+                    <p>設立日: {{ $ctrl.guild.created }}</p>
+                    <p>員数: xxx</p>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- row -->
+</div><!-- container -->
 

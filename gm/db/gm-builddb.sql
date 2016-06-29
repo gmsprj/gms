@@ -221,4 +221,13 @@ CREATE TABLE texts (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-07 15:29:48
+/**
+ * news
+ *
+ * news は抽象化された構造。
+ * news の表現は cells と texts を使う。
+ * texts.content に news のテキスト内容。
+ * cells.left_id に texts.id が保存される。
+ * cells.right_id に リンク先の id が保存される。
+ */
+

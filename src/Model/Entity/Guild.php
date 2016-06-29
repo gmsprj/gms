@@ -8,8 +8,11 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $name
+ * @property string $description
+ * @property string $symbol_url
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
+ * @property \App\Model\Entity\User[] $users
  */
 class Guild extends Entity
 {

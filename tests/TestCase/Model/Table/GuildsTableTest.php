@@ -24,7 +24,8 @@ class GuildsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.guilds'
+        'app.guilds',
+        'app.users'
     ];
 
     /**

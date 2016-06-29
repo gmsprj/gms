@@ -52,6 +52,12 @@ class GuildsTable extends Table
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
+        $validator
+            ->allowEmpty('description');
+
+        $validator
+            ->allowEmpty('symbol_url');
+
         return $validator;
     }
 }

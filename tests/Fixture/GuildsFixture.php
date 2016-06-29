@@ -19,6 +19,8 @@ class GuildsFixture extends TestFixture
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => 'ギルドのID', 'autoIncrement' => true, 'precision' => null],
         'name' => ['type' => 'string', 'length' => 128, 'null' => false, 'default' => null, 'comment' => 'ギルドの名前', 'precision' => null, 'fixed' => null],
+        'description' => ['type' => 'text', 'length' => null, 'null' => true, 'default' => null, 'comment' => '板の説明', 'precision' => null],
+        'symbol_url' => ['type' => 'string', 'length' => 256, 'null' => true, 'default' => '/img/guilds/symbol.png', 'comment' => 'ギルドのシンボル画像へのURL', 'precision' => null, 'fixed' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => 'ギルドの作成日', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => 'ギルドの更新日', 'precision' => null],
         '_constraints' => [
@@ -40,8 +42,10 @@ class GuildsFixture extends TestFixture
         [
             'id' => 1,
             'name' => 'Lorem ipsum dolor sit amet',
-            'created' => '2016-06-09 08:15:39',
-            'modified' => '2016-06-09 08:15:39'
+            'description' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+            'symbol_url' => 'Lorem ipsum dolor sit amet',
+            'created' => '2016-06-29 15:46:13',
+            'modified' => '2016-06-29 15:46:13'
         ],
     ];
 }

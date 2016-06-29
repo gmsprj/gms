@@ -146,6 +146,7 @@ CREATE TABLE guilds (
   id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ギルドのID',
   name varchar(128) NOT NULL COMMENT 'ギルドの名前',
   description text COMMENT '板の説明',
+  symbol_url varchar(256) DEFAULT '/img/guilds/symbol.png' COMMENT 'ギルドのシンボル画像へのURL',
   created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの作成日',
   modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの更新日',
   PRIMARY KEY (id)

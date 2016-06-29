@@ -1,0 +1,21 @@
+#!/bin/bash
+DBNAME=$GM_DBNAME
+DBUSER=$GM_DBUSER
+BASEDIR=$(dirname "$0")
+SQLPATH="$BASEDIR/../../db/gm-cleardb.sql"
+
+echo db-user: $DBUSER
+echo db-name: $DBNAME
+echo ""
+
+echo "上記の DB のテーブルをクリアします。テーブルは破棄されません。"
+echo "データは全て失われます。"
+gm-confirm "本当に宜しいですか？"
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+
+mysql -u $DBUSER -p $DBNAME < $SQLPATH
+
+exit 0
+

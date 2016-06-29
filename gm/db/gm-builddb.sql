@@ -188,12 +188,28 @@ DROP TABLE IF EXISTS cells;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE cells (
-  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ユーザーのID',
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'セルのID',
   name varchar(32) NOT NULL COMMENT 'セルの名前',
   left_id int(11) NOT NULL DEFAULT 1 COMMENT '左のオブジェクト ID',
   right_id int(11) NOT NULL DEFAULT 1 COMMENT '右のオブジェクト ID',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='セルのリスト';
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/**
+ * texts
+ *
+ * texts テーブル
+ */
+DROP TABLE IF EXISTS texts;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE texts (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'テキストのID',
+  content text DEFAULT '' COMMENT 'テキストの内容',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='テキストのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

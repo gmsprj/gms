@@ -2,16 +2,16 @@
 DBNAME=$GM_DBNAME
 DBUSER=$GM_DBUSER
 BASEDIR=$(dirname "$0")
-SQLPATH="$BASEDIR/../../db/gm-guildsadd.sql"
+SQLPATH="$BASEDIR/../../db/gm-sitesadd.sql"
 
 NAME="$1"
 DESC="$2"
 
-if [ -z $NAME ]; then
-    NAME="No name guild"
+if [ -z "$NAME" ]; then
+    NAME="No name"
 fi
 
-if [ -z $DESC ]; then
+if [ -z "$DESC" ]; then
     DESC="No description."
 fi
 

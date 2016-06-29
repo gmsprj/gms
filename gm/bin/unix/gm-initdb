@@ -2,21 +2,24 @@
 #
 # DBのテーブルを初期化する。
 #
-DBUSER="$GM_DBUSER"
-DBNAME="$GM_DBNAME"
-BASEDIR=$(dirname "$0")
-INITDBSQL=$BASEDIR/../../db/gm-initdb.sql
 
-echo db-user:$DBUSER
-echo db-name:$DBNAME
-
-echo "上記の DB を初期化します。テーブルは再構築されません。"
-gm-confirm "本当に実行しますか？"
+gm-cleardb 
 if [ $? -ne 0 ]; then
-    exit 0
+    exit 1
 fi
 
-NOW=`date +%Y-%m-%d`
+gm-sitesadd 'GMS 0.0.4' '労働者のユニオン・サイトです。 ギルド（同業者組合）に参加することで議論に参加可能です。'
+if [ $? -ne 0 ]; then
+    exit 1
+fi
 
-mysql -u $DBUSER -p $DBNAME < $INITDBSQL
+gm-guildsadd '入門者ギルド' '入門者のためのギルドです。'
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+
+gm-guildsadd '開発者ギルド' '開発者のためのギルドです。'
+if [ $? -ne 0 ]; then
+    exit 1
+fi
 

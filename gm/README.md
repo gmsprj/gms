@@ -1,10 +1,10 @@
 # gm/
 
-* ./db/ ... データベース関連のファイル。tool/ からも参照される。
-* ./tool/ ... 開発ツール（UNIX 系 であれば ./tool/unix, Windows であれば ./tool/windows）。
-* ./doc/ ... 開発用ドキュメント。
+* db/ ... Database files. Reference from bin/ too
+* bin/ ... Development binarys
+* doc/ ... Development documents
 
-## tool/unix/
+## bin/unix/
 
 UNIX用ツール。ファイル名の接頭辞は 'gm-' 。スクリプトの多くは環境変数を使用する。環境変数の接頭辞は 'GM_' 。
 

@@ -1,0 +1,34 @@
+#!/bin/bash
+DBNAME=$GM_DBNAME
+DBUSER=$GM_DBUSER
+BASEDIR=$(dirname "$0")
+SQLPATH="$BASEDIR/../../db/gm-guildsadd.sql"
+
+GNAME="$1"
+GDESC="$2"
+
+if [ -z $GNAME ]; then
+    GNAME="No name guild"
+fi
+
+if [ -z $GDESC ]; then
+    GDESC="No description."
+fi
+
+echo db-user: $DBUSER
+echo db-name: $DBNAME
+echo guild-name: $GNAME
+echo guild-description: $GDESC
+echo ""
+
+gm-confirm "以上の内容でギルドを新規作成します。本当に宜しいですか？"
+if [ $? -ne 0 ]; then
+    exit 0
+fi
+
+mysql -u $DBUSER -p $DBNAME <<EOF
+
+`cat $SQLPATH | sed "s/{{ name }}/$GNAME/g" | sed "s/{{ description }}/$GDESC/g"`
+
+EOF
+

@@ -22,6 +22,7 @@ class GuildsController extends AppController
         $this->Auth->allow(['entry']);
         $this->loadModel('Boards');
         $this->loadModel('Threads');
+        $this->loadModel('Cells');
     }
 
     /**
@@ -31,8 +32,22 @@ class GuildsController extends AppController
      */
     public function index()
     {
+        $news = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'texts',
+                'alias' => 't',
+                'type' => 'INNER',
+                'conditions' => 't.id = Cells.left_id'
+            ])->select([
+                'content' => 't.content'
+            ])->where([
+                'Cells.name' => 'news'
+            ])->all();
+
         $this->set('guilds', $this->Guilds->find('all'));
-        $this->set('_serialize', ['guilds']);
+        $this->set('news', $news);
+        $this->set('_serialize', ['guilds', 'news']);
     }
 
     /**

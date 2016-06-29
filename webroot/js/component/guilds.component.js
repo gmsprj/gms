@@ -17,6 +17,7 @@ mod.component('guildsIndex', {
             $http.get('/guilds.json').then(function(res) {
                 //console.log(res);
                 self.guilds = res.data.guilds;
+                self.news = res.data.news;
             });
 
             $http.get('/threads.json').then(function(res) {

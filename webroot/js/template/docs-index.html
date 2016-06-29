@@ -1,0 +1,7 @@
+<div class="container">
+    <h4>ドキュメント一覧</h4>
+    <ul ng-repeat="el in $ctrl.docs">
+        <li><a target="_self" href="/docs/view/{{ el.id }}">{{ el.name }}</a></li>
+    </ul>
+</div>
+

@@ -1,6 +1,26 @@
 <div class="container">
-    <h4>{{ $ctrl.doc.name }}</h4>
-    <p>{{ $ctrl.doc.content }}</p>
-</div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>{{ $ctrl.doc.name }} ({{ $ctrl.guild.name }})</h4>
+            <p>{{ $ctrl.doc.description }}</p>
+        </div>
+    </div>
+    <hr/>
 
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>概要</h4>
+            <ul>
+                <li>出生元スレッド: <a target="_self" href="#">雑談スレ</a></li>
+            </ul>
+        </div>
+    </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <p style="white-space: pre;">{{ $ctrl.doc.content }}</p>
+        </div>
+    </div><!-- row -->
+</div>
 

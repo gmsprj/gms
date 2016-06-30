@@ -28,6 +28,7 @@ mod.component('docsView', {
             $http.get(path).then(function(res) {
                 //console.log(res);
                 self.doc = res.data.doc;
+                self.guild = res.data.guild;
             });
         }
     ]

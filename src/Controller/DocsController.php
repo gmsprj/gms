@@ -10,7 +10,7 @@ use Cake\Log\Log;
  *
  * ドキュメントを管理するアプリケーション。
  *
- * @property \App\Model\Table\GuildsTable $Guilds
+ * @property \App\Model\Table\DocsTable $Docs
  */
 class DocsController extends AppController
 {
@@ -19,6 +19,7 @@ class DocsController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
+        $this->loadModel('Guilds');
     }
 
     /**
@@ -55,12 +56,14 @@ class DocsController extends AppController
     public function view($id = null)
     {
         $doc = $this->Docs->get($id);
-        if (!$doc) {
-            throw new NotFoundException(__('Not found docs of ' + $id));
-        }
+        $guild = $this->Guilds->get($doc->guild_id);
 
         $this->set('doc', $doc);
-        $this->set('_serialize', ['doc']);
+        $this->set('guild', $guild);
+        $this->set('_serialize', [
+            'doc',
+            'guild'
+        ]);
     }
 }
 

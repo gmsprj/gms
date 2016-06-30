@@ -28,8 +28,21 @@ class DocsController extends AppController
      */
     public function index()
     {
-        $this->set('docs', $this->Docs->find()->all());
-        $this->set('_serialize', ['docs']);
+        $customDocs = $this->Docs->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'guilds',
+                'alias' => 'A',
+                'type' => 'INNER',
+                'conditions' => 'A.id = Docs.guild_id'
+            ])->select([
+                'guildId' => 'A.id',
+                'guildName' => 'A.name',
+                'docId' => 'Docs.id',
+                'docName' => 'Docs.name'
+            ])->all();
+        $this->set('customDocs', $customDocs);
+        $this->set('_serialize', ['customDocs']);
     }
 
     /**

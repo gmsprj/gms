@@ -11,7 +11,7 @@ mod.component('docsIndex', {
 
             $http.get('/docs.json').then(function(res) {
                 //console.log(res);
-                self.docs = res.data.docs;
+                self.customDocs = res.data.customDocs;
             });
         }
     ]

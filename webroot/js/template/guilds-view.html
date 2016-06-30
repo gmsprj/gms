@@ -1,17 +1,42 @@
-<div class="container">
+<div class="container" style="border:0px solid red;">
     <div class="row">
-        <div class="col-sm-9">
-            <div class="row">
-                <div class="col-sm-8">
-                    <h3>{{ $ctrl.guild.name }}</h3>
-                    <p>{{ $ctrl.guild.description }}</p>
+        <div class="col-sm-12">
+            <h3>{{ $ctrl.guild.name }}</h3>
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-sm-3">
+            <img class="img-thumbnail" src="{{ $ctrl.guildSymbolUrl }}" />
+        </div>
+        <div class="col-sm-6">
+            <p>{{ $ctrl.guild.description }}</p>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    ギルド情報
                 </div>
-                <div class="col-sm-4">
-                    <img class="img-thumbnail" src="{{ $ctrl.guildSymbolUrl }}" />
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-4">設立日</div>
+                        <div class="col-sm-8">{{ $ctrl.guild.created }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">員数</div>
+                        <div class="col-sm-8">xxx</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">文書総数</div>
+                        <div class="col-sm-8">xxx</div>
+                    </div>
                 </div>
             </div>
-            <hr/>
+        </div>
+    </div>
+    <hr/>
 
+    <div class="row">
+        <div class="col-sm-6">
             <h4>ロビーヘッド</h4>
             <p>雑談スレの新着 5 コメント</p>
             <ul>
@@ -21,62 +46,53 @@
                 <li>201: 名無しさん: そうかな。</li>
                 <li>200: 名無しさん: そうかな。</li>
             </ul>
-            <hr/>
-
-            <h4>文書</h4>
-            <ul ng-repeat="el in $ctrl.pubDocs">
-                <li><a target="_self" href="/docs/view/{{ el.id }}">{{ el.name }}</a></li>
-            </ul>
-            <hr/>
-
-            <div class="row">
-                <div class="col-sm-6">
-                    <h4>提案</h4>
-                    <ul>
-                        <li><a target="_self" href="#">ポケモンゲットしたい</a></li>
-                        <li><a target="_self" href="#">何言ってんの</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-6">
-                    <h4>対案</h4>
-                    <ul>
-                        <li><a target="_self" href="#">入門者にやさしく</a></li>
-                        <li><a target="_self" href="#">何言ってんの</a></li>
-                    </ul>
-                </div>
-            </div>
-            <hr/>
-
-            <h4><a target="_self" href="/boards/view/{{ $ctrl.board.id }}">{{ $ctrl.board.name }}</a></h4>
-            <ul ng-repeat="el in $ctrl.threads">
-                <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
-            </ul>
-            <hr/>
-
+        </div>
+        
+        <div class="col-sm-6">
             <h4>最近のギルドの活動</h4>
             <ul>
                 <li>20xx/x/x ... 同盟を結びました。</li>
                 <li>20xx/x/x ... ギルドが開設されました。</li>
             </ul>
-            <hr/>
-
-            <h4>入会</h4>
-            <p>{{ $ctrl.guild.name }}への入会には<a target="_self" href="/users/signin">サインイン</a>が必要です。</p>
-            <hr/>
         </div>
+    </div>
+    <hr/>
 
-        <div class="col-sm-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <p>{{ $ctrl.guild.name }}</p>
-                </div>
-                <div class="panel-body">
-                    <p>設立日: {{ $ctrl.guild.created }}</p>
-                    <p>員数: xxx</p>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>文書</h4>
+            <ul ng-repeat="el in $ctrl.pubDocs">
+                <li><a target="_self" href="/docs/view/{{ el.id }}">{{ el.name }}</a></li>
+            </ul>
         </div>
+    </div>
 
-    </div><!-- row -->
+    <div class="row">
+        <div class="col-sm-6">
+            <h4>提案</h4>
+            <ul>
+                <li><a target="_self" href="#">ポケモンゲットしたい</a></li>
+                <li><a target="_self" href="#">何言ってんの</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <h4>対案</h4>
+            <ul>
+                <li><a target="_self" href="#">入門者にやさしく</a></li>
+                <li><a target="_self" href="#">何言ってんの</a></li>
+            </ul>
+        </div>
+    </div>
+    <hr/>
+
+    <h4><a target="_self" href="/boards/view/{{ $ctrl.board.id }}">{{ $ctrl.board.name }}</a></h4>
+    <ul ng-repeat="el in $ctrl.threads">
+        <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
+    </ul>
+    <hr/>
+
+    <h4>入会</h4>
+    <p>{{ $ctrl.guild.name }}への入会には<a target="_self" href="/users/signin">サインイン</a>が必要です。</p>
+    <hr/>
 </div><!-- container -->
 

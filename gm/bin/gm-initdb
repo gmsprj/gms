@@ -8,27 +8,27 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-gm-sitesadd 'GMS 0.0.5' '労働者のユニオン・サイトです。 ギルド（同業者組合）に参加することで議論に参加可能です。'
+gm-sitesadd "GMS 0.0.5" "労働者のユニオン・サイトです。 ギルド（同業者組合）に参加することで議論に参加可能です。"
 if [ $? -ne 0 ]; then
     exit 1
 fi
 
-gm-guildsadd '入門者ギルド' '入門者のためのギルドです。'
+gm-guildsadd "入門者ギルド" "入門者のためのギルドです。"
 if [ $? -ne 0 ]; then
     exit 1
 fi
 
-gm-guildsadd '開発者ギルド' '開発者のためのギルドです。'
+gm-guildsadd "開発者ギルド" "開発者のためのギルドです。"
 if [ $? -ne 0 ]; then
     exit 1
 fi
 
-gm-boardsadd 'ロビー' 'ロビー板'
+gm-boardsadd "ロビー" "ロビー板"
 if [ $? -ne 0 ]; then
     exit 1
 fi
 
-gm-newsadd 'ニュースです。'
+gm-newsadd "ニュースです。"
 if [ $? -ne 0 ]; then
     exit 1
 fi

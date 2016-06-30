@@ -6,7 +6,7 @@ SQLPATH="$BASEDIR/../db/gm-newsadd.sql"
 
 CONTENT="$1"
 
-if [ -z $CONTENT ]; then
+if [ -z "$CONTENT" ]; then
     CONTENT="No content"
 fi
 

@@ -7,11 +7,11 @@ SQLPATH="$BASEDIR/../db/gm-boardsadd.sql"
 NAME="$1"
 DESC="$2"
 
-if [ -z $NAME ]; then
+if [ -z "$NAME" ]; then
     NAME="No name"
 fi
 
-if [ -z $DESC ]; then
+if [ -z "$DESC" ]; then
     DESC="No description."
 fi
 

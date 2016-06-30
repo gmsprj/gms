@@ -9,7 +9,7 @@
             <img class="img-thumbnail" src="{{ $ctrl.guildSymbolUrl }}" />
         </div>
         <div class="col-sm-6">
-            <p>{{ $ctrl.guild.description }}</p>
+            <p style="white-space: pre;">{{ $ctrl.guild.description }}</p>
         </div>
         <div class="col-sm-3">
             <div class="panel panel-default">
@@ -17,6 +17,10 @@
                     ギルド情報
                 </div>
                 <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-4">名称</div>
+                        <div class="col-sm-8">{{ $ctrl.guild.name }}</div>
+                    </div>
                     <div class="row">
                         <div class="col-sm-4">設立日</div>
                         <div class="col-sm-8">{{ $ctrl.guild.created }}</div>
@@ -27,6 +31,14 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-4">文書総数</div>
+                        <div class="col-sm-8">xxx</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">板総数</div>
+                        <div class="col-sm-8">xxx</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">スレッド総数</div>
                         <div class="col-sm-8">xxx</div>
                     </div>
                 </div>
@@ -85,14 +97,19 @@
     </div>
     <hr/>
 
-    <h4><a target="_self" href="/boards/view/{{ $ctrl.board.id }}">{{ $ctrl.board.name }}</a></h4>
-    <ul ng-repeat="el in $ctrl.threads">
-        <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
-    </ul>
-    <hr/>
+    <div class="row">
+        <div class="col-sm-6">
+            <h4><a target="_self" href="/boards/view/{{ $ctrl.board.id }}">{{ $ctrl.board.name }}</a></h4>
+            <ul ng-repeat="el in $ctrl.threads">
+                <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
+            </ul>
+        </div>
 
-    <h4>入会</h4>
-    <p>{{ $ctrl.guild.name }}への入会には<a target="_self" href="/users/signin">サインイン</a>が必要です。</p>
+        <div class="col-sm-6">
+            <h4>入会</h4>
+            <p>{{ $ctrl.guild.name }}への入会には<a target="_self" href="/users/signin">サインイン</a>が必要です。</p>
+        </div>
+    </div>
     <hr/>
 </div><!-- container -->
 

@@ -19,7 +19,7 @@ mod.component('guildsIndex', {
                 self.guilds = res.data.guilds;
                 self.news = res.data.news;
                 self.symbol = res.data.symbol;
-                console.log(res.data.symbol);
+                self.customDocs = res.data.customDocs;
             });
 
             $http.get('/threads.json').then(function(res) {

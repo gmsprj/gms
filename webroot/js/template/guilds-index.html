@@ -23,10 +23,20 @@
     </div>
     <hr/>
 
-    <h4>ロビーのスレッド一覧</h4>
-    <ul ng-repeat="el in $ctrl.guestThreads">
-        <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
-    </ul>
+    <div class="row">
+        <div class="col-sm-6">
+            <h4>ロビーのスレッド一覧</h4>
+            <ul ng-repeat="el in $ctrl.guestThreads">
+                <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <h4>ドキュメント一覧</h4>
+            <ul ng-repeat="el in $ctrl.customDocs">
+                <li><a target="_self" href="/docs/view/{{ el.docId }}">{{ el.docName }}</a> (<a target="_self" href="/guilds/view/{{ el.guildId }}">{{ el.guildName }}</a>)</li>
+            </ul>
+        </div>
+    </div>
     <hr/>
 
 </div>

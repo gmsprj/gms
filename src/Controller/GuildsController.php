@@ -58,11 +58,30 @@ class GuildsController extends AppController
             ])->where([
                 'Cells.name' => 'site-symbol'
             ])->first();
+        $customDocs = $this->Docs->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'guilds',
+                'alias' => 'A',
+                'type' => 'INNER',
+                'conditions' => 'A.id = Docs.guild_id'
+            ])->select([
+                'guildId' => 'A.id',
+                'guildName' => 'A.name',
+                'docId' => 'Docs.id',
+                'docName' => 'Docs.name',
+            ])->all();
 
         $this->set('guilds', $this->Guilds->find('all'));
         $this->set('news', $news);
         $this->set('symbol', $symbol);
-        $this->set('_serialize', ['guilds', 'news', 'symbol']);
+        $this->set('customDocs', $customDocs);
+        $this->set('_serialize', [
+            'guilds',
+            'news',
+            'symbol',
+            'customDocs'
+        ]);
     }
 
     /**

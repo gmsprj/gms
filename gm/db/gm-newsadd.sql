@@ -10,7 +10,7 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'news',
+    'text-news-site',
     @text_id,
     1
 );

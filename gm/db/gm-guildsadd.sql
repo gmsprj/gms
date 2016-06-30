@@ -55,9 +55,9 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'guild-symbol',
-    @guild_id,
-    @image_id
+    'image-symbol-guild',
+    @image_id,
+    @guild_id
 );
 
 -- docs

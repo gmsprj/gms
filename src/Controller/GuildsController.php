@@ -44,7 +44,7 @@ class GuildsController extends AppController
                 'content' => 'A.content',
                 'created' => 'A.created'
             ])->where([
-                'Cells.name' => 'news'
+                'Cells.name' => 'text-news-site'
             ])->all();
         $symbol = $this->Cells->find()
             ->hydrate(false)
@@ -56,7 +56,7 @@ class GuildsController extends AppController
             ])->select([
                 'url' => 'A.url',
             ])->where([
-                'Cells.name' => 'site-symbol'
+                'Cells.name' => 'image-symbol-site'
             ])->first();
         $customDocs = $this->Docs->find()
             ->hydrate(false)
@@ -110,12 +110,12 @@ class GuildsController extends AppController
                 'table' => 'images',
                 'alias' => 'A',
                 'type' => 'INNER',
-                'conditions' => 'A.id = Cells.right_id',
+                'conditions' => 'A.id = Cells.left_id',
             ])->select([
                 'url' => 'A.url',
             ])->where([
-                'Cells.name' => 'guild-symbol',
-                'Cells.left_id' => $guild->id,
+                'Cells.name' => 'image-symbol-guild',
+                'Cells.right_id' => $guild->id,
             ])->all();
 
         $this->set('guild', $guild);

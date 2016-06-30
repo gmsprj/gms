@@ -185,18 +185,25 @@ CREATE TABLE users (
  * 文書の状態
  *
  * - draft
- *   提案、原案、草案
- *
- *
- * - published
- *
+ *   名称: 提案、原案、草案
+ *   30日で寿命が尽きる。
+ *   条件を満たすと published へ遷移。
  *
  * - counter
+ *   名称: 対案
+ *   draft, published への対案。
+ *   30日で寿命が尽きる。
+ *   条件を満たすと draft, published へ遷移。
  *
+ * - published
+ *   名称: 文書、公開文書
+ *   恒久的に保存される。
+ *   条件を満たすと draft, closed へ遷移。
  *
  * - closed
- *
- *
+ *   名称: 廃案
+ *   3日で寿命が尽きる。
+ *   条件を満たすと draft, counter へ遷移。
  */
 
 DROP TABLE IF EXISTS docs;
@@ -290,48 +297,63 @@ CREATE TABLE images (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 /**
- * news
+ * left-category-right
+ *
+ *      cells
+ *    /       \
+ * lefts      rights
+ *
+ * cells.name: 'left-category-right'
+ * cells.left_id: lefts.id 
+ * cells.right_id: rights.id
+ */
+
+/**
+ * text-news-xxx
  *
  * 抽象化された構造。表現に cells, texts, ??? を使う。
  * ニュースと、そのソースになるオブジェクトを cells で繋ぐ。
  *
  *      cells
  *    /       \
- * texts      ???
+ * texts     (sites, guilds, boards, posts, ...)
  *
- * cells.name に 'news' が保存される。
- * cells.left_id に texts.id が保存される。
- * cells.right_id にリンク先の id が保存される。
- * texts.content に news のテキスト内容。
+ * cells.name: 'text-news-xxx'
+ * cells.left_id: texts.id
+ * cells.right_id: xxxs.id
+ * texts.content: news のテキスト内容。
  */
 
 /**
- * site-symbol
+ * image-symbol-xxx
  *
- * 抽象化された構造。表現に cells, sites, images を使う。
+ * 抽象化された構造。表現に cells, images, xxx を使う。
  * Web サイトと、そのシンボル画像を cells で繋ぐ。
  *
  *      cells
  *    /       \
- * sites     images
+ * images   (sites, guilds, boards, posts, ...)
  *
- * cells.name に 'site-symbol' が保存される。
- * cells.left_id に guilds.id が保存される。
- * cells.right_id に images.id が保存される。
+ * cells.name に 'image-symbol-xxx' が保存される。
+ * cells.left_id に images.id が保存される。
+ * cells.right_id に xxxs.id が保存される。
  */
 
 /**
- * guild-symbol
+ * doc-owner-xxx
  *
- * 抽象化された構造。表現に cells, guilds, images を使う。
- * ギルドと、そのシンボル画像を cells で繋ぐ。
+ * docs のオーナーを表現する構造。
  *
  *      cells
  *    /       \
- * guilds   images
+ * docs       guilds
  *
- * cells.name に 'guild-symbol' が保存される。
- * cells.left_id に guilds.id が保存される。
- * cells.right_id に images.id が保存される。
+ * cells.name: 'doc-owner-guild'
+ * cells.left_id: docs.id 
+ * cells.right_id: guilds.id
+ *
+ * cells.name: 'doc-owner-board'
+ * cells.left_id: docs.id 
+ * cells.right_id: boards.id
  */
 

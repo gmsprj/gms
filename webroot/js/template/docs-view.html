@@ -11,7 +11,11 @@
         <div class="col-sm-12">
             <h4>概要</h4>
             <ul>
-                <li>出生元スレッド: <a target="_self" href="#">雑談スレ</a></li>
+                <li>作成日: {{ $ctrl.doc.created }}</li>
+                <li>最終更新日: {{ $ctrl.doc.modified }}</li>
+                <li>話し合いのあったスレッド: <a target="_self" href="#">雑談スレ</a></li>
+                <li>原案: xxx</li>
+                <li>対案: xxx, xxx, xxx</li>
             </ul>
         </div>
     </div>
@@ -22,5 +26,7 @@
             <p style="white-space: pre;">{{ $ctrl.doc.content }}</p>
         </div>
     </div><!-- row -->
+    <hr/>
+
 </div>
 

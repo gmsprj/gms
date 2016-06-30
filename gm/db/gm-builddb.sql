@@ -192,10 +192,12 @@ DROP TABLE IF EXISTS docs;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE docs (
-  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ドキュメントのID',
-  name varchar(64) NOT NULL DEFAULT '' COMMENT 'ドキュメントの名前',
-  content text COMMENT 'ドキュメントの内容',
-  state varchar(32) NOT NULL DEFAULT 'closed' COMMENT 'ドキュメントの状態',
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT '文書のID',
+  name varchar(256) NOT NULL DEFAULT '' COMMENT '文書の名前',
+  content text COMMENT '文書の内容',
+  state varchar(32) NOT NULL DEFAULT 'closed' COMMENT '文書の状態',
+  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT '文書の作成日',
+  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT '文書の更新日',
   guild_id int(11) NOT NULL DEFAULT 1 COMMENT '所属ギルドの外部キー',
   PRIMARY KEY (id),
   KEY guild_id (guild_id),

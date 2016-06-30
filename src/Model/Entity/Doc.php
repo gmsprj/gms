@@ -10,6 +10,8 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string $content
  * @property string $state
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  * @property int $guild_id
  * @property \App\Model\Entity\Guild $guild
  */

@@ -92,13 +92,11 @@ class PostsController extends AppController
         
         if ($newPost->errors()) {
             $this->Flash->error(__('Invalid input data'));
-            Log::write('error', $newPost->toString());
             return $this->redirect($redirect);
         }
 
         if (!$postsTable->save($newPost)) {
             $this->Flash->error(__('Invalid input data'));
-            Log::write('error', $newPost->toString());
         }
         
         return $this->redirect($redirect);

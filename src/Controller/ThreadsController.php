@@ -128,7 +128,6 @@ class ThreadsController extends AppController
 
         if ($newThread->errors()) {
             $this->Flash->error(__('入力が不正です。'));
-            Log::write('error', $newThread->toString());
             return $this->redirect($redirect);
         }
         
@@ -136,7 +135,6 @@ class ThreadsController extends AppController
             Log::write('debug', $newThread->toString());
         } else {
             $this->Flash->error(__('登録に失敗しました。'));
-            Log::write('error', $newThread->toString());
             return $this->redirect($redirect);
         }
 
@@ -152,13 +150,12 @@ class ThreadsController extends AppController
         
         if ($newPost->errors()) {
             $this->Flash->error(__('入力が不正です。'));
-            Log::write('error', $newPost->toString());
             $threadsTable->delete($newThread);
             return $this->redirect($redirect);
         }
         
         if ($postsTable->save($newPost)) {
-            Log::write('debug', $newPost->toString());
+            
         } else {
             $this->Flash->error(__('登録に失敗しました。'));
             Log::write('error', $newPost->toString());

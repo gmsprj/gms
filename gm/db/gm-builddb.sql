@@ -182,10 +182,21 @@ CREATE TABLE users (
  * docs
  *
  * state
- * - published
+ * 文書の状態
+ *
  * - draft
+ *   提案、原案、草案
+ *
+ *
+ * - published
+ *
+ *
  * - counter
+ *
+ *
  * - closed
+ *
+ *
  */
 
 DROP TABLE IF EXISTS docs;

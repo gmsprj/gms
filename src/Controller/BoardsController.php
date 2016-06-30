@@ -26,7 +26,7 @@ class BoardsController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
-        $this->Auth->allow(['index', 'view']);
+        $this->Auth->allow([]);
         $this->loadModel('Threads');
     }
 
@@ -37,9 +37,6 @@ class BoardsController extends AppController
      */
     public function index()
     {
-        $boards = $this->Boards->find()->all();
-        $this->set('boards', $boards);
-        $this->set('_serialize', ['boards']);
     }
 
     /**
@@ -51,28 +48,6 @@ class BoardsController extends AppController
      */
     public function view($id = null)
     {
-        // 板
-        $board = $this->Boards->find()
-            ->where(['id' => $id])
-            ->first();
-        if (!$board) {
-            throw new NotFoundException(__('板が見つかりません。'));
-        }
-
-        // スレッドのリスト
-        $threads = $this->Threads->find('all')
-            ->where(['board_id' => $id]);
-
-        // 認証ユーザーから投稿者ネームを得る
-        // TODO: 板毎にデフォルトの「名無しさん」等が必要になった場合はここを変更
-        $authUser = $this->Auth->user();
-        $postName = $authUser ? $authUser['name'] : __('名無しさん');
-
-        // テンプレートに設定
-        $this->set('board', $board);
-        $this->set('threads', $threads);
-        $this->set('postName', $postName);
-        $this->set('_serialize', ['board', 'threads', 'postName']);
     }
 }
 

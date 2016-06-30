@@ -58,18 +58,25 @@ class GuildsController extends AppController
             ])->where([
                 'Cells.name' => 'image-symbol-site'
             ])->first();
-        $customDocs = $this->Docs->find()
+        $customDocs = $this->Cells->find()
             ->hydrate(false)
             ->join([
-                'table' => 'guilds',
-                'alias' => 'A',
+                'table' => 'docs',
+                'alias' => 'D',
                 'type' => 'INNER',
-                'conditions' => 'A.id = Docs.guild_id'
+                'conditions' => 'D.id = Cells.left_id'
+            ])->join([
+                'table' => 'guilds',
+                'alias' => 'G',
+                'type' => 'INNER',
+                'conditions' => 'G.id = Cells.right_id'
             ])->select([
-                'guildId' => 'A.id',
-                'guildName' => 'A.name',
-                'docId' => 'Docs.id',
-                'docName' => 'Docs.name',
+                'guildId' => 'G.id',
+                'guildName' => 'G.name',
+                'docId' => 'D.id',
+                'docName' => 'D.name',
+            ])->where([
+                'Cells.name' => 'doc-owner-guild'
             ])->all();
 
         $this->set('guilds', $this->Guilds->find('all'));
@@ -94,16 +101,45 @@ class GuildsController extends AppController
     public function view($id = null)
     {
         $guild = $this->Guilds->get($id);
-        $pubDocs = $this->Docs->find()
-            ->where([
-                'guild_id' => $guild->id,
-                'state' => 'published'
+        $boards = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'boards',
+                'alias' => 'B',
+                'type' => 'INNER',
+                'conditions' => 'B.id = Cells.left_id',
+            ])->join([
+                'table' => 'guilds',
+                'alias' => 'G',
+                'type' => 'INNER',
+                'conditions' => 'G.id = Cells.right_id',
+            ])->select([
+                'id' => 'B.id',
+                'name' => 'B.name',
+            ])->where([
+                'Cells.name' => 'image-symbol-guild',
+                'G.id' => $guild->id,
             ])->all();
-        $board = $this->Boards->find()
-            ->where(['parent_name' => 'guilds', 'parent_id' => $guild->id])
-            ->first();
-        $threads = $this->Threads->find('all')
-            ->where(['board_id' => $board->id]);
+        $pubDocs = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'docs',
+                'alias' => 'D',
+                'type' => 'INNER',
+                'conditions' => 'D.id = Cells.left_id',
+            ])->join([
+                'table' => 'guilds',
+                'alias' => 'G',
+                'type' => 'INNER',
+                'conditions' => 'G.id = Cells.right_id',
+            ])->select([
+                'id' => 'D.id',
+                'name' => 'D.name',
+            ])->where([
+                'Cells.name' => 'doc-owner-guild',
+                'G.id' => $guild->id,
+                'D.state' => 'published',
+            ])->all();
         $guildSymbols = $this->Cells->find()
             ->hydrate(false)
             ->join([
@@ -120,14 +156,12 @@ class GuildsController extends AppController
 
         $this->set('guild', $guild);
         $this->set('guildSymbols', $guildSymbols);
-        $this->set('board', $board);
-        $this->set('threads', $threads);
+        $this->set('boards', $boards);
         $this->set('pubDocs', $pubDocs);
         $this->set('_serialize', [
             'guild',
             'guildSymbols',
-            'board',
-            'threads',
+            'boards',
             'pubDocs',
         ]);
     }

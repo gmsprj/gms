@@ -20,6 +20,7 @@ class DocsController extends AppController
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
         $this->loadModel('Guilds');
+        $this->loadModel('Cells');
     }
 
     /**
@@ -29,19 +30,27 @@ class DocsController extends AppController
      */
     public function index()
     {
-        $customDocs = $this->Docs->find()
+        $customDocs = $this->Cells->find()
             ->hydrate(false)
             ->join([
-                'table' => 'guilds',
-                'alias' => 'A',
+                'table' => 'docs',
+                'alias' => 'D',
                 'type' => 'INNER',
-                'conditions' => 'A.id = Docs.guild_id'
+                'conditions' => 'D.id = Cells.left_id'
+            ])->join([
+                'table' => 'guilds',
+                'alias' => 'G',
+                'type' => 'INNER',
+                'conditions' => 'G.id = Cells.right_id'
             ])->select([
-                'guildId' => 'A.id',
-                'guildName' => 'A.name',
-                'docId' => 'Docs.id',
-                'docName' => 'Docs.name'
+                'guildId' => 'G.id',
+                'guildName' => 'G.name',
+                'docId' => 'D.id',
+                'docName' => 'D.name'
+            ])->where([
+                'Cells.name' => 'doc-owner-guild'
             ])->all();
+
         $this->set('customDocs', $customDocs);
         $this->set('_serialize', ['customDocs']);
     }
@@ -56,7 +65,7 @@ class DocsController extends AppController
     public function view($id = null)
     {
         $doc = $this->Docs->get($id);
-        $guild = $this->Guilds->get($doc->guild_id);
+        $guild = $this->Guilds->get($doc->id);//TODO
 
         $this->set('doc', $doc);
         $this->set('guild', $guild);

@@ -11,7 +11,6 @@ use Cake\ORM\Entity;
  * @property string $description
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
- * @property \App\Model\Entity\User[] $users
  */
 class Guild extends Entity
 {

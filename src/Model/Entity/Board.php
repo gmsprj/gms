@@ -11,10 +11,6 @@ use Cake\ORM\Entity;
  * @property string $description
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
- * @property string $parent_name
- * @property int $parent_id
- * @property \App\Model\Entity\Board $parent_board
- * @property \App\Model\Entity\Board[] $child_boards
  * @property \App\Model\Entity\Thread[] $threads
  */
 class Board extends Entity

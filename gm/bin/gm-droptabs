@@ -14,5 +14,9 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-mysql -u $DBUSER -p $DBNAME < $BASEDIR/../db/gm-droptabs.sql
+mysql -u $DBUSER -p $DBNAME <<EOF
+SHOW TABLES;
+`cat $BASEDIR/../db/gm-droptabs.sql`
+SHOW TABLES;
+EOF
 

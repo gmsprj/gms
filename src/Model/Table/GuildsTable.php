@@ -10,8 +10,6 @@ use Cake\Validation\Validator;
 /**
  * Guilds Model
  *
- * @property \Cake\ORM\Association\HasMany $Docs
- * @property \Cake\ORM\Association\HasMany $Users
  */
 class GuildsTable extends Table
 {
@@ -31,13 +29,6 @@ class GuildsTable extends Table
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
-
-        $this->hasMany('Docs', [
-            'foreignKey' => 'guild_id'
-        ]);
-        $this->hasMany('Users', [
-            'foreignKey' => 'guild_id'
-        ]);
     }
 
     /**

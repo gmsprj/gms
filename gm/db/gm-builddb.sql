@@ -157,10 +157,7 @@ CREATE TABLE users (
   password varchar(256) NOT NULL COMMENT 'ユーザーのログイン・パスワード',
   created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ユーザーの作成日',
   modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ユーザーの更新日',
-  guild_id int(11) NOT NULL DEFAULT 1 COMMENT '所属ギルドの外部キー',
-  PRIMARY KEY (id),
-  KEY guild_id (guild_id),
-  CONSTRAINT guild_users_ibfk_1 FOREIGN KEY (guild_id) REFERENCES guilds (id)
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ユーザーのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -321,6 +318,20 @@ CREATE TABLE images (
  * cells.name に 'image-symbol-xxx' が保存される。
  * cells.left_id に images.id が保存される。
  * cells.right_id に xxxs.id が保存される。
+ */
+
+/**
+ * user-owner-xxx
+ *
+ * users のオーナーを表現する構造。
+ *
+ *      cells
+ *    /       \
+ * users      xxxs
+ *
+ * cells.name: 'user-owner-xxxs'
+ * cells.left_id: users.id 
+ * cells.right_id: xxxs.id (guilds, sites, ...)
  */
 
 /**

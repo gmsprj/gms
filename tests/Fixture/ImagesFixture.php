@@ -40,8 +40,8 @@ class ImagesFixture extends TestFixture
         [
             'id' => 1,
             'url' => 'Lorem ipsum dolor sit amet',
-            'created' => '2016-06-30 18:50:56',
-            'modified' => '2016-06-30 18:50:56'
+            'created' => '2016-06-30 22:21:41',
+            'modified' => '2016-06-30 22:21:41'
         ],
     ];
 }

@@ -10,7 +10,6 @@ use Cake\Validation\Validator;
 /**
  * Docs Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Guilds
  */
 class DocsTable extends Table
 {
@@ -30,11 +29,6 @@ class DocsTable extends Table
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
-
-        $this->belongsTo('Guilds', [
-            'foreignKey' => 'guild_id',
-            'joinType' => 'INNER'
-        ]);
     }
 
     /**
@@ -61,18 +55,5 @@ class DocsTable extends Table
             ->notEmpty('state');
 
         return $validator;
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['guild_id'], 'Guilds'));
-        return $rules;
     }
 }

@@ -10,7 +10,6 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Guilds
  */
 class UsersTable extends Table
 {
@@ -30,11 +29,6 @@ class UsersTable extends Table
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
-
-        $this->belongsTo('Guilds', [
-            'foreignKey' => 'guild_id',
-            'joinType' => 'INNER'
-        ]);
     }
 
     /**
@@ -75,7 +69,6 @@ class UsersTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['email']));
-        $rules->add($rules->existsIn(['guild_id'], 'Guilds'));
         return $rules;
     }
 }

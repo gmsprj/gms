@@ -25,7 +25,6 @@ class GuildsTableTest extends TestCase
      */
     public $fixtures = [
         'app.guilds',
-        'app.docs',
         'app.users'
     ];
 

@@ -1,13 +1,9 @@
 INSERT INTO boards (
     name,
-    description,
-    parent_name,
-    parent_id
+    description
 ) VALUES (
     '{{ name }}',
-    '{{ description }}',
-    'null',
-    0
+    '{{ description }}'
 );
 SET @board_id = LAST_INSERT_ID();
 
@@ -28,5 +24,15 @@ INSERT INTO posts (
     '名無しさん',
     'てすと。',
     @thread_id
+);
+
+INSERT INTO cells (
+    name,
+    left_id,
+    right_id
+) VALUES (
+    'board-owner-site',
+    @board_id,
+    1
 );
 

@@ -7,18 +7,14 @@ INSERT INTO guilds (
 );
 SET @guild_id = LAST_INSERT_ID();
 
--- boards, threads, posts
+-- boards, threads, posts, cells
 
 INSERT INTO boards (
     name,
-    description,
-    parent_name,
-    parent_id
+    description
 ) VALUES (
     '{{ name }}専用板',
-    '{{ name }}の専用板です。',
-    'guilds',
-    @guild_id
+    '{{ name }}の専用板です。'
 );
 SET @board_id = LAST_INSERT_ID();
 
@@ -39,6 +35,16 @@ INSERT INTO posts (
     '名無しさん',
     'ギルドの雑談スレです。',
     @thread_id
+);
+
+INSERT INTO cells (
+    name,
+    left_id,
+    right_id
+) VALUES (
+    'board-owner-guild',
+    @board_id,
+    @guild_id
 );
 
 -- guild-symbol
@@ -65,12 +71,21 @@ INSERT INTO cells (
 INSERT INTO docs (
     name,
     content,
-    state,
-    guild_id
+    state
 ) VALUES (
     'マニュアル',
     'これは{{ name }}のマニュアルです。',
-    'published',
+    'published'
+);
+SET @doc_id = LAST_INSERT_ID();
+
+INSERT INTO cells (
+    name,
+    left_id,
+    right_id
+) VALUES (
+    'doc-owner-guild',
+    @doc_id,
     @guild_id
 );
 

@@ -51,16 +51,6 @@ CREATE TABLE sites (
  * boards
  *
  * 「板/スレッド/ポスト」の内、板の情報が保存される。
- *
- * 依存関係:
- *
- *     <- 依存方向
- *
- *     (guilds or etc...) <- boards <- threads <- posts
- *
- * parent_name には板の親を表す小文字のオブジェクト名("guilds" 等)が保存される。
- * parent_name が "guilds" であれば、parent_id は guilds.id を指す。
- * parent_name が "null" なら親は存在せず、parent_id の値も無意味になる。
  */
 
 DROP TABLE IF EXISTS boards;
@@ -72,8 +62,6 @@ CREATE TABLE boards (
   description text COMMENT '板の説明',
   created datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の作成日',
   modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の更新日',
-  parent_name varchar(32) NOT NULL DEFAULT 'null' COMMENT '板の親の名前（guilds等）',
-  parent_id int(11) NOT NULL DEFAULT 0 COMMENT '板の親のID',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -215,10 +203,7 @@ CREATE TABLE docs (
   state varchar(32) NOT NULL DEFAULT 'closed' COMMENT '文書の状態',
   created datetime DEFAULT CURRENT_TIMESTAMP COMMENT '文書の作成日',
   modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT '文書の更新日',
-  guild_id int(11) NOT NULL DEFAULT 1 COMMENT '所属ギルドの外部キー',
-  PRIMARY KEY (id),
-  KEY guild_id (guild_id),
-  CONSTRAINT guild_docs_ibfk_1 FOREIGN KEY (guild_id) REFERENCES guilds (id)
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ドキュメントのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -345,14 +330,24 @@ CREATE TABLE images (
  *
  *      cells
  *    /       \
- * docs       guilds
+ * docs       xxxs
  *
- * cells.name: 'doc-owner-guild'
+ * cells.name: 'doc-owner-xxxs'
  * cells.left_id: docs.id 
- * cells.right_id: guilds.id
+ * cells.right_id: xxxs.id (guilds, users, ...)
+ */
+
+/**
+ * board-owner-xxx
  *
- * cells.name: 'doc-owner-board'
- * cells.left_id: docs.id 
- * cells.right_id: boards.id
+ * boards のオーナーを表現する構造。
+ *
+ *      cells
+ *    /       \
+ * boards     xxx
+ *
+ * cells.name: 'board-owner-xxxs'
+ * cells.left_id: boards.id 
+ * cells.right_id: xxxs.id (guilds, docs, ...)
  */
 

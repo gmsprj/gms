@@ -132,7 +132,7 @@ class ThreadsController extends AppController
         }
         
         if ($threadsTable->save($newThread)) {
-            Log::write('debug', $newThread->toString());
+            ;
         } else {
             $this->Flash->error(__('登録に失敗しました。'));
             return $this->redirect($redirect);
@@ -158,7 +158,6 @@ class ThreadsController extends AppController
             
         } else {
             $this->Flash->error(__('登録に失敗しました。'));
-            Log::write('error', $newPost->toString());
             $threadsTable->delete($newThread);
         }
 

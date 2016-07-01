@@ -37,6 +37,12 @@ class BoardsController extends AppController
      */
     public function index()
     {
+        $boards = $this->Boards->find()
+            ->all();
+        $this->set('boards', $boards);
+        $this->set('_serialize', [
+            'boards',
+        ]);
     }
 
     /**
@@ -48,6 +54,21 @@ class BoardsController extends AppController
      */
     public function view($id = null)
     {
+        $board = $this->Boards->get($id);
+        $threads = $this->Threads->find()
+            ->where([
+                'board_id' => $id
+            ])->all();
+
+        $this->set('board', $board);
+        $this->set('threads', $threads);
+        $this->set('postName', __('名無しさん'));
+        $this->set('csrf', $this->Csrf->request->_csrfToken);
+        $this->set('_serialize', [
+            'board',
+            'threads',
+            'csrf',
+        ]);
     }
 }
 

@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>{{ $ctrl.board.name }}板</h4>
+        </div>
+    </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>スレッド一覧</h4>
+            <ul ng-repeat="el in $ctrl.threads">
+                <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
+            </ul>
+        </div>
+    </div>
+    <hr/>
+
+    <!-- 新規スレッド -->
+    <div class="row">
+        <h4>新規スレッド作成</h4>
+        <form method="post" accept-charset="utf-8" action="/threads/add">
+            <div style="display:none;">
+                <input type="hidden" name="_method" value="POST"/>
+                <input type="hidden" name="_csrfToken" value="20a032c02ad93150625513c65b6f94b12421e7ec646e9bc65370c28f58e91757b407e1499772322e8377c8c3322ec40e70cd09949200255bda2ae41c79d854a6"/>
+            </div>
+            <input type="hidden" name="boardId" value="2"/>
+            <label for="threadname">スレッド名：</label>
+            <input type="text" name="threadName" value="スレッド名"/>
+            <label for="postname">名前：</label>
+            <input type="text" name="postName" value="名無しさん"/>
+            <label for="postcontent">内容：</label>
+            <textarea name="postContent" rows="5">内容なし</textarea>
+            <div class="submit">
+                <input type="submit" value="作成"/>
+            </div>
+        </form>    
+    </div>
+    <hr/>
+
+</div>
+

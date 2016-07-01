@@ -73,8 +73,8 @@ INSERT INTO docs (
     content,
     state
 ) VALUES (
-    'マニュアル',
-    'これは{{ name }}のマニュアルです。',
+    'ギルド利用マニュアル',
+    'これは{{ name }}の利用マニュアルです。ギルドの新規参加者を対象にしています。',
     'published'
 );
 SET @doc_id = LAST_INSERT_ID();

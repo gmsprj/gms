@@ -22,7 +22,6 @@ gm.component('sitesFooter', {
     controller: ['$http',
         function sitesFooterController($http) {
             var self = this;
-            console.log(self);
         }
     ]
 });

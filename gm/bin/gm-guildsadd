@@ -5,19 +5,19 @@ DBPASS="$GM_DBPASS"
 BASEDIR=$(dirname "$0")
 SQLPATH="$BASEDIR/../db/gm-guildsadd.sql"
 
-NAME="$1"
-DESC="$2"
+GUILDNAME="$1"
+GUILDDESC="$2"
 
-if [ -z "$NAME" ]; then
-    NAME="No name guild"
+if [ -z "$GUILDNAME" ]; then
+    GUILDNAME="No name guild"
 fi
 
-if [ -z "$DESC" ]; then
-    DESC="No description."
+if [ -z "$GUILDDESC" ]; then
+    GUILDDESC="No description."
 fi
 
 mysql -u $DBUSER -p$DBPASS $DBNAME <<EOF
-`cat $SQLPATH | sed "s/{{ name }}/$NAME/g" | sed "s/{{ description }}/$DESC/g"`
+`cat $SQLPATH | sed "s/{{ name }}/$GUILDNAME/g" | sed "s/{{ description }}/$GUILDDESC/g"`
 EOF
 
 exit 0

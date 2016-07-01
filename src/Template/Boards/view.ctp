@@ -1,4 +1,5 @@
-<div ng-app="boards">
+<div ng-app="gm">
+    <sites-header></sites-header>
     <boards-view></boards-view>
 
     <!-- 新規スレッド投稿フォーム -->
@@ -18,5 +19,7 @@
         <?= $this->Form->submit(__('投稿')) ?>
         <?= $this->Form->end() ?>
     <?php endif; ?>
+
+    <sites-footer></sites-footer>
 </div>
 

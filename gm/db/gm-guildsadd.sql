@@ -89,3 +89,44 @@ INSERT INTO cells (
     @guild_id
 );
 
+INSERT INTO docs (
+    name,
+    content,
+    state
+) VALUES (
+    '{{ name }}の提案',
+    'これは{{ name }}の文書化前の提案です。',
+    'draft'
+);
+SET @doc_id = LAST_INSERT_ID();
+
+INSERT INTO cells (
+    name,
+    left_id,
+    right_id
+) VALUES (
+    'doc-owner-guild',
+    @doc_id,
+    @guild_id
+);
+
+INSERT INTO docs (
+    name,
+    content,
+    state
+) VALUES (
+    '{{ name }}の対案',
+    'これは{{ name }}の提案、または文書への対案です。',
+    'counter'
+);
+SET @doc_id = LAST_INSERT_ID();
+
+INSERT INTO cells (
+    name,
+    left_id,
+    right_id
+) VALUES (
+    'doc-owner-guild',
+    @doc_id,
+    @guild_id
+);

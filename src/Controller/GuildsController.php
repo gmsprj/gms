@@ -91,6 +91,30 @@ class GuildsController extends AppController
         ]);
     }
 
+    private function getDocs($guildId, $state)
+    {
+        return $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'docs',
+                'alias' => 'D',
+                'type' => 'INNER',
+                'conditions' => 'D.id = Cells.left_id',
+            ])->join([
+                'table' => 'guilds',
+                'alias' => 'G',
+                'type' => 'INNER',
+                'conditions' => 'G.id = Cells.right_id',
+            ])->select([
+                'id' => 'D.id',
+                'name' => 'D.name',
+            ])->where([
+                'Cells.name' => 'doc-owner-guild',
+                'G.id' => $guildId,
+                'D.state' => $state,
+            ])->all();
+    }
+
     /**
      * View method
      *
@@ -120,26 +144,9 @@ class GuildsController extends AppController
                 'Cells.name' => 'image-symbol-guild',
                 'G.id' => $guild->id,
             ])->all();
-        $pubDocs = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'docs',
-                'alias' => 'D',
-                'type' => 'INNER',
-                'conditions' => 'D.id = Cells.left_id',
-            ])->join([
-                'table' => 'guilds',
-                'alias' => 'G',
-                'type' => 'INNER',
-                'conditions' => 'G.id = Cells.right_id',
-            ])->select([
-                'id' => 'D.id',
-                'name' => 'D.name',
-            ])->where([
-                'Cells.name' => 'doc-owner-guild',
-                'G.id' => $guild->id,
-                'D.state' => 'published',
-            ])->all();
+        $publishedDocs = $this->getDocs($guild->id, 'published');
+        $draftDocs = $this->getDocs($guild->id, 'draft');
+        $counterDocs = $this->getDocs($guild->id, 'counter');
         $guildSymbols = $this->Cells->find()
             ->hydrate(false)
             ->join([
@@ -157,12 +164,16 @@ class GuildsController extends AppController
         $this->set('guild', $guild);
         $this->set('guildSymbols', $guildSymbols);
         $this->set('boards', $boards);
-        $this->set('pubDocs', $pubDocs);
+        $this->set('publishedDocs', $publishedDocs);
+        $this->set('draftDocs', $draftDocs);
+        $this->set('counterDocs', $counterDocs);
         $this->set('_serialize', [
             'guild',
             'guildSymbols',
             'boards',
-            'pubDocs',
+            'publishedDocs',
+            'draftDocs',
+            'counterDocs',
         ]);
     }
 

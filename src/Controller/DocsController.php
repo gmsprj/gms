@@ -70,13 +70,10 @@ class DocsController extends AppController
     public function view($id = null)
     {
         $doc = $this->Docs->get($id);
-        $guild = $this->Guilds->get(1);//TODO: Docs のギルドを Cells から検索
 
         $this->set('doc', $doc);
-        $this->set('guild', $guild);
         $this->set('_serialize', [
             'doc',
-            'guild'
         ]);
     }
 

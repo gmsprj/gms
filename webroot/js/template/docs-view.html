@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h3>{{ $ctrl.doc.name }} ({{ $ctrl.guild.name }})</h3>
+            <h3>{{ $ctrl.doc.name }}</h3>
             <p>{{ $ctrl.doc.description }}</p>
         </div>
     </div>
@@ -13,9 +13,7 @@
             <ul>
                 <li>タグ: <a href="#">マニュアル</a> <a href="#">ギルド</a> <a href="#">初心者</a></li>
                 <li>文書タイトル: {{ $ctrl.doc.name }}</li>
-                <li>作成ギルド: {{ $ctrl.guild.name }}</li>
                 <li>状態: {{ $ctrl.doc.state }}</li>
-                <li>話し合いのあったスレッド: <a target="_self" href="#">雑談スレ</a></li>
                 <li>原案: xxx</li>
                 <li>対案: xxx, xxx, xxx</li>
                 <li>作成日: {{ $ctrl.doc.created }}</li>

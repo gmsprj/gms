@@ -118,6 +118,7 @@ class DocsController extends AppController
                 'guildName' => 'G.name',
             ])->where([
                 'Cells.name' => 'doc-owner-guild',
+                'D.id' => $id,
             ])->first();
 
         $this->set('customDoc', $customDoc);

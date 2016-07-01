@@ -1,7 +1,18 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h3>{{ $ctrl.customDoc.docName }}</h3>
+            <h3>{{ $ctrl.customDoc.docName }} {{ $ctrl.customDoc.docState == 'draft' ? '(提案)' : '' }}</h3>
+            <div ng-switch on="$ctrl.customDoc.docState">
+                <div ng-switch-when="published">
+                    この文書は公開されています。
+                </div>
+                <div ng-switch-when="draft">
+                    この文書は提案中です。
+                </div>
+                <div ng-switch-default>
+                    この文書の詳細は不明です(´・ω・｀)。
+                </div>
+            </div>
         </div>
     </div>
     <hr/>
@@ -12,7 +23,7 @@
             <ul>
                 <li>文書タイトル: {{ $ctrl.customDoc.docName }}</li>
                 <li>タグ: <a href="#">マニュアル</a> <a href="#">ギルド</a> <a href="#">初心者</a></li>
-                <li>作成ギルド: {{ $ctrl.customDoc.guildName }}</li>
+                <li>作成ギルド: <a target="_self" href="/guilds/view/{{ $ctrl.customDoc.guildId }}">{{ $ctrl.customDoc.guildName }}</a></li>
                 <li>状態: {{ $ctrl.customDoc.docState }}</li>
                 <li>作成日: {{ $ctrl.customDoc.docCreated }}</li>
                 <li>最終更新日: {{ $ctrl.customDoc.docModified }}</li>

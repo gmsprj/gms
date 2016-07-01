@@ -131,27 +131,6 @@ INSERT INTO cells (
     @guild_id
 );
 
-INSERT INTO docs (
-    name,
-    content,
-    state
-) VALUES (
-    '{{ name }}の対案',
-    'これは{{ name }}の提案か文書に当てる対案です。',
-    'counter'
-);
-SET @doc_id = LAST_INSERT_ID();
-
-INSERT INTO cells (
-    name,
-    left_id,
-    right_id
-) VALUES (
-    'doc-owner-guild',
-    @doc_id,
-    @guild_id
-);
-
 -- text-news-guild
 
 INSERT INTO texts (

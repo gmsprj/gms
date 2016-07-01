@@ -143,7 +143,7 @@ class GuildsController extends AppController
                 'id' => 'B.id',
                 'name' => 'B.name',
             ])->where([
-                'Cells.name' => 'image-symbol-guild',
+                'Cells.name' => 'board-owner-guild',
                 'G.id' => $id,
             ])->all();
         $guildSymbols = $this->Cells->find()

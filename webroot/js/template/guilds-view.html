@@ -72,24 +72,15 @@
     <hr/>
 
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-6">
             <h4>文書</h4>
             <ul ng-repeat="el in $ctrl.publishedDocs">
                 <li><a target="_self" href="/docs/view/{{ el.id }}">{{ el.name }}</a></li>
             </ul>
         </div>
-    </div>
-
-    <div class="row">
         <div class="col-sm-6">
             <h4>提案</h4>
             <ul ng-repeat="el in $ctrl.draftDocs">
-                <li><a target="_self" href="/docs/view/{{ el.id }}">{{ el.name }}</a></li>
-            </ul>
-        </div>
-        <div class="col-sm-6">
-            <h4>対案</h4>
-            <ul ng-repeat="el in $ctrl.counterDocs">
                 <li><a target="_self" href="/docs/view/{{ el.id }}">{{ el.name }}</a></li>
             </ul>
         </div>

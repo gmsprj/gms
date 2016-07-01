@@ -88,6 +88,15 @@ class DocsController extends AppController
         $failTo = ['controller' => 'Docs', 'action' => 'index'];
         $doneTo = ['controller' => 'Docs', 'action' => 'index'];
 
+        // Guilds
+
+        $guildId = $this->request->data('guildId'); // doc-owner-guild の guilds.id
+        if (!TableRegistry::get('Guilds')->exists(['id' => $guildId])) {
+            $this->Flash->error(__('Not found guild id'));
+            Log::write('error', 'Not found guild id ' + $guildId);
+            return $this->redirect($failTo);
+        }
+        
         // Docs
 
         $docName = $this->request->data('docName');
@@ -113,13 +122,13 @@ class DocsController extends AppController
             return $this->redirect($failTo);
         }
 
-        // Cells
+        // Cells for doc-owner-guild
 
         $tab = TableRegistry::get('Cells');
         $cell = $tab->newEntity([
             'name' => 'doc-owner-guild',
             'left_id' => $doc->id,
-            'right_id' => 1,
+            'right_id' => $guildId,
         ]);
 
         if (!$tab->save($cell)) {

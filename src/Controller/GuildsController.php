@@ -45,6 +45,8 @@ class GuildsController extends AppController
                 'created' => 'A.created'
             ])->where([
                 'Cells.name LIKE' => '%text-news-%'
+            ])->order([
+                'A.created' => 'DESC'
             ])->all();
         $symbol = $this->Cells->find()
             ->hydrate(false)

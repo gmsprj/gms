@@ -49,6 +49,25 @@ INSERT INTO cells (
     @guild_id
 );
 
+-- text-news-board
+
+INSERT INTO texts (
+    content
+) VALUES (
+    '{{ name }}専用板が新設されました。'
+);
+SET @text_id = LAST_INSERT_ID();
+
+INSERT INTO cells (
+    name,
+    left_id,
+    right_id
+) VALUES (
+    'text-news-board',
+    @text_id,
+    @board_id
+);
+
 -- guild-symbol
 
 INSERT INTO images (

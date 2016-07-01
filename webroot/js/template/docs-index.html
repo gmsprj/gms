@@ -1,7 +1,19 @@
 <div class="container">
-    <h4>ドキュメント一覧</h4>
-    <ul ng-repeat="el in $ctrl.customDocs">
-        <li><a target="_self" href="/docs/view/{{ el.docId }}">{{ el.docName }}</a> (<a target="_self" href="/guilds/view/{{ el.guildId }}">{{ el.guildName }}</a>)</li>
-    </ul>
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>ドキュメント一覧</h3>
+        </div>
+    </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <ul ng-repeat="el in $ctrl.customDocs">
+                <li><a target="_self" href="/docs/view/{{ el.docId }}">{{ el.docName }}</a> (<a target="_self" href="/guilds/view/{{ el.guildId }}">{{ el.guildName }}</a>)</li>
+            </ul>
+        </div>
+    </div>
+    <hr/>
+
 </div>
 

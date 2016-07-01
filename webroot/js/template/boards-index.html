@@ -1,11 +1,19 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h4>板一覧</h4>
+            <h3>板一覧</h3>
+        </div>
+    </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-12">
             <ul ng-repeat="el in $ctrl.boards">
                 <li><a target="_self" href="/boards/view/{{ el.id }}">{{ el.name }}</a></li>
             </ul>
         </div>
     </div>
+    <hr/>
+
 </div>
 

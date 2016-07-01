@@ -1,12 +1,19 @@
 <div class="container">
-    <div class="col-sm-2">
-        <p>sidebar</p>
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>スレッド一覧</h3>
+        </div>
     </div>
-    <div class="col-sm-10">
-        <h3>スレッド一覧</h3>
-        <ul ng-repeat="el in $ctrl.threads">
-            <li><a href="threads/view/{{ el.id }}">{{ el.name }}</a></li>
-        </ul>
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <ul ng-repeat="el in $ctrl.threads">
+                <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
+            </ul>
+        </div>
     </div>
+    <hr/>
+
 </div>
 

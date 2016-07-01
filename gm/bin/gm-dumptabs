@@ -4,19 +4,10 @@
 #
 DBUSER="$GM_DBUSER"
 DBNAME="$GM_DBNAME"
-
-if [ -z $DBUSER ]; then
-	echo "Need db user name."
-	exit 1
-fi
-
-if [ -z $DBNAME ]; then
-	echo "Need db name."
-	exit 1
-fi
+DBPASS="$GM_DBPASS"
 
 echo db-user: $DBUSER
 echo db-name: $DBNAME
 
-mysqldump -u $DBUSER --no-data $DBNAME -p > $DBNAME.all-table-structures.sql
+mysqldump -u $DBUSER --no-data $DBNAME -p$DBPASS > $DBNAME.all-table-structures.sql
 

@@ -1,6 +1,7 @@
 #!/bin/bash
-DBNAME=$GM_DBNAME
-DBUSER=$GM_DBUSER
+DBNAME="$GM_DBNAME"
+DBUSER="$GM_DBUSER"
+DBPASS="$GM_DBPASS"
 BASEDIR=$(dirname "$0")
 SQLPATH="$BASEDIR/../db/gm-newsadd.sql"
 
@@ -10,7 +11,7 @@ if [ -z "$CONTENT" ]; then
     CONTENT="No content"
 fi
 
-mysql -u $DBUSER -p $DBNAME <<EOF
+mysql -u $DBUSER -p$DBPASS $DBNAME <<EOF
 `cat $SQLPATH | sed "s/{{ content }}/$CONTENT/g"`
 EOF
 

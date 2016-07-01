@@ -4,6 +4,7 @@
 #
 DBUSER="$GM_DBUSER"
 DBNAME="$GM_DBNAME"
+DBPASS="$GM_DBPASS"
 BASEDIR=$(dirname "$0")
 
 echo db-user:$DBUSER
@@ -17,7 +18,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-mysql -u $DBUSER -p $DBNAME <<EOF
+mysql -u $DBUSER -p$DBPASS $DBNAME <<EOF
 `cat $BASEDIR/../db/gm-builddb.sql`
 EOF
 

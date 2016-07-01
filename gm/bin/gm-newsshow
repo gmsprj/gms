@@ -4,8 +4,9 @@
 #
 DBUSER="$GM_DBUSER"
 DBNAME="$GM_DBNAME"
+DBPASS="$GM_DBPASS"
 TABNAME="$1"
 
-mysql -u $DBUSER -p $DBNAME <<EOF
+mysql -u $DBUSER -p$DBPASS $DBNAME <<EOF
 SELECT content FROM cells A INNER JOIN texts B ON A.left_id = B.id WHERE A.name = 'news';
 EOF

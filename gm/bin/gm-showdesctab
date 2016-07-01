@@ -4,12 +4,13 @@
 #
 DBUSER="$GM_DBUSER"
 DBNAME="$GM_DBNAME"
+DBPASS="$GM_DBPASS"
 TABNAME="$1"
 
 echo db-user: $DBUSER
 echo db-name: $DBNAME
 
-mysql -u $DBUSER -p $DBNAME <<EOF
+mysql -u $DBUSER -p$DBPASS $DBNAME <<EOF
 DESC $TABNAME;
 EOF
 

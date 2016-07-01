@@ -1,6 +1,7 @@
 #!/bin/bash
 DBNAME=$GM_DBNAME
 DBUSER=$GM_DBUSER
+DBPASS=$GM_DBPASS
 BASEDIR=$(dirname "$0")
 SQLPATH="$BASEDIR/../db/gm-boardsadd.sql"
 
@@ -15,7 +16,7 @@ if [ -z "$DESC" ]; then
     DESC="No description."
 fi
 
-mysql -u $DBUSER -p $DBNAME <<EOF
+mysql -u $DBUSER -p$DBPASS $DBNAME <<EOF
 `cat $SQLPATH | sed "s/{{ name }}/$NAME/g" | sed "s/{{ description }}/$DESC/g"`
 EOF
 

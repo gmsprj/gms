@@ -4,11 +4,12 @@
 #
 DBUSER="$GM_DBUSER"
 DBNAME="$GM_DBNAME"
+DBPASS="$GM_DBPASS"
 
 echo db-user: $DBUSER
 echo db-name: $DBNAME
 
-mysql -u $DBUSER -p $DBNAME <<EOF
+mysql -u $DBUSER -p$DBPASS $DBNAME <<EOF
 
 UPDATE sites SET name = "$1" WHERE id = 1;
 

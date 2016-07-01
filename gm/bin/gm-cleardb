@@ -1,6 +1,7 @@
 #!/bin/bash
-DBNAME=$GM_DBNAME
-DBUSER=$GM_DBUSER
+DBNAME="$GM_DBNAME"
+DBUSER="$GM_DBUSER"
+DBPASS="$GM_DBPASS"
 BASEDIR=$(dirname "$0")
 SQLPATH="$BASEDIR/../db/gm-cleardb.sql"
 
@@ -15,7 +16,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-mysql -u $DBUSER -p $DBNAME < $SQLPATH
+mysql -u $DBUSER -p$DBPASS $DBNAME < $SQLPATH
 
 exit 0
 

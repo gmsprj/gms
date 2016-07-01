@@ -116,7 +116,7 @@ INSERT INTO docs (
     state
 ) VALUES (
     '{{ name }}の対案',
-    'これは{{ name }}の提案、または文書への対案です。',
+    'これは{{ name }}の提案か文書に当てる対案です。',
     'counter'
 );
 SET @doc_id = LAST_INSERT_ID();

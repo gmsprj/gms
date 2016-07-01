@@ -15,5 +15,50 @@
     </div>
     <hr/>
 
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">文書を提案する</div>
+                <div class="panel-body">
+                    <form method="post" accept-charset="utf-8" action="/docs/add">
+                        <div style="display:none;">
+                            <input type="hidden" name="_method" value="POST"/>
+                            <input type="hidden" name="_csrfToken" value="{{ $ctrl.csrf }}"/>
+                            <input type="hidden" name="guildId" value="{{ $ctrl.guildId }}"/>
+                        </div>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label for="docState" class="col-xs-1 control-label text-muted">状態</label>
+                                <div class="col-xs-11">
+                                    <input name="docState" type="text" class="form-control" value="published" placeholder="状態" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="docName" class="col-xs-1 control-label text-muted">タイトル</label>
+                                <div class="col-xs-11">
+                                    <input name="docName" type="text" class="form-control" value="" placeholder="文書タイトル" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="docContent" class="col-xs-1 control-label text-muted">内容</label>
+                                <div class="col-xs-11">
+                                    <textarea class="col-xs-12" name="docContent" rows="5" placeholder="文書内容"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-offset-1 col-xs-11">
+                                    <input type="submit" class="btn btn-default" value="提案する" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- panel -->
+        </div><!-- col -->
+    </div><!-- row -->
+    <hr/>
+
 </div>
 

@@ -19,6 +19,7 @@ class DocsController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
+        $this->Auth->allow(['add']);
         $this->loadModel('Guilds');
         $this->loadModel('Cells');
     }
@@ -52,7 +53,11 @@ class DocsController extends AppController
             ])->all();
 
         $this->set('customDocs', $customDocs);
-        $this->set('_serialize', ['customDocs']);
+        $this->set('csrf', $this->Csrf->request->_csrfToken);
+        $this->set('_serialize', [
+            'customDocs',
+            'csrf',
+        ]);
     }
 
     /**
@@ -65,7 +70,7 @@ class DocsController extends AppController
     public function view($id = null)
     {
         $doc = $this->Docs->get($id);
-        $guild = $this->Guilds->get($doc->id);//TODO
+        $guild = $this->Guilds->get(1);//TODO: Docs のギルドを Cells から検索
 
         $this->set('doc', $doc);
         $this->set('guild', $guild);
@@ -73,6 +78,57 @@ class DocsController extends AppController
             'doc',
             'guild'
         ]);
+    }
+
+    /**
+     * Add method
+     */
+    public function add()
+    {
+        $failTo = ['controller' => 'Docs', 'action' => 'index'];
+        $doneTo = ['controller' => 'Docs', 'action' => 'index'];
+
+        // Docs
+
+        $docName = $this->request->data('docName');
+        $docContent = $this->request->data('docContent');
+        $docState = $this->request->data('docState');
+
+        $tab = TableRegistry::get('Docs');
+        $doc = $tab->newEntity([
+            'name' => $docName,
+            'content' => $docContent,
+            'state' => $docState,
+        ]);
+
+        if ($doc->errors()) {
+            $this->Flash->error(__('Invalid input data'));
+            Log::write('error', json_encode($doc->errors()));
+            return $this->redirect($failTo);
+        }
+
+        if (!$tab->save($doc)) {
+            $this->Flash->error(__('Failed to save'));
+            Log::write('error', json_encode($doc->errors()));
+            return $this->redirect($failTo);
+        }
+
+        // Cells
+
+        $tab = TableRegistry::get('Cells');
+        $cell = $tab->newEntity([
+            'name' => 'doc-owner-guild',
+            'left_id' => $doc->id,
+            'right_id' => 1,
+        ]);
+
+        if (!$tab->save($cell)) {
+            $this->Flash->error(__('Internal error'));
+            Log::write('error', json_encode($cell->errors()));
+            return $this->redirect($failTo);
+        }
+
+        return $this->redirect($doneTo);
     }
 }
 

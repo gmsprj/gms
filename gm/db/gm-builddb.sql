@@ -222,8 +222,8 @@ DROP TABLE IF EXISTS cells;
 CREATE TABLE cells (
   id int(11) NOT NULL AUTO_INCREMENT COMMENT 'セルのID',
   name varchar(32) NOT NULL COMMENT 'セルの名前',
-  left_id int(11) NOT NULL DEFAULT 1 COMMENT '左のオブジェクト ID',
-  right_id int(11) NOT NULL DEFAULT 1 COMMENT '右のオブジェクト ID',
+  left_id int(11) NOT NULL DEFAULT 1 COMMENT '左のオブジェクトID',
+  right_id int(11) NOT NULL DEFAULT 1 COMMENT '右のオブジェクトID',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='セルのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;

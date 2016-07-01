@@ -68,8 +68,6 @@ class CellsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['left_id'], 'Lefts'));
-        $rules->add($rules->existsIn(['right_id'], 'Rights'));
         return $rules;
     }
 }

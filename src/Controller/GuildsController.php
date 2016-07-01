@@ -44,7 +44,7 @@ class GuildsController extends AppController
                 'content' => 'A.content',
                 'created' => 'A.created'
             ])->where([
-                'Cells.name' => 'text-news-site'
+                'Cells.name LIKE' => '%text-news-%'
             ])->all();
         $symbol = $this->Cells->find()
             ->hydrate(false)

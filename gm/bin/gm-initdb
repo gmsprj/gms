@@ -16,7 +16,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-gm-guildsadd "無職ギルド" "無職のギルドです。"
+gm-guildsadd "練習用ギルド" "練習用のギルドです。"
 if [ $? -ne 0 ]; then
     exit 1
 fi

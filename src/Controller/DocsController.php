@@ -52,9 +52,35 @@ class DocsController extends AppController
                 'Cells.name' => 'doc-owner-guild'
             ])->all();
 
+        // Name and Description
+
+        $nd = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'texts',
+                'alias' => 'N',
+                'type' => 'INNER',
+                'conditions' => 'N.id = Cells.left_id'
+            ])->join([
+                'table' => 'texts',
+                'alias' => 'D',
+                'type' => 'INNER',
+                'conditions' => 'D.id = Cells.right_id'
+            ])->select([
+                'name' => 'N.content',
+                'description' => 'D.content',
+            ])->where([
+                'Cells.name LIKE' => '%-nd-%',
+                'N.content' => '文書について'
+            ])->first();
+
+        // Set
+
+        $this->set('nd', $nd);
         $this->set('customDocs', $customDocs);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
+            'nd',
             'customDocs',
             'csrf',
         ]);

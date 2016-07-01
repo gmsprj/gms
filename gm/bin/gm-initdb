@@ -31,6 +31,11 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+gm-ndadd "文書について" "文書についての説明。"
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+
 gm-newsadd "システムが初期化されました。"
 if [ $? -ne 0 ]; then
     exit 1

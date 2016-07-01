@@ -16,12 +16,12 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-gm-guildsadd "入門者ギルド" "入門者のためのギルドです。"
+gm-guildsadd "無職ギルド" "無職のギルドです。"
 if [ $? -ne 0 ]; then
     exit 1
 fi
 
-gm-guildsadd "開発者ギルド" "開発者のためのギルドです。"
+gm-guildsadd "開発者ギルド" "開発者のギルドです。"
 if [ $? -ne 0 ]; then
     exit 1
 fi

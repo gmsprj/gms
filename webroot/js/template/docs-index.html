@@ -24,20 +24,13 @@
                         <div style="display:none;">
                             <input type="hidden" name="_method" value="POST"/>
                             <input type="hidden" name="_csrfToken" value="{{ $ctrl.csrf }}"/>
-                            <input type="hidden" name="guildId" value="{{ $ctrl.guildId }}"/>
+                            <input type="hidden" name="docState" value="draft"/>
                         </div>
                         <div class="form-horizontal">
                             <div class="form-group">
                                 <label for="guildId" class="col-xs-1 control-label text-muted">ギルド</label>
                                 <div class="col-xs-11">
                                     <input name="guildId" type="text" class="form-control" value="1" placeholder="ID" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="docState" class="col-xs-1 control-label text-muted">状態</label>
-                                <div class="col-xs-11">
-                                    <input name="docState" type="text" class="form-control" value="published" placeholder="状態" />
                                 </div>
                             </div>
 

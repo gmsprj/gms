@@ -354,13 +354,17 @@ CREATE TABLE images (
 /**
  * text-kv-text
  *
- * boards のオーナーを表現する構造。
+ * kv ... Key and Value
+ *
+ * テキスト同士を繋いだ構造。
+ * 左の texts (key) は検索等で参照される。
  *
  *      cells
  *    /       \
- * boards     xxx
+ * texts     texts
  *
- * cells.name: 'board-owner-xxxs'
- * cells.left_id: boards.id 
- * cells.right_id: xxxs.id (guilds, docs, ...)
+ * cells.name: 'text-kv-text'
+ * cells.left_id: texts.id (key)
+ * cells.right_id: texts.id (value)
  */
+

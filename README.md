@@ -24,6 +24,10 @@ None.
 * Initialize database by ``` gm/ ``` tools
 * Run development server of CakePHP3
 
+### XAMPP
+
+* https://omikujio.github.io/fwu-support/manual/  
+
 ## History
 
 | Branch      | Description                                                   |

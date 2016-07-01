@@ -135,10 +135,19 @@ class DocsController extends AppController
         $failTo = ['controller' => 'Docs', 'action' => 'index'];
         $doneTo = ['controller' => 'Docs', 'action' => 'index'];
 
+        // Users
+        /*
+        $user = $this->Auth->user();
+        if (!$user) {
+            $this->Flash->error(__('文書の提案にはサインインが必要です。'));
+            return $this->redirect($failTo);
+        }*/
+
         // Guilds
 
         $guildId = $this->request->data('guildId'); // doc-owner-guild の guilds.id
-        if (!TableRegistry::get('Guilds')->exists(['id' => $guildId])) {
+        $guild = $this->Guilds->get($guildId);
+        if (!$guild) {
             $this->Flash->error(__('Not found guild id'));
             Log::write('error', 'Not found guild id ' + $guildId);
             return $this->redirect($failTo);
@@ -175,6 +184,32 @@ class DocsController extends AppController
         $cell = $tab->newEntity([
             'name' => 'doc-owner-guild',
             'left_id' => $doc->id,
+            'right_id' => $guildId,
+        ]);
+
+        if (!$tab->save($cell)) {
+            $this->Flash->error(__('Internal error'));
+            Log::write('error', json_encode($cell->errors()));
+            return $this->redirect($failTo);
+        }
+
+        // News (text-news-guild)
+
+        $tab = TableRegistry::get('Texts');
+        $text = $tab->newEntity([
+            'content' => __($guild->name . 'で「' . $docName . '」が提案されました。'),
+        ]);
+
+        if (!$tab->save($text)) {
+            $this->Flash->error(__('Internal error'));
+            Log::write('error', json_encode($text->errors()));
+            return $this->redirect($failTo);
+        }
+
+        $tab = TableRegistry::get('Cells');
+        $cell = $tab->newEntity([
+            'name' => 'text-news-guild',
+            'left_id' => $text->id,
             'right_id' => $guildId,
         ]);
 

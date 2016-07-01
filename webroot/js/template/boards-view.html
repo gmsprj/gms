@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h4>{{ $ctrl.board.name }}板</h4>
+            <h3>{{ $ctrl.board.name }}</h3>
         </div>
     </div>
     <hr/>
@@ -16,27 +16,48 @@
     </div>
     <hr/>
 
-    <!-- 新規スレッド -->
-    <div class="row">
-        <h4>新規スレッド作成</h4>
-        <form method="post" accept-charset="utf-8" action="/threads/add">
-            <div style="display:none;">
-                <input type="hidden" name="_method" value="POST"/>
-                <input type="hidden" name="_csrfToken" value="20a032c02ad93150625513c65b6f94b12421e7ec646e9bc65370c28f58e91757b407e1499772322e8377c8c3322ec40e70cd09949200255bda2ae41c79d854a6"/>
-            </div>
-            <input type="hidden" name="boardId" value="2"/>
-            <label for="threadname">スレッド名：</label>
-            <input type="text" name="threadName" value="スレッド名"/>
-            <label for="postname">名前：</label>
-            <input type="text" name="postName" value="名無しさん"/>
-            <label for="postcontent">内容：</label>
-            <textarea name="postContent" rows="5">内容なし</textarea>
-            <div class="submit">
-                <input type="submit" value="作成"/>
-            </div>
-        </form>    
-    </div>
-    <hr/>
+    <div class="panel panel-default">
+        <div class="panel-heading">新規スレッド作成</div>
+        <div class="panel-body">
+            <form method="post" accept-charset="utf-8" action="/threads/add">
+                <div style="display:none;">
+                    <input type="hidden" name="_method" value="POST"/>
+                    <input type="hidden" name="_csrfToken" value="{{ $ctrl.csrf }}"/>
+                    <input type="hidden" name="boardId" value="{{ $ctrl.board.id }}"/>
+                </div>
 
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="threadName" class="col-xs-1 control-label text-muted">スレッド名</label>
+                        <div class="col-xs-11">
+                            <input class="col-xs-12" name="threadName" rows="5" placeholder="新規スレッド"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-1">
+                        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                        </div>
+                        <div class="col-xs-11">
+                            <input name="postName" type="text" class="form-control" value="{{ $ctrl.postName }}" placeholder="{{ $ctrl.postName }}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postContent" class="col-xs-1 control-label text-muted">内容</label>
+                        <div class="col-xs-11">
+                            <textarea class="col-xs-12" name="postContent" rows="5" placeholder="内容"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-offset-1 col-xs-11">
+                            <input type="submit" class="btn btn-default" value="Submit" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

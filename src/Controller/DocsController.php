@@ -58,20 +58,20 @@ class DocsController extends AppController
             ->hydrate(false)
             ->join([
                 'table' => 'texts',
-                'alias' => 'N',
+                'alias' => 'K',
                 'type' => 'INNER',
-                'conditions' => 'N.id = Cells.left_id'
+                'conditions' => 'K.id = Cells.left_id'
             ])->join([
                 'table' => 'texts',
-                'alias' => 'D',
+                'alias' => 'V',
                 'type' => 'INNER',
-                'conditions' => 'D.id = Cells.right_id'
+                'conditions' => 'V.id = Cells.right_id'
             ])->select([
-                'name' => 'N.content',
-                'description' => 'D.content',
+                'key' => 'K.content',
+                'value' => 'V.content',
             ])->where([
-                'Cells.name LIKE' => '%-nd-%',
-                'N.content' => '文書について'
+                'Cells.name LIKE' => '%-kv-%',
+                'K.content' => '文書について'
             ])->first();
 
         // Set

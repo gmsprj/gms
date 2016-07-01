@@ -173,21 +173,10 @@ CREATE TABLE users (
  *   30日で寿命が尽きる。
  *   条件を満たすと published へ遷移。
  *
- * - counter
- *   名称: 対案
- *   draft, published への対案。
- *   30日で寿命が尽きる。
- *   条件を満たすと draft, published へ遷移。
- *
  * - published
  *   名称: 文書、公開文書
  *   恒久的に保存される。
- *   条件を満たすと draft, closed へ遷移。
- *
- * - closed
- *   名称: 廃案
- *   3日で寿命が尽きる。
- *   条件を満たすと draft, counter へ遷移。
+ *   条件を満たすと draft へ遷移。
  */
 
 DROP TABLE IF EXISTS docs;
@@ -362,3 +351,16 @@ CREATE TABLE images (
  * cells.right_id: xxxs.id (guilds, docs, ...)
  */
 
+/**
+ * text-kv-text
+ *
+ * boards のオーナーを表現する構造。
+ *
+ *      cells
+ *    /       \
+ * boards     xxx
+ *
+ * cells.name: 'board-owner-xxxs'
+ * cells.left_id: boards.id 
+ * cells.right_id: xxxs.id (guilds, docs, ...)
+ */

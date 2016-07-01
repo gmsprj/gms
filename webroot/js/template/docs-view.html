@@ -1,8 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h3>{{ $ctrl.doc.name }}</h3>
-            <p>{{ $ctrl.doc.description }}</p>
+            <h3>{{ $ctrl.customDoc.docName }}</h3>
         </div>
     </div>
     <hr/>
@@ -11,12 +10,12 @@
         <div class="col-sm-12">
             <h4>概要</h4>
             <ul>
+                <li>文書タイトル: {{ $ctrl.customDoc.docName }}</li>
                 <li>タグ: <a href="#">マニュアル</a> <a href="#">ギルド</a> <a href="#">初心者</a></li>
-                <li>文書タイトル: {{ $ctrl.doc.name }}</li>
-                <li>状態: {{ $ctrl.doc.state }}</li>
-                <li>原案: xxx</li>
-                <li>作成日: {{ $ctrl.doc.created }}</li>
-                <li>最終更新日: {{ $ctrl.doc.modified }}</li>
+                <li>作成ギルド: {{ $ctrl.customDoc.guildName }}</li>
+                <li>状態: {{ $ctrl.customDoc.docState }}</li>
+                <li>作成日: {{ $ctrl.customDoc.docCreated }}</li>
+                <li>最終更新日: {{ $ctrl.customDoc.docModified }}</li>
             </ul>
         </div>
     </div>
@@ -25,7 +24,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h4>内容</h4>
-            <p style="white-space: pre;">{{ $ctrl.doc.content }}</p>
+            <p style="white-space: pre;">{{ $ctrl.customDoc.docContent }}</p>
         </div>
     </div>
     <hr/>

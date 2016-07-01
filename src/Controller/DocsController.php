@@ -95,11 +95,34 @@ class DocsController extends AppController
      */
     public function view($id = null)
     {
-        $doc = $this->Docs->get($id);
+        $customDoc = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'docs',
+                'alias' => 'D',
+                'type' => 'INNER',
+                'conditions' => 'D.id = Cells.left_id'
+            ])->join([
+                'table' => 'guilds',
+                'alias' => 'G',
+                'type' => 'INNER',
+                'conditions' => 'G.id = Cells.right_id'
+            ])->select([
+                'docId' => 'D.id',
+                'docName' => 'D.name',
+                'docContent' => 'D.content',
+                'docState' => 'D.state',
+                'docCreated' => 'D.created',
+                'docModified' => 'D.modified',
+                'guildId' => 'G.id',
+                'guildName' => 'G.name',
+            ])->where([
+                'Cells.name' => 'doc-owner-guild',
+            ])->first();
 
-        $this->set('doc', $doc);
+        $this->set('customDoc', $customDoc);
         $this->set('_serialize', [
-            'doc',
+            'customDoc',
         ]);
     }
 

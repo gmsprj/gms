@@ -64,9 +64,8 @@
         
         <div class="col-sm-6">
             <h4>ニュース</h4>
-            <ul>
-                <li>20xx/x/x ... 同盟を結びました。</li>
-                <li>20xx/x/x ... ギルドが開設されました。</li>
+            <ul ng-repeat="el in $ctrl.news">
+                <li>{{ el.created }} ... {{ el.content }}</li>
             </ul>
         </div>
     </div>

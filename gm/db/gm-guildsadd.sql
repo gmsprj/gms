@@ -1,3 +1,5 @@
+-- guilds
+
 INSERT INTO guilds (
     name,
     description
@@ -130,3 +132,23 @@ INSERT INTO cells (
     @doc_id,
     @guild_id
 );
+
+-- text-news-guild
+
+INSERT INTO texts (
+    content
+) VALUES (
+    '{{ name }}が新設されました。'
+);
+SET @text_id = LAST_INSERT_ID();
+
+INSERT INTO cells (
+    name,
+    left_id,
+    right_id
+) VALUES (
+    'text-news-guild',
+    @text_id,
+    @guild_id
+);
+

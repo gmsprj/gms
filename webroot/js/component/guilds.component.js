@@ -45,6 +45,7 @@ mod.component('guildsView', {
                 self.publishedDocs = res.data.publishedDocs;
                 self.draftDocs = res.data.draftDocs;
                 self.counterDocs = res.data.counterDocs;
+                self.news = res.data.news;
             });
         }
     ]

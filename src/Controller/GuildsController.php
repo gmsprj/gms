@@ -142,11 +142,8 @@ class GuildsController extends AppController
                 'name' => 'B.name',
             ])->where([
                 'Cells.name' => 'image-symbol-guild',
-                'G.id' => $guild->id,
+                'G.id' => $id,
             ])->all();
-        $publishedDocs = $this->getDocs($guild->id, 'published');
-        $draftDocs = $this->getDocs($guild->id, 'draft');
-        $counterDocs = $this->getDocs($guild->id, 'counter');
         $guildSymbols = $this->Cells->find()
             ->hydrate(false)
             ->join([
@@ -158,12 +155,30 @@ class GuildsController extends AppController
                 'url' => 'A.url',
             ])->where([
                 'Cells.name' => 'image-symbol-guild',
-                'Cells.right_id' => $guild->id,
+                'Cells.right_id' => $id,
             ])->all();
+        $news = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'texts',
+                'alias' => 'T',
+                'type' => 'INNER',
+                'conditions' => 'T.id = Cells.left_id',
+            ])->select([
+                'content' => 'T.content',
+                'created' => 'T.created',
+            ])->where([
+                'Cells.name' => 'text-news-guild',
+                'Cells.right_id' => $id,
+            ])->all();
+        $publishedDocs = $this->getDocs($id, 'published');
+        $draftDocs = $this->getDocs($id, 'draft');
+        $counterDocs = $this->getDocs($id, 'counter');
 
         $this->set('guild', $guild);
         $this->set('guildSymbols', $guildSymbols);
         $this->set('boards', $boards);
+        $this->set('news', $news);
         $this->set('publishedDocs', $publishedDocs);
         $this->set('draftDocs', $draftDocs);
         $this->set('counterDocs', $counterDocs);
@@ -171,6 +186,7 @@ class GuildsController extends AppController
             'guild',
             'guildSymbols',
             'boards',
+            'news',
             'publishedDocs',
             'draftDocs',
             'counterDocs',

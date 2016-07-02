@@ -21,9 +21,11 @@
         <div class="col-sm-12">
             <h4>概要</h4>
             <ul>
+                <li>文書ID: {{ $ctrl.customDoc.docId }}</li>
                 <li>文書タイトル: {{ $ctrl.customDoc.docName }}</li>
                 <li>タグ: <a href="#">マニュアル</a> <a href="#">ギルド</a> <a href="#">初心者</a></li>
                 <li>作成ギルド: <a target="_self" href="/guilds/view/{{ $ctrl.customDoc.guildId }}">{{ $ctrl.customDoc.guildName }}</a></li>
+                <li>参照先スレッド: <a target="_self" href="/threads/view/{{ $ctrl.thread.id }}">{{ $ctrl.thread.name }}</a></li>
                 <li>状態: {{ $ctrl.customDoc.docState }}</li>
                 <li>作成日: {{ $ctrl.customDoc.docCreated }}</li>
                 <li>最終更新日: {{ $ctrl.customDoc.docModified }}</li>
@@ -36,6 +38,16 @@
         <div class="col-sm-12">
             <h4>内容</h4>
             <p style="white-space: pre;">{{ $ctrl.customDoc.docContent }}</p>
+        </div>
+    </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>参照先スレッド (<a target="_self" href="/threads/view/{{ $ctrl.thread.id }}">{{ $ctrl.thread.name }}</a>)</h4>
+            <ul ng-repeat="el in $ctrl.posts">
+                <li>{{ $index+1 }}: {{ el.name }}: {{ el.content }}</li>
+            </ul>
         </div>
     </div>
     <hr/>

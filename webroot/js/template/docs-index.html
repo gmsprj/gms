@@ -32,27 +32,34 @@
                         </div>
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label for="guildId" class="col-xs-1 control-label text-muted">ギルド</label>
-                                <div class="col-xs-11">
+                                <label for="guildId" class="col-xs-2 control-label text-muted">ギルド</label>
+                                <div class="col-xs-10">
                                     <input name="guildId" type="text" class="form-control" value="1" placeholder="ID" />
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="docName" class="col-xs-1 control-label text-muted">タイトル</label>
-                                <div class="col-xs-11">
-                                    <input name="docName" type="text" class="form-control" value="" placeholder="文書タイトル" />
+                                <label for="threadId" class="col-xs-2 control-label text-muted">参照スレッド</label>
+                                <div class="col-xs-10">
+                                    <input name="threadId" type="text" class="form-control" value="1" placeholder="ID" />
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="docContent" class="col-xs-1 control-label text-muted">内容</label>
-                                <div class="col-xs-11">
-                                    <textarea class="col-xs-12" name="docContent" rows="5" placeholder="文書内容"></textarea>
+                                <label for="docName" class="col-xs-2 control-label text-muted">提案名</label>
+                                <div class="col-xs-10">
+                                    <input name="docName" type="text" class="form-control" value="" placeholder="提案名" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="docContent" class="col-xs-2 control-label text-muted">提案内容</label>
+                                <div class="col-xs-10">
+                                    <textarea class="col-xs-12" name="docContent" rows="5" placeholder="提案内容"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-xs-offset-1 col-xs-11">
+                                <div class="col-xs-offset-2 col-xs-10">
                                     <input type="submit" class="btn btn-default" value="提案する" />
                                 </div>
                             </div>

@@ -110,6 +110,18 @@ INSERT INTO cells (
     @guild_id
 );
 
+INSERT INTO cells (
+    name,
+    left_id,
+    right_id
+) VALUES (
+    'thread-ref-doc',
+    @thread_id,
+    @doc_id
+);
+
+-- docs
+
 INSERT INTO docs (
     name,
     content,
@@ -129,6 +141,16 @@ INSERT INTO cells (
     'doc-owner-guild',
     @doc_id,
     @guild_id
+);
+
+INSERT INTO cells (
+    name,
+    left_id,
+    right_id
+) VALUES (
+    'thread-ref-doc',
+    @thread_id,
+    @doc_id
 );
 
 -- text-news-guild

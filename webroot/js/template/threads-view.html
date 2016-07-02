@@ -16,7 +16,7 @@
         <h3>{{ $ctrl.board.name }} &gt; {{ $ctrl.thread.name }}</h3>
         <hr/>
 
-        <p>このスレッドを<a href="/watchs/">ウォッチ</a>する。でユーザーページからスレッド一覧が見れるみたいな機能。</p>
+        <p>スレッドID: {{ $ctrl.thread.id }}</p>
         <hr/>
 
         <div ng-repeat="el in $ctrl.posts">
@@ -24,7 +24,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-sm-12">
-                            <strong>{{ el.name }}</strong> <span class="text-muted">{{ el.created }}</span>
+                            <span>{{ $index+1 }}</span> <strong>{{ el.name }}</strong> <span class="text-muted">{{ el.created }}</span>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-xs-offset-1 col-xs-11">
-                                <input type="submit" class="btn btn-default" value="Submit" />
+                                <input type="submit" class="btn btn-default" value="書き込む" />
                             </div>
                         </div>
                     </div>

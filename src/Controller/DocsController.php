@@ -21,6 +21,7 @@ class DocsController extends AppController
         $this->viewBuilder()->layout('gm-default');
         $this->Auth->allow(['add']);
         $this->loadModel('Guilds');
+        $this->loadModel('Posts');
         $this->loadModel('Cells');
     }
 
@@ -120,9 +121,31 @@ class DocsController extends AppController
                 'Cells.name' => 'doc-owner-guild',
                 'D.id' => $id,
             ])->first();
+        $thread = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'threads',
+                'alias' => 'T',
+                'type' => 'INNER',
+                'conditions' => 'T.id = Cells.left_id'
+            ])->select([
+                'id' => 'T.id',
+                'name' => 'T.name',
+            ])->where([
+                'Cells.name' => 'thread-ref-doc',
+                'Cells.right_id' => $id,
+            ])->first();
+        $posts = $this->Posts->find()
+            ->where([
+                'thread_id' => $thread['id'],
+            ])->all();
 
+        $this->set('thread', $thread);
+        $this->set('posts', $posts);
         $this->set('customDoc', $customDoc);
         $this->set('_serialize', [
+            'thread',
+            'posts',
             'customDoc',
         ]);
     }
@@ -178,6 +201,22 @@ class DocsController extends AppController
             return $this->redirect($failTo);
         }
 
+        // Cells for thread-ref-doc 
+        
+        $threadId = $this->request->data('threadId'); // thread-ref-doc の threads.id
+        $tab = TableRegistry::get('Cells');
+        $cell = $tab->newEntity([
+            'name' => 'thread-ref-doc',
+            'left_id' => $threadId,
+            'right_id' => $doc->id,
+        ]);
+
+        if (!$tab->save($cell)) {
+            $this->Flash->error(__('Failed to save'));
+            Log::write('error', json_encode($cell->errors()));
+            return $this->redirect($failTo);
+        }
+
         // Cells for doc-owner-guild
 
         $tab = TableRegistry::get('Cells');
@@ -193,7 +232,7 @@ class DocsController extends AppController
             return $this->redirect($failTo);
         }
 
-        // News (text-news-guild)
+        // text-news-guild
 
         $tab = TableRegistry::get('Texts');
         $text = $tab->newEntity([

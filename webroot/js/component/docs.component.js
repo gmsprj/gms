@@ -29,6 +29,8 @@ mod.component('docsView', {
 
             $http.get(path).then(function(res) {
                 //console.log(res);
+                self.thread = res.data.thread;
+                self.posts = res.data.posts;
                 self.customDoc = res.data.customDoc;
             });
         }

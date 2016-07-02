@@ -288,7 +288,7 @@ CREATE TABLE images (
  *    /       \
  * texts     (sites, guilds, boards, posts, ...)
  *
- * cells.name: 'text-news-xxx'
+ * cells.name: 'text-news-xxx' (example 'text-news-guild' でギルドのニュース)
  * cells.left_id: texts.id
  * cells.right_id: xxxs.id
  * texts.content: news のテキスト内容。
@@ -297,8 +297,7 @@ CREATE TABLE images (
 /**
  * image-symbol-xxx
  *
- * 抽象化された構造。表現に cells, images, xxx を使う。
- * Web サイトと、そのシンボル画像を cells で繋ぐ。
+ * シンボル画像とオブジェクトを cells で繋ぐ。
  *
  *      cells
  *    /       \
@@ -310,60 +309,53 @@ CREATE TABLE images (
  */
 
 /**
- * user-owner-xxx
+ * xxx-owner-xxx
  *
- * users のオーナーを表現する構造。
+ * 所属を表現する構造。
+ * 左がオブジェクト、右が所属先のオブジェクト。
  *
- *      cells
- *    /       \
- * users      xxxs
- *
- * cells.name: 'user-owner-xxxs'
- * cells.left_id: users.id 
- * cells.right_id: xxxs.id (guilds, sites, ...)
- */
-
-/**
- * doc-owner-xxx
- *
- * docs のオーナーを表現する構造。
+ * 'doc-owner-guild' で Docs のオーナーは Guilds であると言う状態。
  *
  *      cells
  *    /       \
- * docs       xxxs
+ * xxxs       xxxs
  *
- * cells.name: 'doc-owner-xxxs'
- * cells.left_id: docs.id 
- * cells.right_id: xxxs.id (guilds, users, ...)
+ * cells.name: 'xxx-owner-xxx' (example 'doc-owner-guild')
+ * cells.left_id: xxxs.id 
+ * cells.right_id: xxxs.id 
  */
 
 /**
- * board-owner-xxx
+ * xxx-ref-xxx
  *
- * boards のオーナーを表現する構造。
+ * 参照先と参照元を表現する構造。
+ * 左が参照先、右が参照元。
+ *
+ * 'thread-ref-doc' で、Threads が Docs に参照されている状態を表す。
  *
  *      cells
  *    /       \
- * boards     xxx
+ * xxxs       xxxs
  *
- * cells.name: 'board-owner-xxxs'
- * cells.left_id: boards.id 
- * cells.right_id: xxxs.id (guilds, docs, ...)
+ * cells.name: 'xxx-ref-xxx'
+ * cells.left_id: xxxs.id 
+ * cells.right_id: xxxs.id
  */
 
 /**
- * text-kv-text
+ * text-kv-xxx
  *
  * kv ... Key and Value
  *
- * テキスト同士を繋いだ構造。
- * 左の texts (key) は検索等で参照される。
+ * キーと値を表す構造。
+ * 左がキー、右が値。
+ * 左のキー(texts)は検索等で参照される。
  *
  *      cells
  *    /       \
- * texts     texts
+ * texts     xxxs
  *
- * cells.name: 'text-kv-text'
+ * cells.name: 'text-kv-xxx' (example 'text-kv-text')
  * cells.left_id: texts.id (key)
  * cells.right_id: texts.id (value)
  */

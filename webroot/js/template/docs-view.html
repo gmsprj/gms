@@ -7,12 +7,19 @@
                     この文書は公開されています。
                 </div>
                 <div ng-switch-when="draft">
-                    この文書は提案中です。
+                    これは<a target="_self" href="/guilds/view/{{ $ctrl.customDoc.guildId }}">{{ $ctrl.customDoc.guildName }}</a>で提案されている文書です。
                 </div>
                 <div ng-switch-default>
-                    この文書の詳細は不明です(´・ω・｀)。
+                    この文書の詳細は不明です\(´・ω・｀)/ｽﾞｺｰ
                 </div>
             </div>
+        </div>
+    </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <a target="_self" href="/docs/edit/{{ $ctrl.customDoc.docId }}">編集する</a>
         </div>
     </div>
     <hr/>

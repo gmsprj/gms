@@ -37,5 +37,21 @@ mod.component('docsView', {
     ]
 })
 
+mod.component('docsEdit', {
+    templateUrl: '/js/template/docs-edit.html',
+    controller: ['$http', '$location',
+        function GuildsViewCtrl($http, $location) {
+            var self = this;
+            var path = $location.$$path + '.json';
+            //console.log(path);
+
+            $http.get(path).then(function(res) {
+                //console.log(res);
+                self.doc = res.data.doc;
+                self.csrf = res.data.csrf;
+            });
+        }
+    ]
+})
 }());
 

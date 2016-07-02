@@ -19,7 +19,7 @@ class DocsController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
-        $this->Auth->allow(['add']);
+        $this->Auth->allow(['add', 'edit']);// TODO: デバッグ用の allow
         $this->loadModel('Guilds');
         $this->loadModel('Posts');
         $this->loadModel('Cells');
@@ -259,6 +259,20 @@ class DocsController extends AppController
         }
 
         return $this->redirect($doneTo);
+    }
+
+    /**
+     * Edit method
+     */
+    public function edit($id = null)
+    {
+        $doc = $this->Docs->get($id);
+        $this->set('doc', $doc);
+        $this->set('csrf', $this->Csrf->request->_csrfToken);
+        $this->set('_serialize', [
+            'doc',
+            'csrf',
+        ]);
     }
 }
 

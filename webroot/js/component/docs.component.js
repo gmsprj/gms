@@ -46,8 +46,9 @@ mod.component('docsEdit', {
             //console.log(path);
 
             $http.get(path).then(function(res) {
-                //console.log(res);
+               // console.log(res);
                 self.doc = res.data.doc;
+                self.thread = res.data.thread;
                 self.csrf = res.data.csrf;
             });
         }

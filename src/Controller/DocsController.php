@@ -19,7 +19,7 @@ class DocsController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
-        $this->Auth->allow(['add', 'edit']);// TODO: デバッグ用の allow
+        $this->Auth->allow(['add', 'edit', 'update']);// TODO: デバッグ用の allow
         $this->loadModel('Guilds');
         $this->loadModel('Posts');
         $this->loadModel('Cells');
@@ -267,12 +267,48 @@ class DocsController extends AppController
     public function edit($id = null)
     {
         $doc = $this->Docs->get($id);
+
+        $thread = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'threads',
+                'alias' => 'T',
+                'type' => 'INNER',
+                'conditions' => 'T.id = Cells.left_id'
+            ])->select([
+                'id' => 'T.id',
+                'name' => 'T.name',
+            ])->where([
+                'Cells.name' => 'thread-ref-doc',
+                'Cells.right_id' => $id,
+            ])->first();
+
         $this->set('doc', $doc);
+        $this->set('thread', $thread);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
             'doc',
+            'thread',
             'csrf',
         ]);
+    }
+
+    public function update()
+    {
+        $id = $this->request->data('id');
+        $name = $this->request->data('name');
+        $content = $this->request->data('content');
+        $threadId = $this->request->data('threadId');
+        $doneTo = ['controller' => 'Docs', 'action' => 'view', $id];
+
+        $doc = $this->Docs->get($id);
+        $doc->name = $name;
+        $doc->content = $content;
+        
+        $tab = TableRegistry::get('Docs');
+        $tab->save($doc);
+
+        $this->redirect($doneTo);
     }
 }
 

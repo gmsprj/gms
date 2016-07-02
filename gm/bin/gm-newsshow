@@ -8,5 +8,5 @@ DBPASS="$GM_DBPASS"
 TABNAME="$1"
 
 mysql -u $DBUSER -p$DBPASS $DBNAME <<EOF
-SELECT content FROM cells A INNER JOIN texts B ON A.left_id = B.id WHERE A.name = 'news';
+SELECT content FROM cells A INNER JOIN texts B ON A.left_id = B.id WHERE A.name LIKE '%-news-%';
 EOF

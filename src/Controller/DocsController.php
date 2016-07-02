@@ -234,29 +234,11 @@ class DocsController extends AppController
 
         // text-news-guild
 
-        $tab = TableRegistry::get('Texts');
-        $text = $tab->newEntity([
-            'content' => __($guild->name . 'で「' . $docName . '」が提案されました。'),
+        $this->addNews([
+            'id' => $guildId,
+            'name' => 'guild',
+            'content' => sprintf('%sで「%s」が提案されました。', $guild->name, $docName)
         ]);
-
-        if (!$tab->save($text)) {
-            $this->Flash->error(__('Internal error'));
-            Log::write('error', json_encode($text->errors()));
-            return $this->redirect($failTo);
-        }
-
-        $tab = TableRegistry::get('Cells');
-        $cell = $tab->newEntity([
-            'name' => 'text-news-guild',
-            'left_id' => $text->id,
-            'right_id' => $guildId,
-        ]);
-
-        if (!$tab->save($cell)) {
-            $this->Flash->error(__('Internal error'));
-            Log::write('error', json_encode($cell->errors()));
-            return $this->redirect($failTo);
-        }
 
         return $this->redirect($doneTo);
     }
@@ -302,11 +284,18 @@ class DocsController extends AppController
         $doneTo = ['controller' => 'Docs', 'action' => 'view', $id];
 
         $doc = $this->Docs->get($id);
+        $oldName = $doc->name;
         $doc->name = $name;
         $doc->content = $content;
         
         $tab = TableRegistry::get('Docs');
         $tab->save($doc);
+
+        $this->addNews([
+            'id' => $id,
+            'name' => 'doc',
+            'content' => sprintf('文書「%s」が更新されました。', $oldName)
+        ]);
 
         $this->redirect($doneTo);
     }

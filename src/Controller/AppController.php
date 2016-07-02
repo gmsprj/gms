@@ -16,6 +16,8 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
+use Cake\Log\Log;
 
 /**
  * Application Controller
@@ -90,5 +92,36 @@ class AppController extends Controller
 
         $this->set('site', $this->Sites->find()->first());
         $this->set('user', $this->Auth->user());
+    }
+
+    protected function addNews($params)
+    {
+        $textTab = TableRegistry::get('Texts');
+        $cellsTab = TableRegistry::get('Cells');
+
+        $text = $textTab->newEntity([
+            'content' => __($params['content']),
+        ]);
+
+        if (!$textTab->save($text)) {
+            $this->Flash->error(__('Internal error'));
+            Log::write('error', json_encode($text->errors()));
+            return false;
+        }
+
+        $cell = $cellsTab->newEntity([
+            'name' => 'text-news-' . $params['name'],
+            'left_id' => $text->id,
+            'right_id' => $params['id'],
+        ]);
+
+        if (!$cellsTab->save($cell)) {
+            $this->Flash->error(__('Internal error'));
+            Log::write('error', json_encode($cell->errors()));
+            $textTab->delete($text);
+            return false;
+        }
+
+        return true;
     }
 }

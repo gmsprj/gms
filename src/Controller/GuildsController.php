@@ -47,7 +47,7 @@ class GuildsController extends AppController
                 'Cells.name LIKE' => '%text-news-%'
             ])->order([
                 'A.created' => 'DESC'
-            ])->all();
+            ])->limit(5);
         $symbol = $this->Cells->find()
             ->hydrate(false)
             ->join([
@@ -172,7 +172,9 @@ class GuildsController extends AppController
             ])->where([
                 'Cells.name' => 'text-news-guild',
                 'Cells.right_id' => $id,
-            ])->all();
+            ])->order([
+                'T.created' => 'DESC'
+            ])->limit(5);
         $publishedDocs = $this->getDocs($id, 'published');
         $draftDocs = $this->getDocs($id, 'draft');
         $counterDocs = $this->getDocs($id, 'counter');

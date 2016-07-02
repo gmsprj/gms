@@ -163,6 +163,14 @@ class ThreadsController extends AppController
             $threadsTable->delete($newThread);
         }
 
+        // News
+
+        $this->addNews([
+            'name' => 'board',
+            'id' => $boardId,
+            'content' => sprintf('%sに新規スレッド「%s」が作成されました。', $board->name, $threadName),
+        ]);
+
         return $this->redirect($redirect);
     }
 }

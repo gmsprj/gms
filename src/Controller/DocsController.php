@@ -19,6 +19,7 @@ class DocsController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
+        $this->Auth->allow(['add']);
         $this->loadModel('Guilds');
         $this->loadModel('Cells');
     }
@@ -51,8 +52,38 @@ class DocsController extends AppController
                 'Cells.name' => 'doc-owner-guild'
             ])->all();
 
+        // Name and Description
+
+        $nd = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'texts',
+                'alias' => 'K',
+                'type' => 'INNER',
+                'conditions' => 'K.id = Cells.left_id'
+            ])->join([
+                'table' => 'texts',
+                'alias' => 'V',
+                'type' => 'INNER',
+                'conditions' => 'V.id = Cells.right_id'
+            ])->select([
+                'key' => 'K.content',
+                'value' => 'V.content',
+            ])->where([
+                'Cells.name LIKE' => '%-kv-%',
+                'K.content' => '文書について'
+            ])->first();
+
+        // Set
+
+        $this->set('nd', $nd);
         $this->set('customDocs', $customDocs);
-        $this->set('_serialize', ['customDocs']);
+        $this->set('csrf', $this->Csrf->request->_csrfToken);
+        $this->set('_serialize', [
+            'nd',
+            'customDocs',
+            'csrf',
+        ]);
     }
 
     /**
@@ -64,15 +95,131 @@ class DocsController extends AppController
      */
     public function view($id = null)
     {
-        $doc = $this->Docs->get($id);
-        $guild = $this->Guilds->get($doc->id);//TODO
+        $customDoc = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'docs',
+                'alias' => 'D',
+                'type' => 'INNER',
+                'conditions' => 'D.id = Cells.left_id'
+            ])->join([
+                'table' => 'guilds',
+                'alias' => 'G',
+                'type' => 'INNER',
+                'conditions' => 'G.id = Cells.right_id'
+            ])->select([
+                'docId' => 'D.id',
+                'docName' => 'D.name',
+                'docContent' => 'D.content',
+                'docState' => 'D.state',
+                'docCreated' => 'D.created',
+                'docModified' => 'D.modified',
+                'guildId' => 'G.id',
+                'guildName' => 'G.name',
+            ])->where([
+                'Cells.name' => 'doc-owner-guild',
+                'D.id' => $id,
+            ])->first();
 
-        $this->set('doc', $doc);
-        $this->set('guild', $guild);
+        $this->set('customDoc', $customDoc);
         $this->set('_serialize', [
-            'doc',
-            'guild'
+            'customDoc',
         ]);
+    }
+
+    /**
+     * Add method
+     */
+    public function add()
+    {
+        $failTo = ['controller' => 'Docs', 'action' => 'index'];
+        $doneTo = ['controller' => 'Docs', 'action' => 'index'];
+
+        // Users
+        /*
+        $user = $this->Auth->user();
+        if (!$user) {
+            $this->Flash->error(__('文書の提案にはサインインが必要です。'));
+            return $this->redirect($failTo);
+        }*/
+
+        // Guilds
+
+        $guildId = $this->request->data('guildId'); // doc-owner-guild の guilds.id
+        $guild = $this->Guilds->get($guildId);
+        if (!$guild) {
+            $this->Flash->error(__('Not found guild id'));
+            Log::write('error', 'Not found guild id ' + $guildId);
+            return $this->redirect($failTo);
+        }
+        
+        // Docs
+
+        $docName = $this->request->data('docName');
+        $docContent = $this->request->data('docContent');
+        $docState = $this->request->data('docState');
+
+        $tab = TableRegistry::get('Docs');
+        $doc = $tab->newEntity([
+            'name' => $docName,
+            'content' => $docContent,
+            'state' => $docState,
+        ]);
+
+        if ($doc->errors()) {
+            $this->Flash->error(__('Invalid input data'));
+            Log::write('error', json_encode($doc->errors()));
+            return $this->redirect($failTo);
+        }
+
+        if (!$tab->save($doc)) {
+            $this->Flash->error(__('Failed to save'));
+            Log::write('error', json_encode($doc->errors()));
+            return $this->redirect($failTo);
+        }
+
+        // Cells for doc-owner-guild
+
+        $tab = TableRegistry::get('Cells');
+        $cell = $tab->newEntity([
+            'name' => 'doc-owner-guild',
+            'left_id' => $doc->id,
+            'right_id' => $guildId,
+        ]);
+
+        if (!$tab->save($cell)) {
+            $this->Flash->error(__('Internal error'));
+            Log::write('error', json_encode($cell->errors()));
+            return $this->redirect($failTo);
+        }
+
+        // News (text-news-guild)
+
+        $tab = TableRegistry::get('Texts');
+        $text = $tab->newEntity([
+            'content' => __($guild->name . 'で「' . $docName . '」が提案されました。'),
+        ]);
+
+        if (!$tab->save($text)) {
+            $this->Flash->error(__('Internal error'));
+            Log::write('error', json_encode($text->errors()));
+            return $this->redirect($failTo);
+        }
+
+        $tab = TableRegistry::get('Cells');
+        $cell = $tab->newEntity([
+            'name' => 'text-news-guild',
+            'left_id' => $text->id,
+            'right_id' => $guildId,
+        ]);
+
+        if (!$tab->save($cell)) {
+            $this->Flash->error(__('Internal error'));
+            Log::write('error', json_encode($cell->errors()));
+            return $this->redirect($failTo);
+        }
+
+        return $this->redirect($doneTo);
     }
 }
 

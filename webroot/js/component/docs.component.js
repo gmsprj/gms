@@ -11,7 +11,9 @@ mod.component('docsIndex', {
 
             $http.get('/docs.json').then(function(res) {
                 //console.log(res);
+                self.nd = res.data.nd;
                 self.customDocs = res.data.customDocs;
+                self.csrf = res.data.csrf;
             });
         }
     ]
@@ -27,8 +29,7 @@ mod.component('docsView', {
 
             $http.get(path).then(function(res) {
                 //console.log(res);
-                self.doc = res.data.doc;
-                self.guild = res.data.guild;
+                self.customDoc = res.data.customDoc;
             });
         }
     ]

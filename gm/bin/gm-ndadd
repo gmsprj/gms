@@ -1,0 +1,51 @@
+#!/bin/bash
+#
+# gm-ndadd
+#
+# nd ... Name and Description
+#
+DBNAME="$GM_DBNAME"
+DBUSER="$GM_DBUSER"
+DBPASS="$GM_DBPASS"
+BASEDIR=$(dirname "$0")
+SQLPATH="$BASEDIR/../db/gm-newsadd.sql"
+
+NAME="$1"
+DESCRIPTION="$2"
+
+if [ -z "$NAME" ]; then
+    NAME="No name"
+fi
+
+if [ -z "$DESCRIPTION" ]; then
+    DESCRIPTION="No description."
+fi
+
+mysql -u $DBUSER -p$DBPASS $DBNAME <<EOF
+INSERT INTO texts (
+    content
+) VALUES (
+    '$NAME'
+);
+SET @name_id = LAST_INSERT_ID();
+
+INSERT INTO texts (
+    content
+) VALUES (
+    '$DESCRIPTION'
+);
+SET @description_id = LAST_INSERT_ID();
+
+INSERT INTO cells (
+    name,
+    left_id,
+    right_id
+) VALUES (
+    'text-kv-text',
+    @name_id,
+    @description_id
+);
+EOF
+
+exit 0
+

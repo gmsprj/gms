@@ -173,21 +173,10 @@ CREATE TABLE users (
  *   30日で寿命が尽きる。
  *   条件を満たすと published へ遷移。
  *
- * - counter
- *   名称: 対案
- *   draft, published への対案。
- *   30日で寿命が尽きる。
- *   条件を満たすと draft, published へ遷移。
- *
  * - published
  *   名称: 文書、公開文書
  *   恒久的に保存される。
- *   条件を満たすと draft, closed へ遷移。
- *
- * - closed
- *   名称: 廃案
- *   3日で寿命が尽きる。
- *   条件を満たすと draft, counter へ遷移。
+ *   条件を満たすと draft へ遷移。
  */
 
 DROP TABLE IF EXISTS docs;
@@ -222,8 +211,8 @@ DROP TABLE IF EXISTS cells;
 CREATE TABLE cells (
   id int(11) NOT NULL AUTO_INCREMENT COMMENT 'セルのID',
   name varchar(32) NOT NULL COMMENT 'セルの名前',
-  left_id int(11) NOT NULL DEFAULT 1 COMMENT '左のオブジェクト ID',
-  right_id int(11) NOT NULL DEFAULT 1 COMMENT '右のオブジェクト ID',
+  left_id int(11) NOT NULL DEFAULT 1 COMMENT '左のオブジェクトID',
+  right_id int(11) NOT NULL DEFAULT 1 COMMENT '右のオブジェクトID',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='セルのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -360,5 +349,22 @@ CREATE TABLE images (
  * cells.name: 'board-owner-xxxs'
  * cells.left_id: boards.id 
  * cells.right_id: xxxs.id (guilds, docs, ...)
+ */
+
+/**
+ * text-kv-text
+ *
+ * kv ... Key and Value
+ *
+ * テキスト同士を繋いだ構造。
+ * 左の texts (key) は検索等で参照される。
+ *
+ *      cells
+ *    /       \
+ * texts     texts
+ *
+ * cells.name: 'text-kv-text'
+ * cells.left_id: texts.id (key)
+ * cells.right_id: texts.id (value)
  */
 

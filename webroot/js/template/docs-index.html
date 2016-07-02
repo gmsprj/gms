@@ -1,18 +1,67 @@
 <div class="container">
     <div class="row">
-        <div class="col-sm-12">
-            <h3>ドキュメント一覧</h3>
+        <div class="col-sm-6">
+            <h3>{{ $ctrl.nd.key }}</h3>
+            <p>{{ $ctrl.nd.value }}</p>
+        </div>
+        <div class="col-sm-6">
         </div>
     </div>
     <hr/>
 
     <div class="row">
         <div class="col-sm-12">
+            <h4>文書一覧</h4>
             <ul ng-repeat="el in $ctrl.customDocs">
                 <li><a target="_self" href="/docs/view/{{ el.docId }}">{{ el.docName }}</a> (<a target="_self" href="/guilds/view/{{ el.guildId }}">{{ el.guildName }}</a>)</li>
             </ul>
         </div>
     </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">文書を提案する</div>
+                <div class="panel-body">
+                    <form method="post" accept-charset="utf-8" action="/docs/add">
+                        <div style="display:none;">
+                            <input type="hidden" name="_method" value="POST"/>
+                            <input type="hidden" name="_csrfToken" value="{{ $ctrl.csrf }}"/>
+                            <input type="hidden" name="docState" value="draft"/>
+                        </div>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label for="guildId" class="col-xs-1 control-label text-muted">ギルド</label>
+                                <div class="col-xs-11">
+                                    <input name="guildId" type="text" class="form-control" value="1" placeholder="ID" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="docName" class="col-xs-1 control-label text-muted">タイトル</label>
+                                <div class="col-xs-11">
+                                    <input name="docName" type="text" class="form-control" value="" placeholder="文書タイトル" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="docContent" class="col-xs-1 control-label text-muted">内容</label>
+                                <div class="col-xs-11">
+                                    <textarea class="col-xs-12" name="docContent" rows="5" placeholder="文書内容"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-offset-1 col-xs-11">
+                                    <input type="submit" class="btn btn-default" value="提案する" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- panel -->
+        </div><!-- col -->
+    </div><!-- row -->
     <hr/>
 
 </div>

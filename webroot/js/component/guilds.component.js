@@ -42,8 +42,10 @@ mod.component('guildsView', {
                 self.guild = res.data.guild;
                 self.guildSymbolUrl = res.data.guildSymbols[0].url;
                 self.boards = res.data.boards;
-                //console.log(res.data.boards);
-                self.pubDocs = res.data.pubDocs;
+                self.publishedDocs = res.data.publishedDocs;
+                self.draftDocs = res.data.draftDocs;
+                self.counterDocs = res.data.counterDocs;
+                self.news = res.data.news;
             });
         }
     ]

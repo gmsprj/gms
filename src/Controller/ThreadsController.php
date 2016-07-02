@@ -79,7 +79,14 @@ class ThreadsController extends AppController
         $this->set('posts', $posts);
         $this->set('postName', $postName);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
-        $this->set('_serialize', ['board', 'threads', 'thread', 'posts', 'postName', 'csrf']);
+        $this->set('_serialize', [
+            'board',
+            'threads',
+            'thread',
+            'posts',
+            'postName',
+            'csrf'
+        ]);
     }
 
     /**
@@ -106,7 +113,6 @@ class ThreadsController extends AppController
         $postContent = $this->request->data('postContent');
         $boardId = $this->request->data('boardId');
         $authUser = $this->Auth->user();
-        $created = new DateTime(date('Y-m-d H:i:s'));
         $redirect = ['controller' => 'Boards', 'action' => 'view', $boardId];
 
         // 板の親が guilds でかつ、認証ユーザーでないなら書き込み不可
@@ -121,8 +127,6 @@ class ThreadsController extends AppController
         $threadsTable = TableRegistry::get('Threads');
         $newThread = $threadsTable->newEntity([
             'name' => $threadName,
-            'created' => $created,
-            'modified' => $created,
             'board_id' => $boardId,
         ]);
 
@@ -143,8 +147,6 @@ class ThreadsController extends AppController
         $newPost = $postsTable->newEntity([
             'name' => $postName,
             'content' => $postContent,
-            'created' => $created,
-            'modified' => $created,
             'thread_id' => $newThread->id,
         ]);
         

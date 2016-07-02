@@ -44,7 +44,9 @@ class GuildsController extends AppController
                 'content' => 'A.content',
                 'created' => 'A.created'
             ])->where([
-                'Cells.name' => 'text-news-site'
+                'Cells.name LIKE' => '%text-news-%'
+            ])->order([
+                'A.created' => 'DESC'
             ])->all();
         $symbol = $this->Cells->find()
             ->hydrate(false)
@@ -91,6 +93,30 @@ class GuildsController extends AppController
         ]);
     }
 
+    private function getDocs($guildId, $state)
+    {
+        return $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'docs',
+                'alias' => 'D',
+                'type' => 'INNER',
+                'conditions' => 'D.id = Cells.left_id',
+            ])->join([
+                'table' => 'guilds',
+                'alias' => 'G',
+                'type' => 'INNER',
+                'conditions' => 'G.id = Cells.right_id',
+            ])->select([
+                'id' => 'D.id',
+                'name' => 'D.name',
+            ])->where([
+                'Cells.name' => 'doc-owner-guild',
+                'G.id' => $guildId,
+                'D.state' => $state,
+            ])->all();
+    }
+
     /**
      * View method
      *
@@ -117,28 +143,8 @@ class GuildsController extends AppController
                 'id' => 'B.id',
                 'name' => 'B.name',
             ])->where([
-                'Cells.name' => 'image-symbol-guild',
-                'G.id' => $guild->id,
-            ])->all();
-        $pubDocs = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'docs',
-                'alias' => 'D',
-                'type' => 'INNER',
-                'conditions' => 'D.id = Cells.left_id',
-            ])->join([
-                'table' => 'guilds',
-                'alias' => 'G',
-                'type' => 'INNER',
-                'conditions' => 'G.id = Cells.right_id',
-            ])->select([
-                'id' => 'D.id',
-                'name' => 'D.name',
-            ])->where([
-                'Cells.name' => 'doc-owner-guild',
-                'G.id' => $guild->id,
-                'D.state' => 'published',
+                'Cells.name' => 'board-owner-guild',
+                'G.id' => $id,
             ])->all();
         $guildSymbols = $this->Cells->find()
             ->hydrate(false)
@@ -151,18 +157,41 @@ class GuildsController extends AppController
                 'url' => 'A.url',
             ])->where([
                 'Cells.name' => 'image-symbol-guild',
-                'Cells.right_id' => $guild->id,
+                'Cells.right_id' => $id,
             ])->all();
+        $news = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'texts',
+                'alias' => 'T',
+                'type' => 'INNER',
+                'conditions' => 'T.id = Cells.left_id',
+            ])->select([
+                'content' => 'T.content',
+                'created' => 'T.created',
+            ])->where([
+                'Cells.name' => 'text-news-guild',
+                'Cells.right_id' => $id,
+            ])->all();
+        $publishedDocs = $this->getDocs($id, 'published');
+        $draftDocs = $this->getDocs($id, 'draft');
+        $counterDocs = $this->getDocs($id, 'counter');
 
         $this->set('guild', $guild);
         $this->set('guildSymbols', $guildSymbols);
         $this->set('boards', $boards);
-        $this->set('pubDocs', $pubDocs);
+        $this->set('news', $news);
+        $this->set('publishedDocs', $publishedDocs);
+        $this->set('draftDocs', $draftDocs);
+        $this->set('counterDocs', $counterDocs);
         $this->set('_serialize', [
             'guild',
             'guildSymbols',
             'boards',
-            'pubDocs',
+            'news',
+            'publishedDocs',
+            'draftDocs',
+            'counterDocs',
         ]);
     }
 

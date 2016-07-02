@@ -45,8 +45,8 @@ class ThreadsFixture extends TestFixture
         [
             'id' => 1,
             'name' => 'Lorem ipsum dolor sit amet',
-            'created' => '2016-06-30 22:45:53',
-            'modified' => '2016-06-30 22:45:53',
+            'created' => '2016-07-01 20:32:52',
+            'modified' => '2016-07-01 20:32:52',
             'board_id' => 1
         ],
     ];

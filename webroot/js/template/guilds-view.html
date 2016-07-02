@@ -64,36 +64,24 @@
         
         <div class="col-sm-6">
             <h4>ニュース</h4>
-            <ul>
-                <li>20xx/x/x ... 同盟を結びました。</li>
-                <li>20xx/x/x ... ギルドが開設されました。</li>
+            <ul ng-repeat="el in $ctrl.news">
+                <li>{{ el.created }} ... {{ el.content }}</li>
             </ul>
         </div>
     </div>
     <hr/>
 
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-6">
             <h4>文書</h4>
-            <ul ng-repeat="el in $ctrl.pubDocs">
+            <ul ng-repeat="el in $ctrl.publishedDocs">
                 <li><a target="_self" href="/docs/view/{{ el.id }}">{{ el.name }}</a></li>
             </ul>
         </div>
-    </div>
-
-    <div class="row">
         <div class="col-sm-6">
             <h4>提案</h4>
-            <ul>
-                <li><a target="_self" href="#">ポケモンゲットしたい</a></li>
-                <li><a target="_self" href="#">何言ってんの</a></li>
-            </ul>
-        </div>
-        <div class="col-sm-6">
-            <h4>対案</h4>
-            <ul>
-                <li><a target="_self" href="#">入門者にやさしく</a></li>
-                <li><a target="_self" href="#">何言ってんの</a></li>
+            <ul ng-repeat="el in $ctrl.draftDocs">
+                <li><a target="_self" href="/docs/view/{{ el.id }}">{{ el.name }}</a></li>
             </ul>
         </div>
     </div>
@@ -113,5 +101,6 @@
         </div>
     </div>
     <hr/>
+
 </div><!-- container -->
 

@@ -1,8 +1,18 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h3>{{ $ctrl.doc.name }} ({{ $ctrl.guild.name }})</h3>
-            <p>{{ $ctrl.doc.description }}</p>
+            <h3>{{ $ctrl.customDoc.docName }} {{ $ctrl.customDoc.docState == 'draft' ? '(提案)' : '' }}</h3>
+            <div ng-switch on="$ctrl.customDoc.docState">
+                <div ng-switch-when="published">
+                    この文書は公開されています。
+                </div>
+                <div ng-switch-when="draft">
+                    この文書は提案中です。
+                </div>
+                <div ng-switch-default>
+                    この文書の詳細は不明です(´・ω・｀)。
+                </div>
+            </div>
         </div>
     </div>
     <hr/>
@@ -11,15 +21,12 @@
         <div class="col-sm-12">
             <h4>概要</h4>
             <ul>
+                <li>文書タイトル: {{ $ctrl.customDoc.docName }}</li>
                 <li>タグ: <a href="#">マニュアル</a> <a href="#">ギルド</a> <a href="#">初心者</a></li>
-                <li>文書タイトル: {{ $ctrl.doc.name }}</li>
-                <li>作成ギルド: {{ $ctrl.guild.name }}</li>
-                <li>状態: {{ $ctrl.doc.state }}</li>
-                <li>話し合いのあったスレッド: <a target="_self" href="#">雑談スレ</a></li>
-                <li>原案: xxx</li>
-                <li>対案: xxx, xxx, xxx</li>
-                <li>作成日: {{ $ctrl.doc.created }}</li>
-                <li>最終更新日: {{ $ctrl.doc.modified }}</li>
+                <li>作成ギルド: <a target="_self" href="/guilds/view/{{ $ctrl.customDoc.guildId }}">{{ $ctrl.customDoc.guildName }}</a></li>
+                <li>状態: {{ $ctrl.customDoc.docState }}</li>
+                <li>作成日: {{ $ctrl.customDoc.docCreated }}</li>
+                <li>最終更新日: {{ $ctrl.customDoc.docModified }}</li>
             </ul>
         </div>
     </div>
@@ -28,7 +35,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h4>内容</h4>
-            <p style="white-space: pre;">{{ $ctrl.doc.content }}</p>
+            <p style="white-space: pre;">{{ $ctrl.customDoc.docContent }}</p>
         </div>
     </div>
     <hr/>

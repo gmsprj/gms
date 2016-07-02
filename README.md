@@ -32,8 +32,7 @@ None.
 
 | Branch      | Description                                                   |
 | ----------- |:------------------------------------------------------------- |
-| 0.0.7       | Refactoring for DB tables. Implementation of Docs             |
-| 0.0.6       | Implementation of Docs                                        |
+| 0.0.6       | Refactoring for DB tables. Implementation of Docs             |
 | 0.0.5       | Implementation of Cells, Texts, Images                        |
 | 0.0.4       | Change project name                                           |
 | 0.0.3       | Install AngularJS 1.5.7                                       | 

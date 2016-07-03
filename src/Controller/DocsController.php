@@ -32,47 +32,33 @@ class DocsController extends AppController
      */
     public function index()
     {
+        // Guilds and Docs
+
         $customDocs = $this->Cells->find()
             ->hydrate(false)
             ->join([
                 'table' => 'docs',
-                'alias' => 'D',
+                'alias' => 'L',
                 'type' => 'INNER',
-                'conditions' => 'D.id = Cells.left_id'
+                'conditions' => 'L.id = Cells.left_id'
             ])->join([
                 'table' => 'guilds',
-                'alias' => 'G',
+                'alias' => 'R',
                 'type' => 'INNER',
-                'conditions' => 'G.id = Cells.right_id'
+                'conditions' => 'R.id = Cells.right_id'
             ])->select([
-                'guildId' => 'G.id',
-                'guildName' => 'G.name',
-                'docId' => 'D.id',
-                'docName' => 'D.name'
+                'guildId' => 'R.id',
+                'guildName' => 'R.name',
+                'docId' => 'L.id',
+                'docName' => 'L.name'
             ])->where([
                 'Cells.name' => 'docs-owners-guilds'
             ])->all();
 
         // Name and Description
 
-        $nd = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'texts',
-                'alias' => 'K',
-                'type' => 'INNER',
-                'conditions' => 'K.id = Cells.left_id'
-            ])->join([
-                'table' => 'texts',
-                'alias' => 'V',
-                'type' => 'INNER',
-                'conditions' => 'V.id = Cells.right_id'
-            ])->select([
-                'key' => 'K.content',
-                'value' => 'V.content',
-            ])->where([
-                'Cells.name LIKE' => '%-kvs-%',
-                'K.content' => '文書について'
+        $nd = $this->findKVSAll()->where([
+                'L.content' => '文書について'
             ])->first();
 
         // Set
@@ -100,37 +86,37 @@ class DocsController extends AppController
             ->hydrate(false)
             ->join([
                 'table' => 'docs',
-                'alias' => 'D',
+                'alias' => 'L',
                 'type' => 'INNER',
-                'conditions' => 'D.id = Cells.left_id'
+                'conditions' => 'L.id = Cells.left_id'
             ])->join([
                 'table' => 'guilds',
-                'alias' => 'G',
+                'alias' => 'R',
                 'type' => 'INNER',
-                'conditions' => 'G.id = Cells.right_id'
+                'conditions' => 'R.id = Cells.right_id'
             ])->select([
-                'docId' => 'D.id',
-                'docName' => 'D.name',
-                'docContent' => 'D.content',
-                'docState' => 'D.state',
-                'docCreated' => 'D.created',
-                'docModified' => 'D.modified',
-                'guildId' => 'G.id',
-                'guildName' => 'G.name',
+                'docId' => 'L.id',
+                'docName' => 'L.name',
+                'docContent' => 'L.content',
+                'docState' => 'L.state',
+                'docCreated' => 'L.created',
+                'docModified' => 'L.modified',
+                'guildId' => 'R.id',
+                'guildName' => 'R.name',
             ])->where([
                 'Cells.name' => 'docs-owners-guilds',
-                'D.id' => $id,
+                'L.id' => $id,
             ])->first();
         $thread = $this->Cells->find()
             ->hydrate(false)
             ->join([
                 'table' => 'threads',
-                'alias' => 'T',
+                'alias' => 'L',
                 'type' => 'INNER',
-                'conditions' => 'T.id = Cells.left_id'
+                'conditions' => 'L.id = Cells.left_id'
             ])->select([
-                'id' => 'T.id',
-                'name' => 'T.name',
+                'id' => 'L.id',
+                'name' => 'L.name',
             ])->where([
                 'Cells.name' => 'threads-refs-docs',
                 'Cells.right_id' => $id,
@@ -217,7 +203,7 @@ class DocsController extends AppController
             return $this->redirect($failTo);
         }
 
-        // Cells for doc-owner-guild
+        // Cells for docs-owners-guilds
 
         $tab = TableRegistry::get('Cells');
         $cell = $tab->newEntity([
@@ -232,11 +218,11 @@ class DocsController extends AppController
             return $this->redirect($failTo);
         }
 
-        // text-news-guild
+        // texts-news-guilds
 
-        $this->addNews([
-            'id' => $guildId,
-            'name' => 'guilds',
+        $this->addTextsNews([
+            'right' => 'guilds',
+            'rightId' => $guildId,
             'content' => sprintf('%sで「%s」が提案されました。', $guild->name, $docName)
         ]);
 
@@ -250,19 +236,9 @@ class DocsController extends AppController
     {
         $doc = $this->Docs->get($id);
 
-        $thread = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'threads',
-                'alias' => 'T',
-                'type' => 'INNER',
-                'conditions' => 'T.id = Cells.left_id'
-            ])->select([
-                'id' => 'T.id',
-                'name' => 'T.name',
-            ])->where([
-                'Cells.name' => 'threads-refs-docs',
-                'Cells.right_id' => $id,
+        $thread = $this->findThreadsRefs([
+                'right' => 'docs',
+                'rightId' => $id,
             ])->first();
 
         $this->set('doc', $doc);
@@ -291,10 +267,10 @@ class DocsController extends AppController
         $tab = TableRegistry::get('Docs');
         $tab->save($doc);
 
-        $this->addNews([
-            'id' => $id,
-            'name' => 'docs',
-            'content' => sprintf('文書「%s」が更新されました。', $oldName)
+        $this->addTextsNews([
+            'right' => 'docs',
+            'rightId' => $id,
+            'content' => __(sprintf('文書「%s」が更新されました。', $oldName))
         ]);
 
         $this->redirect($doneTo);

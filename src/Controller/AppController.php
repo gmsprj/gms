@@ -94,13 +94,13 @@ class AppController extends Controller
         $this->set('user', $this->Auth->user());
     }
 
-    protected function addNews($params)
+    protected function addTextsNews($arr = [])
     {
         $textTab = TableRegistry::get('Texts');
         $cellsTab = TableRegistry::get('Cells');
 
         $text = $textTab->newEntity([
-            'content' => __($params['content']),
+            'content' => __($arr['content']),
         ]);
 
         if (!$textTab->save($text)) {
@@ -110,9 +110,9 @@ class AppController extends Controller
         }
 
         $cell = $cellsTab->newEntity([
-            'name' => 'texts-news-' . $params['name'],
+            'name' => 'texts-news-' . $arr['right'],
             'left_id' => $text->id,
-            'right_id' => $params['id'],
+            'right_id' => $arr['rightId'],
         ]);
 
         if (!$cellsTab->save($cell)) {
@@ -125,7 +125,7 @@ class AppController extends Controller
         return true;
     }
 
-    protected function findTextsNewsAll()
+    protected function findTextsNewsAll($arr = [])
     {
         return $this->Cells->find()
             ->hydrate(false)
@@ -144,7 +144,7 @@ class AppController extends Controller
             ]);
     }
 
-    protected function findTextsNews($arr)
+    protected function findTextsNews($arr = [])
     {
         return $this->Cells->find()
             ->hydrate(false)
@@ -184,7 +184,7 @@ class AppController extends Controller
      * @param $arr['rightId']
      * @param $arr['state']
      */
-    protected function findDocsOwners($arr)
+    protected function findDocsOwners($arr = [])
     {
         return $this->Cells->find()
             ->hydrate(false)
@@ -208,7 +208,7 @@ class AppController extends Controller
             ]);
     }
 
-    protected function findBoardsOwners($arr)
+    protected function findBoardsOwners($arr = [])
     {
         return $this->Cells->find()
             ->hydrate(false)
@@ -228,6 +228,46 @@ class AppController extends Controller
             ])->where([
                 'Cells.name' => 'boards-owners-' . $arr['right'],
                 'R.id' => $arr['rightId'],
+            ]);
+    }
+
+    protected function findKVSAll($arr = [])
+    {
+        return $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'texts',
+                'alias' => 'L',
+                'type' => 'INNER',
+                'conditions' => 'L.id = Cells.left_id'
+            ])->join([
+                'table' => 'texts',
+                'alias' => 'R',
+                'type' => 'INNER',
+                'conditions' => 'R.id = Cells.right_id'
+            ])->select([
+                'key' => 'L.content',
+                'value' => 'R.content',
+            ])->where([
+                'Cells.name LIKE' => '%-kvs-%',
+            ]);
+    }
+
+    protected function findThreadsRefs($arr = [])
+    {
+        return $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'threads',
+                'alias' => 'L',
+                'type' => 'INNER',
+                'conditions' => 'L.id = Cells.left_id'
+            ])->select([
+                'id' => 'L.id',
+                'name' => 'L.name',
+            ])->where([
+                'Cells.name' => 'threads-refs-' . $arr['right'],
+                'Cells.right_id' => $arr['rightId'],
             ]);
     }
 }

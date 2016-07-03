@@ -44,12 +44,12 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'board-owner-guild',
+    'boards-owners-guilds',
     @board_id,
     @guild_id
 );
 
--- text-news-board
+-- news
 
 INSERT INTO texts (
     content
@@ -63,12 +63,12 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'text-news-board',
+    'texts-news-boards',
     @text_id,
     @board_id
 );
 
--- guild-symbol
+-- symbols
 
 INSERT INTO images (
     url
@@ -82,7 +82,7 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'image-symbol-guild',
+    'images-syms-guilds',
     @image_id,
     @guild_id
 );
@@ -105,7 +105,7 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'doc-owner-guild',
+    'docs-owners-guilds',
     @doc_id,
     @guild_id
 );
@@ -115,7 +115,7 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'thread-ref-doc',
+    'threads-refs-docs',
     @thread_id,
     @doc_id
 );
@@ -138,7 +138,7 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'doc-owner-guild',
+    'docs-owners-guilds',
     @doc_id,
     @guild_id
 );
@@ -148,12 +148,12 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'thread-ref-doc',
+    'threads-refs-docs',
     @thread_id,
     @doc_id
 );
 
--- text-news-guild
+-- news
 
 INSERT INTO texts (
     content
@@ -167,7 +167,7 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'text-news-guild',
+    'texts-news-guilds',
     @text_id,
     @guild_id
 );

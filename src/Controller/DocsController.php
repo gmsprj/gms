@@ -50,7 +50,7 @@ class DocsController extends AppController
                 'docId' => 'D.id',
                 'docName' => 'D.name'
             ])->where([
-                'Cells.name' => 'doc-owner-guild'
+                'Cells.name' => 'docs-owners-guilds'
             ])->all();
 
         // Name and Description
@@ -71,7 +71,7 @@ class DocsController extends AppController
                 'key' => 'K.content',
                 'value' => 'V.content',
             ])->where([
-                'Cells.name LIKE' => '%-kv-%',
+                'Cells.name LIKE' => '%-kvs-%',
                 'K.content' => '文書について'
             ])->first();
 
@@ -118,7 +118,7 @@ class DocsController extends AppController
                 'guildId' => 'G.id',
                 'guildName' => 'G.name',
             ])->where([
-                'Cells.name' => 'doc-owner-guild',
+                'Cells.name' => 'docs-owners-guilds',
                 'D.id' => $id,
             ])->first();
         $thread = $this->Cells->find()
@@ -132,7 +132,7 @@ class DocsController extends AppController
                 'id' => 'T.id',
                 'name' => 'T.name',
             ])->where([
-                'Cells.name' => 'thread-ref-doc',
+                'Cells.name' => 'threads-refs-docs',
                 'Cells.right_id' => $id,
             ])->first();
         $posts = $this->Posts->find()
@@ -206,7 +206,7 @@ class DocsController extends AppController
         $threadId = $this->request->data('threadId'); // thread-ref-doc の threads.id
         $tab = TableRegistry::get('Cells');
         $cell = $tab->newEntity([
-            'name' => 'thread-ref-doc',
+            'name' => 'threads-refs-docs',
             'left_id' => $threadId,
             'right_id' => $doc->id,
         ]);
@@ -221,7 +221,7 @@ class DocsController extends AppController
 
         $tab = TableRegistry::get('Cells');
         $cell = $tab->newEntity([
-            'name' => 'doc-owner-guild',
+            'name' => 'docs-owners-guilds',
             'left_id' => $doc->id,
             'right_id' => $guildId,
         ]);
@@ -236,7 +236,7 @@ class DocsController extends AppController
 
         $this->addNews([
             'id' => $guildId,
-            'name' => 'guild',
+            'name' => 'guilds',
             'content' => sprintf('%sで「%s」が提案されました。', $guild->name, $docName)
         ]);
 
@@ -261,7 +261,7 @@ class DocsController extends AppController
                 'id' => 'T.id',
                 'name' => 'T.name',
             ])->where([
-                'Cells.name' => 'thread-ref-doc',
+                'Cells.name' => 'threads-refs-docs',
                 'Cells.right_id' => $id,
             ])->first();
 
@@ -293,7 +293,7 @@ class DocsController extends AppController
 
         $this->addNews([
             'id' => $id,
-            'name' => 'doc',
+            'name' => 'docs',
             'content' => sprintf('文書「%s」が更新されました。', $oldName)
         ]);
 

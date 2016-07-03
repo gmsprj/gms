@@ -31,7 +31,7 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'board-owner-site',
+    'boards-owners-sites',
     @board_id,
     1
 );
@@ -50,7 +50,7 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'text-news-board',
+    'texts-news-boards',
     @text_id,
     @board_id
 );

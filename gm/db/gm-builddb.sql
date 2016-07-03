@@ -267,19 +267,19 @@ CREATE TABLE images (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 /**
- * left-category-right
+ * lefts-types-rights
  *
  *      cells
  *    /       \
  * lefts      rights
  *
- * cells.name: 'left-category-right'
+ * cells.name: 'lefts-types-rights'
  * cells.left_id: lefts.id 
  * cells.right_id: rights.id
  */
 
 /**
- * text-news-xxx
+ * texts-news-xxxs
  *
  * 抽象化された構造。表現に cells, texts, ??? を使う。
  * ニュースと、そのソースになるオブジェクトを cells で繋ぐ。
@@ -288,14 +288,14 @@ CREATE TABLE images (
  *    /       \
  * texts     (sites, guilds, boards, posts, ...)
  *
- * cells.name: 'text-news-xxx' (example 'text-news-guild' でギルドのニュース)
+ * cells.name: 'texts-news-xxxs' (example 'texts-news-guilds' でギルドのニュース)
  * cells.left_id: texts.id
  * cells.right_id: xxxs.id
  * texts.content: news のテキスト内容。
  */
 
 /**
- * image-symbol-xxx
+ * images-syms-xxxs
  *
  * シンボル画像とオブジェクトを cells で繋ぐ。
  *
@@ -303,47 +303,47 @@ CREATE TABLE images (
  *    /       \
  * images   (sites, guilds, boards, posts, ...)
  *
- * cells.name に 'image-symbol-xxx' が保存される。
+ * cells.name に 'images-syms-xxxs' が保存される。
  * cells.left_id に images.id が保存される。
  * cells.right_id に xxxs.id が保存される。
  */
 
 /**
- * xxx-owner-xxx
+ * xxxs-owners-xxxs
  *
  * 所属を表現する構造。
  * 左がオブジェクト、右が所属先のオブジェクト。
  *
- * 'doc-owner-guild' で Docs のオーナーは Guilds であると言う状態。
+ * 'docs-owners-guilds' で Docs のオーナーは Guilds であると言う状態。
  *
  *      cells
  *    /       \
  * xxxs       xxxs
  *
- * cells.name: 'xxx-owner-xxx' (example 'doc-owner-guild')
+ * cells.name: 'xxxs-owners-xxxs' (example 'docs-owners-guilds')
  * cells.left_id: xxxs.id 
  * cells.right_id: xxxs.id 
  */
 
 /**
- * xxx-ref-xxx
+ * xxxs-refs-xxxs
  *
  * 参照先と参照元を表現する構造。
  * 左が参照先、右が参照元。
  *
- * 'thread-ref-doc' で、Threads が Docs に参照されている状態を表す。
+ * 'threads-refs-docs' で、Threads が Docs に参照されている状態を表す。
  *
  *      cells
  *    /       \
  * xxxs       xxxs
  *
- * cells.name: 'xxx-ref-xxx'
+ * cells.name: 'xxxs-refs-xxxs'
  * cells.left_id: xxxs.id 
  * cells.right_id: xxxs.id
  */
 
 /**
- * text-kv-xxx
+ * texts-kvs-xxxs
  *
  * kv ... Key and Value
  *
@@ -355,7 +355,7 @@ CREATE TABLE images (
  *    /       \
  * texts     xxxs
  *
- * cells.name: 'text-kv-xxx' (example 'text-kv-text')
+ * cells.name: 'texts-kvs-xxxs' (example 'texts-kvs-texts')
  * cells.left_id: texts.id (key)
  * cells.right_id: texts.id (value)
  */

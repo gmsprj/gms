@@ -110,7 +110,7 @@ class AppController extends Controller
         }
 
         $cell = $cellsTab->newEntity([
-            'name' => 'text-news-' . $params['name'],
+            'name' => 'texts-news-' . $params['name'],
             'left_id' => $text->id,
             'right_id' => $params['id'],
         ]);

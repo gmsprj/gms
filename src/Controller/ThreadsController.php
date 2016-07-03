@@ -166,7 +166,7 @@ class ThreadsController extends AppController
         // News
 
         $this->addNews([
-            'name' => 'board',
+            'name' => 'boards',
             'id' => $boardId,
             'content' => sprintf('%sに新規スレッド「%s」が作成されました。', $board->name, $threadName),
         ]);

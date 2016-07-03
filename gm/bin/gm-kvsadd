@@ -41,7 +41,7 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'text-kv-text',
+    'texts-kvs-texts',
     @name_id,
     @description_id
 );

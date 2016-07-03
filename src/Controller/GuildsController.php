@@ -44,7 +44,7 @@ class GuildsController extends AppController
                 'content' => 'A.content',
                 'created' => 'A.created'
             ])->where([
-                'Cells.name LIKE' => '%text-news-%'
+                'Cells.name LIKE' => '%texts-news-%'
             ])->order([
                 'A.created' => 'DESC'
             ])->limit(5);
@@ -58,7 +58,7 @@ class GuildsController extends AppController
             ])->select([
                 'url' => 'A.url',
             ])->where([
-                'Cells.name' => 'image-symbol-site'
+                'Cells.name' => 'images-syms-sites'
             ])->first();
         $customDocs = $this->Cells->find()
             ->hydrate(false)
@@ -78,7 +78,7 @@ class GuildsController extends AppController
                 'docId' => 'D.id',
                 'docName' => 'D.name',
             ])->where([
-                'Cells.name' => 'doc-owner-guild'
+                'Cells.name' => 'docs-owners-guilds'
             ])->all();
 
         $this->set('guilds', $this->Guilds->find('all'));
@@ -116,7 +116,7 @@ class GuildsController extends AppController
                 'id' => 'D.id',
                 'name' => 'D.name',
             ])->where([
-                'Cells.name' => 'doc-owner-' . $arr['owner'],
+                'Cells.name' => 'docs-owners-' . $arr['owner'],
                 'G.id' => $arr['id'],
                 'D.state' => $arr['state'],
             ])->all();
@@ -148,7 +148,7 @@ class GuildsController extends AppController
                 'id' => 'B.id',
                 'name' => 'B.name',
             ])->where([
-                'Cells.name' => 'board-owner-guild',
+                'Cells.name' => 'boards-owners-guilds',
                 'G.id' => $id,
             ])->all();
         $guildSymbols = $this->Cells->find()
@@ -161,7 +161,7 @@ class GuildsController extends AppController
             ])->select([
                 'url' => 'A.url',
             ])->where([
-                'Cells.name' => 'image-symbol-guild',
+                'Cells.name' => 'images-syms-guilds',
                 'Cells.right_id' => $id,
             ])->all();
         $news = $this->Cells->find()
@@ -175,14 +175,14 @@ class GuildsController extends AppController
                 'content' => 'T.content',
                 'created' => 'T.created',
             ])->where([
-                'Cells.name' => 'text-news-guild',
+                'Cells.name' => 'texts-news-guilds',
                 'Cells.right_id' => $id,
             ])->order([
                 'T.created' => 'DESC'
             ])->limit(5);
-        $publishedDocs = $this->findCellsOwner(['owner' => 'guild', 'id' => $id, 'state' => 'published']);
-        $draftDocs = $this->findCellsOwner(['owner' => 'guild', 'id' => $id, 'state' => 'draft']);
-        $counterDocs = $this->findCellsOwner(['owner' => 'guild', 'id' => $id, 'state' => 'counter']);
+        $publishedDocs = $this->findCellsOwner(['owner' => 'guilds', 'id' => $id, 'state' => 'published']);
+        $draftDocs = $this->findCellsOwner(['owner' => 'guilds', 'id' => $id, 'state' => 'draft']);
+        $counterDocs = $this->findCellsOwner(['owner' => 'guilds', 'id' => $id, 'state' => 'counter']);
 
         $this->set('guild', $guild);
         $this->set('guildSymbols', $guildSymbols);

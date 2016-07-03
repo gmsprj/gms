@@ -19,7 +19,7 @@ INSERT INTO cells (
     left_id,
     right_id
 ) VALUES (
-    'image-symbol-site',
+    'images-syms-sites',
     @image_id,
     @site_id
 );

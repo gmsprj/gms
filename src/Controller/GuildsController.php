@@ -93,7 +93,12 @@ class GuildsController extends AppController
         ]);
     }
 
-    private function getDocs($guildId, $state)
+    /**
+     * @param $arr['owner']
+     * @param $arr['id']
+     * @param $arr['state']
+     */
+    protected function findCellsOwner($arr)
     {
         return $this->Cells->find()
             ->hydrate(false)
@@ -111,9 +116,9 @@ class GuildsController extends AppController
                 'id' => 'D.id',
                 'name' => 'D.name',
             ])->where([
-                'Cells.name' => 'doc-owner-guild',
-                'G.id' => $guildId,
-                'D.state' => $state,
+                'Cells.name' => 'doc-owner-' . $arr['owner'],
+                'G.id' => $arr['id'],
+                'D.state' => $arr['state'],
             ])->all();
     }
 
@@ -175,9 +180,9 @@ class GuildsController extends AppController
             ])->order([
                 'T.created' => 'DESC'
             ])->limit(5);
-        $publishedDocs = $this->getDocs($id, 'published');
-        $draftDocs = $this->getDocs($id, 'draft');
-        $counterDocs = $this->getDocs($id, 'counter');
+        $publishedDocs = $this->findCellsOwner(['owner' => 'guild', 'id' => $id, 'state' => 'published']);
+        $draftDocs = $this->findCellsOwner(['owner' => 'guild', 'id' => $id, 'state' => 'draft']);
+        $counterDocs = $this->findCellsOwner(['owner' => 'guild', 'id' => $id, 'state' => 'counter']);
 
         $this->set('guild', $guild);
         $this->set('guildSymbols', $guildSymbols);

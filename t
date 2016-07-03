@@ -1,1 +1,1 @@
-js/template/
+webroot/js/template/

@@ -1,1 +1,1 @@
-js/component/
+webroot/js/component/

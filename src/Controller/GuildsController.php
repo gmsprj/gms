@@ -58,12 +58,35 @@ class GuildsController extends AppController
             ])->where([
                 'Cells.name' => 'docs-owners-guilds'
             ])->all();
+        $site = $this->Sites->get(1);
+        $threads = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'boards',
+                'alias' => 'L',
+                'type' => 'INNER',
+                'conditions' => 'L.id = Cells.left_id',
+            ])->join([
+                'table' => 'threads',
+                'alias' => 'T',
+                'type' => 'INNER',
+                'conditions' => 'L.id = T.board_id',
+            ])->select([
+                'id' => 'T.id',
+                'name' => 'T.name',
+            ])->where([
+                'Cells.name' => 'boards-owners-sites',
+                'Cells.right_id' => $site->id,
+            ])->all();
 
         $this->set('guilds', $this->Guilds->find('all'));
         $this->set('news', $news);
+        $this->set('threads', $threads);
         $this->set('symbol', $symbol);
         $this->set('customDocs', $customDocs);
         $this->set('_serialize', [
+            'site',
+            'threads',
             'guilds',
             'news',
             'symbol',

@@ -9,22 +9,14 @@ mod.component('guildsIndex', {
         function GuildsIndexCtrl($http) {
             var self = this;
 
-            $http.get('/sites/view/1.json').then(function(res) {
-                //console.log(res);
-                self.site = res.data.site;
-            });
-
             $http.get('/guilds.json').then(function(res) {
                 //console.log(res);
                 self.guilds = res.data.guilds;
                 self.news = res.data.news;
                 self.symbol = res.data.symbol;
                 self.customDocs = res.data.customDocs;
-            });
-
-            $http.get('/threads.json').then(function(res) {
-                //console.log(res);
-                self.guestThreads = res.data.threads;
+                self.site = res.data.site;
+                self.threads = res.data.threads;
             });
         }
     ]

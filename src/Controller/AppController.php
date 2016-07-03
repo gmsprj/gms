@@ -190,21 +190,21 @@ class AppController extends Controller
             ->hydrate(false)
             ->join([
                 'table' => 'docs',
-                'alias' => 'D',
+                'alias' => 'L',
                 'type' => 'INNER',
-                'conditions' => 'D.id = Cells.left_id',
+                'conditions' => 'L.id = Cells.left_id',
             ])->join([
                 'table' => 'guilds',
-                'alias' => 'G',
+                'alias' => 'R',
                 'type' => 'INNER',
-                'conditions' => 'G.id = Cells.right_id',
+                'conditions' => 'R.id = Cells.right_id',
             ])->select([
-                'id' => 'D.id',
-                'name' => 'D.name',
+                'id' => 'L.id',
+                'name' => 'L.name',
             ])->where([
                 'Cells.name' => 'docs-owners-' . $arr['right'],
-                'G.id' => $arr['rightId'],
-                'D.state' => $arr['state'],
+                'R.id' => $arr['rightId'],
+                'L.state' => $arr['state'],
             ]);
     }
 

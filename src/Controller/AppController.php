@@ -124,4 +124,110 @@ class AppController extends Controller
 
         return true;
     }
+
+    protected function findTextsNewsAll()
+    {
+        return $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'texts',
+                'alias' => 'L',
+                'type' => 'INNER',
+                'conditions' => 'L.id = Cells.left_id',
+            ])->select([
+                'content' => 'L.content',
+                'created' => 'L.created',
+            ])->where([
+                'Cells.name LIKE' => '%texts-news-%',
+            ])->order([
+                'L.created' => 'DESC',
+            ]);
+    }
+
+    protected function findTextsNews($arr)
+    {
+        return $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'texts',
+                'alias' => 'L',
+                'type' => 'INNER',
+                'conditions' => 'L.id = Cells.left_id',
+            ])->select([
+                'content' => 'L.content',
+                'created' => 'L.created',
+            ])->where([
+                'Cells.name' => 'texts-news-' . $arr['right'],
+            ])->order([
+                'L.created' => 'DESC',
+            ]);
+    }
+
+    protected function findImagesSyms($arr = [])
+    {
+        return $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'images',
+                'alias' => 'L',
+                'type' => 'INNER',
+                'conditions' => 'L.id = Cells.left_id'
+            ])->select([
+                'url' => 'L.url',
+            ])->where([
+                'Cells.name' => 'images-syms-' . $arr['right'],
+            ]);
+    }
+
+    /**
+     * @param $arr['right']
+     * @param $arr['rightId']
+     * @param $arr['state']
+     */
+    protected function findDocsOwners($arr)
+    {
+        return $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'docs',
+                'alias' => 'D',
+                'type' => 'INNER',
+                'conditions' => 'D.id = Cells.left_id',
+            ])->join([
+                'table' => 'guilds',
+                'alias' => 'G',
+                'type' => 'INNER',
+                'conditions' => 'G.id = Cells.right_id',
+            ])->select([
+                'id' => 'D.id',
+                'name' => 'D.name',
+            ])->where([
+                'Cells.name' => 'docs-owners-' . $arr['right'],
+                'G.id' => $arr['rightId'],
+                'D.state' => $arr['state'],
+            ]);
+    }
+
+    protected function findBoardsOwners($arr)
+    {
+        return $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'boards',
+                'alias' => 'L',
+                'type' => 'INNER',
+                'conditions' => 'L.id = Cells.left_id',
+            ])->join([
+                'table' => $arr['right'],
+                'alias' => 'R',
+                'type' => 'INNER',
+                'conditions' => 'R.id = Cells.right_id',
+            ])->select([
+                'id' => 'L.id',
+                'name' => 'L.name',
+            ])->where([
+                'Cells.name' => 'boards-owners-' . $arr['right'],
+                'R.id' => $arr['rightId'],
+            ]);
+    }
 }

@@ -33,50 +33,28 @@ class GuildsController extends AppController
      */
     public function index()
     {
-        $news = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'texts',
-                'alias' => 'A',
-                'type' => 'INNER',
-                'conditions' => 'A.id = Cells.left_id'
-            ])->select([
-                'content' => 'A.content',
-                'created' => 'A.created'
-            ])->where([
-                'Cells.name LIKE' => '%texts-news-%'
-            ])->order([
-                'A.created' => 'DESC'
-            ])->limit(5);
-        $symbol = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'images',
-                'alias' => 'A',
-                'type' => 'INNER',
-                'conditions' => 'A.id = Cells.right_id'
-            ])->select([
-                'url' => 'A.url',
-            ])->where([
-                'Cells.name' => 'images-syms-sites'
+        $news = $this->findTextsNewsAll()
+            ->limit(5);
+        $symbol = $this->findImagesSyms([
+                'right' => 'sites',
             ])->first();
         $customDocs = $this->Cells->find()
             ->hydrate(false)
             ->join([
                 'table' => 'docs',
-                'alias' => 'D',
+                'alias' => 'L',
                 'type' => 'INNER',
-                'conditions' => 'D.id = Cells.left_id'
+                'conditions' => 'L.id = Cells.left_id'
             ])->join([
                 'table' => 'guilds',
-                'alias' => 'G',
+                'alias' => 'R',
                 'type' => 'INNER',
-                'conditions' => 'G.id = Cells.right_id'
+                'conditions' => 'R.id = Cells.right_id'
             ])->select([
-                'guildId' => 'G.id',
-                'guildName' => 'G.name',
-                'docId' => 'D.id',
-                'docName' => 'D.name',
+                'guildId' => 'R.id',
+                'guildName' => 'R.name',
+                'docId' => 'L.id',
+                'docName' => 'L.name',
             ])->where([
                 'Cells.name' => 'docs-owners-guilds'
             ])->all();
@@ -94,35 +72,6 @@ class GuildsController extends AppController
     }
 
     /**
-     * @param $arr['owner']
-     * @param $arr['id']
-     * @param $arr['state']
-     */
-    protected function findCellsOwner($arr)
-    {
-        return $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'docs',
-                'alias' => 'D',
-                'type' => 'INNER',
-                'conditions' => 'D.id = Cells.left_id',
-            ])->join([
-                'table' => 'guilds',
-                'alias' => 'G',
-                'type' => 'INNER',
-                'conditions' => 'G.id = Cells.right_id',
-            ])->select([
-                'id' => 'D.id',
-                'name' => 'D.name',
-            ])->where([
-                'Cells.name' => 'docs-owners-' . $arr['owner'],
-                'G.id' => $arr['id'],
-                'D.state' => $arr['state'],
-            ])->all();
-    }
-
-    /**
      * View method
      *
      * @param string|null $id Guild id.
@@ -132,57 +81,32 @@ class GuildsController extends AppController
     public function view($id = null)
     {
         $guild = $this->Guilds->get($id);
-        $boards = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'boards',
-                'alias' => 'B',
-                'type' => 'INNER',
-                'conditions' => 'B.id = Cells.left_id',
-            ])->join([
-                'table' => 'guilds',
-                'alias' => 'G',
-                'type' => 'INNER',
-                'conditions' => 'G.id = Cells.right_id',
-            ])->select([
-                'id' => 'B.id',
-                'name' => 'B.name',
-            ])->where([
-                'Cells.name' => 'boards-owners-guilds',
-                'G.id' => $id,
+        $boards = $this->findBoardsOwners([
+                'right' => 'guilds',
+                'rightId' => $id,
             ])->all();
-        $guildSymbols = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'images',
-                'alias' => 'A',
-                'type' => 'INNER',
-                'conditions' => 'A.id = Cells.left_id',
-            ])->select([
-                'url' => 'A.url',
-            ])->where([
-                'Cells.name' => 'images-syms-guilds',
-                'Cells.right_id' => $id,
+        $guildSymbols = $this->findImagesSyms([
+                'right' => 'guilds',
+                'rightId' => $id,
             ])->all();
-        $news = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'texts',
-                'alias' => 'T',
-                'type' => 'INNER',
-                'conditions' => 'T.id = Cells.left_id',
-            ])->select([
-                'content' => 'T.content',
-                'created' => 'T.created',
-            ])->where([
-                'Cells.name' => 'texts-news-guilds',
-                'Cells.right_id' => $id,
-            ])->order([
-                'T.created' => 'DESC'
+        $news = $this->findTextsNews([
+                'right' => 'guilds',
             ])->limit(5);
-        $publishedDocs = $this->findCellsOwner(['owner' => 'guilds', 'id' => $id, 'state' => 'published']);
-        $draftDocs = $this->findCellsOwner(['owner' => 'guilds', 'id' => $id, 'state' => 'draft']);
-        $counterDocs = $this->findCellsOwner(['owner' => 'guilds', 'id' => $id, 'state' => 'counter']);
+        $publishedDocs = $this->findDocsOwners([
+                'right' => 'guilds',
+                'rightId' => $id,
+                'state' => 'published'
+            ])->all();
+        $draftDocs = $this->findDocsOwners([
+                'right' => 'guilds',
+                'rightId' => $id,
+                'state' => 'draft'
+            ])->all();
+        $counterDocs = $this->findDocsOwners([
+                'right' => 'guilds',
+                'rightId' => $id,
+                'state' => 'counter'
+            ])->all();
 
         $this->set('guild', $guild);
         $this->set('guildSymbols', $guildSymbols);

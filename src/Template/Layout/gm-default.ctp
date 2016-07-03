@@ -34,7 +34,7 @@
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <div class="background">
+    <div class="gm-background">
         <?= $this->Flash->render() ?>
         <?= $this->fetch('content') ?>
     </div>

@@ -25,7 +25,7 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <h4>スレッド一覧</h4>
+            <h4><a target="_self" href="/boards/view/{{ $ctrl.board.id }}">{{ $ctrl.board.name }}</a>のスレッド一覧</h4>
             <ul ng-repeat="el in $ctrl.threads">
                 <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
             </ul>

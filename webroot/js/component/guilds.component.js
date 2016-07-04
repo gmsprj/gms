@@ -17,6 +17,7 @@ mod.component('guildsIndex', {
                 self.customDocs = res.data.customDocs;
                 self.site = res.data.site;
                 self.threads = res.data.threads;
+                self.board = res.data.board;
             });
         }
     ]

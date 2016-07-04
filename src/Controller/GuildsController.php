@@ -70,9 +70,24 @@ class GuildsController extends AppController
                 'Cells.name' => 'boards-owners-sites',
                 'Cells.right_id' => $site->id,
             ])->all();
+        $board = $this->Cells->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'boards',
+                'alias' => 'L',
+                'type' => 'INNER',
+                'conditions' => 'L.id = Cells.left_id',
+            ])->select([
+                'id' => 'L.id',
+                'name' => 'L.name',
+            ])->where([
+                'Cells.name' => 'boards-owners-sites',
+                'Cells.right_id' => $site->id,
+            ])->first();
 
         $this->set('guilds', $this->Guilds->find('all'));
         $this->set('news', $news);
+        $this->set('board', $board);
         $this->set('threads', $threads);
         $this->set('symbol', $symbol);
         $this->set('customDocs', $customDocs);

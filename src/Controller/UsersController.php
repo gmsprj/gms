@@ -93,7 +93,7 @@ class UsersController extends AppController
             return $this->redirect(['controller' => 'Users', 'action' => 'signin']);
         }
 
-        return $this->redirect(['controller' => 'Guilds', 'action' => 'view', $user['guild_id']]);
+        return $this->redirect(['controller' => 'Users', 'action' => 'view', $user['id']]);
     }
 
     /**

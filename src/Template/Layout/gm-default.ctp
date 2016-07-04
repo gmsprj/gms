@@ -27,6 +27,7 @@
     <?= $this->Html->script('component/sites.component.js') ?>
     <?= $this->Html->script('component/boards.component.js') ?>
     <?= $this->Html->script('component/threads.component.js') ?>
+    <?= $this->Html->script('component/users.component.js') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

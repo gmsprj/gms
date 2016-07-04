@@ -183,7 +183,7 @@ class GuildsController extends AppController
         }
 
         // 入会
-        $user->guild_id = $guildId;
+        //$user->guild_id = $guildId;
         if (!$usersTable->save($user)) {
             Log::write('error', __('Failed to save Users of ID ' . $user->id));
             Log::write('error', json_encode($user->errors()));

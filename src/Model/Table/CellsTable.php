@@ -269,28 +269,6 @@ class CellsTable extends Table
             ]);
     }
 
-    public function findKVSAll($arr = [])
-    {
-        return $this->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'texts',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id'
-            ])->join([
-                'table' => 'texts',
-                'alias' => 'R',
-                'type' => 'INNER',
-                'conditions' => 'R.id = Cells.right_id'
-            ])->select([
-                'key' => 'L.content',
-                'value' => 'R.content',
-            ])->where([
-                'Cells.name LIKE' => '%-kvs-%',
-            ]);
-    }
-
     public function findThreadsRefs($arr = [])
     {
         return $this->find()

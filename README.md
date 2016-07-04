@@ -32,6 +32,7 @@ None.
 
 | Branch      | Description                                                   |
 | ----------- |:------------------------------------------------------------- |
+| 0.0.8       | Implementation of Users for Guilds, Docs, Boards, Threads     |
 | 0.0.7       | Implementation of Docs                                        |
 | 0.0.6       | Refactoring for DB tables. Implementation of Docs             |
 | 0.0.5       | Implementation of Cells, Texts, Images                        |

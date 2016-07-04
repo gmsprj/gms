@@ -26,9 +26,10 @@ mod.component('boardsView', {
             //console.log(path);
 
             $http.get(path).then(function(res) {
+                self.user = res.data.user;
                 self.board = res.data.board;
                 self.threads = res.data.threads;
-                self.postName = '名無しさん';
+                self.postName = res.data.postName;
                 self.csrf = res.data.csrf;
             });
         }

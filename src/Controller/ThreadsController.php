@@ -27,6 +27,7 @@ class ThreadsController extends AppController
         $this->Auth->allow(['index', 'view', 'add']);
         $this->loadModel('Boards');
         $this->loadModel('Posts');
+        $this->loadModel('Cells');
     }
 
     /**
@@ -167,9 +168,9 @@ class ThreadsController extends AppController
 
         // News
 
-        $this->addNews([
-            'name' => 'boards',
-            'id' => $boardId,
+        $this->Cells->addTextsNews([
+            'right' => 'boards',
+            'rightId' => $boardId,
             'content' => sprintf('%sに新規スレッド「%s」が作成されました。', $board->name, $threadName),
         ]);
 

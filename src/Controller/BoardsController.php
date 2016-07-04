@@ -54,19 +54,24 @@ class BoardsController extends AppController
      */
     public function view($id = null)
     {
+        $user = $this->Auth->user();
         $board = $this->Boards->get($id);
         $threads = $this->Threads->find()
             ->where([
                 'board_id' => $id
             ])->all();
+        $postName = ($user ? $user['name'] : __('名無しさん'));
 
+        $this->set('user', $user);
         $this->set('board', $board);
         $this->set('threads', $threads);
-        $this->set('postName', __('名無しさん'));
+        $this->set('postName', $postName);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
+            'user',
             'board',
             'threads',
+            'postName',
             'csrf',
         ]);
     }

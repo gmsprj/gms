@@ -113,12 +113,12 @@ class UsersController extends AppController
     public function view($id = null)
     {
         if (!$this->request->is('get')) {
-                return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
+            return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
         }
 
         $user = $this->Auth->user();
         if (!$user) {
-            $this->Flash->error(__('サインインしてください(´・ω・｀)'));
+            $this->Flash->error(__('サインインしてください。'));
             return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
         }
 
@@ -132,9 +132,11 @@ class UsersController extends AppController
 
         $this->set('user', $user);
         $this->set('userGuilds', $userGuilds);
+        $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
             'user',
             'userGuilds',
+            'csrf',
         ]);
     }
 }

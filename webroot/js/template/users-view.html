@@ -23,7 +23,18 @@
                 所属しているギルドはありません。
             </p>
             <ul ng-repeat="el in $ctrl.userGuilds">
-                <li><a target="_self" href="/guilds/view/{{ el.id }}">{{ el.name }}</a></li>
+                <li>
+                    <a target="_self" href="/guilds/view/{{ el.id }}">{{ el.name }}</a>
+                    <form style="display:inline-block;" method="post" accept-charset="utf-8" action="/guilds/leave">
+                        <div style="display:none;">
+                            <input type="hidden" name="_method" value="POST"/>
+                            <input type="hidden" name="_csrfToken" value="{{ $ctrl.csrf }}"/>
+                            <input type="hidden" name="userId" value="{{ $ctrl.user.id }}"/>
+                            <input type="hidden" name="guildId" value="{{ el.id }}"/>
+                        </div>
+                        <input type="submit" value="退会する"/>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>

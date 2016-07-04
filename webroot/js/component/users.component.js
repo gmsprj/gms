@@ -14,6 +14,7 @@ mod.component('usersView', {
             $http.get(path).then(function(res) {
                 self.user = res.data.user;
                 self.userGuilds = res.data.userGuilds;
+                self.csrf = res.data.csrf;
             });
         }
     ]

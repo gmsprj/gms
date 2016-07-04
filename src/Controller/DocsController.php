@@ -57,16 +57,9 @@ class DocsController extends AppController
                 'Cells.name' => 'docs-owners-guilds'
             ])->all();
 
-        // Name and Description
-
-        $nd = $this->Cells->findKVSAll()->where([
-                'L.content' => '文書について'
-            ])->first();
-
         // Set
 
         $this->set('user', $user);
-        $this->set('nd', $nd);
         $this->set('customDocs', $customDocs);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [

@@ -342,21 +342,3 @@ CREATE TABLE images (
  * cells.right_id: xxxs.id
  */
 
-/**
- * texts-kvs-xxxs
- *
- * kv ... Key and Value
- *
- * キーと値を表す構造。
- * 左がキー、右が値。
- * 左のキー(texts)は検索等で参照される。
- *
- *      cells
- *    /       \
- * texts     xxxs
- *
- * cells.name: 'texts-kvs-xxxs' (example 'texts-kvs-texts')
- * cells.left_id: texts.id (key)
- * cells.right_id: texts.id (value)
- */
-

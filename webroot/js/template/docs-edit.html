@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="threadId" class="col-xs-2 control-label text-muted">参照先スレッド</label>
+                        <label for="threadId" class="col-xs-2 control-label text-muted">所属ギルド</label>
                         <div class="col-xs-10">
                             <select name="guildId"
                                 ng-options="el.name for el in $ctrl.guilds track by el.id"
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="threadId" class="col-xs-2 control-label text-muted">参照先スレッド</label>
+                        <label for="threadId" class="col-xs-2 control-label text-muted">参照先スレッド（オプション）</label>
                         <div class="col-xs-10">
                             <input class="col-sm-12" type="text" name="threadId" value="{{ $ctrl.thread.id }}" placeholder="参照先スレッドID"/>
                         </div>

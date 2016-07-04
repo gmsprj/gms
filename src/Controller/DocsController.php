@@ -234,24 +234,25 @@ class DocsController extends AppController
 
     /**
      * Edit method
+     *
+     * @param string|null $id Docs id.
      */
     public function edit($id = null)
     {
         $user = $this->Auth->user();
-        $currentGuild = $this->Cells->findCells('users', 'owners', 'guilds')
+        $doc = $this->Docs->get($id);
+        $currentGuild = $this->Cells->findCells('docs', 'owners', 'guilds')
             ->select([
                 'id' => 'R.id',
                 'name' => 'R.name',
             ])->where([
-                'L.id' => $user['id'],
+                'L.id' => $id,
             ])->first();
         $guilds = $this->Guilds->find()
             ->select([
                 'id',
                 'name',
             ])->all();
-        $doc = $this->Docs->get($id);
-
         $thread = $this->Cells->findCells('threads', 'refs', 'docs')
             ->select([
                 'id' => 'L.id',
@@ -277,28 +278,46 @@ class DocsController extends AppController
 
     public function update()
     {
+        // Get parameters
         $id = $this->request->data('id');
         $name = $this->request->data('name');
         $content = $this->request->data('content');
         $guildId = $this->request->data('guildId');
         $threadId = $this->request->data('threadId');
+
         $doneTo = ['controller' => 'Docs', 'action' => 'view', $id];
 
+        // Update parameters
         $doc = $this->Docs->get($id);
         $oldName = $doc->name;
         $doc->name = $name;
         $doc->content = $content;
 
-        die('TODO: remove cells by old guild id');
-        
-        $tab = TableRegistry::get('Docs');
-        $tab->save($doc);
+        // Save
+        $docsTab = TableRegistry::get('Docs');
+        if (!$docsTab->save($doc)) {
+        }
 
-        $this->Cells->addTextsNews([
+        // Update cells for docs and guilds relationship
+        $cell = $this->Cells->findCells('docs', 'owners', 'guilds')
+            ->where([
+                'L.id' => $id,
+            ])->first();
+        if (!$cell) {
+        }
+        $cellsTab = TableRegistry::get('Cells');
+        $cellEntity = $cellsTab->get($cell['id']);
+        $cellEntity->right_id = $guildId;
+        if (!$cellsTab->save($cellEntity)) {
+        }
+
+        // News
+        if (!$this->Cells->addTextsNews([
             'right' => 'docs',
             'rightId' => $id,
             'content' => __(sprintf('文書「%s」が更新されました。', $oldName))
-        ]);
+        ])) {
+        }
 
         $this->redirect($doneTo);
     }

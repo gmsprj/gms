@@ -91,6 +91,5 @@ class AppController extends Controller
         }
 
         $this->set('site', $this->Sites->find()->first());
-        $this->set('user', $this->Auth->user());
     }
 }

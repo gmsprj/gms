@@ -12,7 +12,9 @@ mod.component('usersView', {
             //console.log(path);
 
             $http.get(path).then(function(res) {
+                console.log(self.user);
                 self.user = res.data.user;
+                console.log(self.user);
                 self.userGuilds = res.data.userGuilds;
                 self.csrf = res.data.csrf;
             });

@@ -116,15 +116,16 @@ class UsersController extends AppController
             return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
         }
 
-        $user = $this->Auth->user();
+        $user = $this->Users->get($id);
+        Log::debug(sprintf('User: %s', json_encode($user)));
         if (!$user) {
-            $this->Flash->error(__('サインインしてください。'));
+            $this->Flash->error(__('ユーザーが見つかりません。'));
             return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
         }
 
         $userGuilds = $this->Cells->findCells('users', 'owners', 'guilds')
             ->where([
-                'L.id' => $user['id'],
+                'L.id' => $user->id,
             ])->select([
                 'id' => 'R.id',
                 'name' => 'R.name',

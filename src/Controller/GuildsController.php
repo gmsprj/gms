@@ -23,6 +23,7 @@ class GuildsController extends AppController
             'entry',
             'leave',
         ]);
+        $this->loadModel('Sites');
         $this->loadModel('Boards');
         $this->loadModel('Threads');
         $this->loadModel('Posts');

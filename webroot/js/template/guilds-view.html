@@ -52,13 +52,9 @@
     <div class="row">
         <div class="col-sm-6">
             <h4>ヘッドライン</h4>
-            <p>雑談スレの新着 5 コメント</p>
+            <p><a target="_self" href="/threads/view/{{ $ctrl.headlineThread.id }}">{{ $ctrl.headlineThread.name }}</a>の新着{{ $ctrl.headlinePosts.length }}コメント</p>
             <ul>
-                <li>204: 名無しさん: そうだよ。</li>
-                <li>203: 名無しさん: そうかな。</li>
-                <li>202: 名無しさん: そうだよ。</li>
-                <li>201: 名無しさん: そうかな。</li>
-                <li>200: 名無しさん: そうかな。</li>
+                <li ng-repeat="el in $ctrl.headlinePosts">{{ el.name }}: {{ el.content }}</li>
             </ul>
         </div>
         

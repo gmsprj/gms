@@ -25,6 +25,7 @@ class GuildsController extends AppController
         ]);
         $this->loadModel('Boards');
         $this->loadModel('Threads');
+        $this->loadModel('Posts');
         $this->loadModel('Docs');
         $this->loadModel('Cells');
     }
@@ -133,18 +134,47 @@ class GuildsController extends AppController
                 'content' => 'L.content',
                 'created' => 'L.created',
             ])->limit(5);
+        $wasEntry = $this->Cells->findCells('users', 'owners', 'guilds')
+            ->where([
+                'R.id' => $id,
+            ])->first();
+        $headlineBoard = $this->Cells->findCells('boards', 'owners', 'guilds')
+            ->where([
+                'R.id' => $id,
+            ])->select([
+                'id' => 'L.id',
+            ])->order([
+                'L.created' => 'DESC',
+            ])->first();
+        $headlineThread = $this->Threads->find()
+            ->select([
+                'id',
+                'name',
+            ])->where([
+                'board_id' => $headlineBoard['id'],
+            ])->order([
+                'created' => 'DESC',
+            ])->first();
+        $headlinePosts = $this->Posts->find()
+            ->select([
+                'name',
+                'content',
+            ])->where([
+                'thread_id' => $headlineThread->id,
+            ])->order([
+                'created' => 'DESC',
+            ])->limit(5);
 
         $this->set('user', $user);
         $this->set('guild', $guild);
         $this->set('guildSymbols', $guildSymbols);
         $this->set('boards', $boards);
         $this->set('news', $news);
+        $this->set('headlineThread', $headlineThread);
+        $this->set('headlinePosts', $headlinePosts);
         $this->set('publishedDocs', $publishedDocs);
         $this->set('draftDocs', $draftDocs);
-        $this->set('wasEntry', $this->Cells->findCells('users', 'owners', 'guilds')
-            ->where([
-                'R.id' => $id,
-            ])->first());
+        $this->set('wasEntry', $wasEntry);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
             'user',
@@ -152,6 +182,8 @@ class GuildsController extends AppController
             'guildSymbols',
             'boards',
             'news',
+            'headlineThread',
+            'headlinePosts',
             'publishedDocs',
             'draftDocs',
             'wasEntry',

@@ -38,6 +38,8 @@ mod.component('guildsView', {
                 self.publishedDocs = res.data.publishedDocs;
                 self.draftDocs = res.data.draftDocs;
                 self.news = res.data.news;
+                self.headlineThread = res.data.headlineThread;
+                self.headlinePosts = res.data.headlinePosts;
                 self.wasEntry = res.data.wasEntry;
                 self.csrf = res.data.csrf;
             });

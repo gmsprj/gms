@@ -49,15 +49,17 @@
     </div>
     <hr/>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <h4>参照先スレッド (<a target="_self" href="/threads/view/{{ $ctrl.thread.id }}">{{ $ctrl.thread.name }}</a>)</h4>
-            <ul ng-repeat="el in $ctrl.posts">
-                <li>{{ $index+1 }}: {{ el.name }}: {{ el.content }}</li>
-            </ul>
+    <div ng-if="$ctrl.thread">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>参照先スレッド (<a target="_self" href="/threads/view/{{ $ctrl.thread.id }}">{{ $ctrl.thread.name }}</a>)</h4>
+                <ul ng-repeat="el in $ctrl.posts">
+                    <li>{{ $index+1 }}: {{ el.name }}: {{ el.content }}</li>
+                </ul>
+            </div>
         </div>
+        <hr/>
     </div>
-    <hr/>
 
 </div>
 

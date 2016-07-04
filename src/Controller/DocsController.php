@@ -32,10 +32,6 @@ class DocsController extends AppController
      */
     public function index()
     {
-        $user = $this->Auth->user();
-
-        // Guilds and Docs
-
         $customDocs = $this->Cells->find()
             ->hydrate(false)
             ->join([
@@ -57,13 +53,26 @@ class DocsController extends AppController
                 'Cells.name' => 'docs-owners-guilds'
             ])->all();
 
-        // Set
+        $user = $this->Auth->user();
+        $userGuilds = [];
+
+        if ($user) {
+            $userGuilds = $this->Cells->findCells('users', 'owners', 'guilds')
+            ->select([
+                'id' => 'R.id',
+                'name' => 'R.name',
+            ])->where([
+                'L.id' => $user['id'],
+            ])->all();
+        }
 
         $this->set('user', $user);
+        $this->set('userGuilds', $userGuilds);
         $this->set('customDocs', $customDocs);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
             'user',
+            'userGuilds',
             'nd',
             'customDocs',
             'csrf',
@@ -137,17 +146,29 @@ class DocsController extends AppController
         $failTo = ['controller' => 'Docs', 'action' => 'index'];
         $doneTo = ['controller' => 'Docs', 'action' => 'index'];
 
+        $guildId = $this->request->data('guildId'); // 所属ギルド
+        $threadId = $this->request->data('threadId'); // 参照先スレッド
+        $docName = $this->request->data('docName');
+        $docContent = $this->request->data('docContent');
+        $docState = $this->request->data('docState');
+
+        // 必須パラメーターのチェック
+
+        if (!$guildId || !$docName || !$docContent || !$docState) {
+            $this->Flash->error(__('不正な入力です。'));
+            return $this->redirect($failTo);
+        }
+
         // Users
-        /*
+
         $user = $this->Auth->user();
         if (!$user) {
             $this->Flash->error(__('文書の提案にはサインインが必要です。'));
             return $this->redirect($failTo);
-        }*/
+        }
 
         // Guilds
 
-        $guildId = $this->request->data('guildId'); // doc-owner-guild の guilds.id
         $guild = $this->Guilds->get($guildId);
         if (!$guild) {
             $this->Flash->error(__('Not found guild id'));
@@ -156,10 +177,6 @@ class DocsController extends AppController
         }
         
         // Docs
-
-        $docName = $this->request->data('docName');
-        $docContent = $this->request->data('docContent');
-        $docState = $this->request->data('docState');
 
         $tab = TableRegistry::get('Docs');
         $doc = $tab->newEntity([
@@ -180,36 +197,29 @@ class DocsController extends AppController
             return $this->redirect($failTo);
         }
 
-        // Cells for thread-ref-doc 
+        // Cells for thread-ref-doc (optional)
         
-        $threadId = $this->request->data('threadId'); // thread-ref-doc の threads.id
-        $tab = TableRegistry::get('Cells');
-        $cell = $tab->newEntity([
-            'name' => 'threads-refs-docs',
-            'left_id' => $threadId,
-            'right_id' => $doc->id,
-        ]);
+        if ($threadId) {
+            $tab = TableRegistry::get('Cells');
+            $cell = $tab->newEntity([
+                'name' => 'threads-refs-docs',
+                'left_id' => $threadId,
+                'right_id' => $doc->id,
+            ]);
 
-        if (!$tab->save($cell)) {
-            $this->Flash->error(__('Failed to save'));
-            Log::write('error', json_encode($cell->errors()));
-            return $this->redirect($failTo);
+            if (!$tab->save($cell)) {
+                $this->Flash->error(__('Failed to save'));
+                Log::write('error', json_encode($cell->errors()));
+                return $this->redirect($failTo);
+            }
         }
 
         // Cells for docs-owners-guilds
 
-        $tab = TableRegistry::get('Cells');
-        $cell = $tab->newEntity([
-            'name' => 'docs-owners-guilds',
+        $this->Cells->addCells('docs', 'owners', 'guilds', [
             'left_id' => $doc->id,
             'right_id' => $guildId,
         ]);
-
-        if (!$tab->save($cell)) {
-            $this->Flash->error(__('Internal error'));
-            Log::write('error', json_encode($cell->errors()));
-            return $this->redirect($failTo);
-        }
 
         // texts-news-guilds
 

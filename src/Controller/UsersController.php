@@ -31,6 +31,7 @@ class UsersController extends AppController
             'signout',
             'signinRedirect',
         ]);
+        $this->loadModel('Cells');
     }
 
     /**
@@ -121,8 +122,19 @@ class UsersController extends AppController
             return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
         }
 
+        $userGuilds = $this->Cells->findUsersOwners([
+            'right' => 'guilds',
+        ])->select([
+            'id' => 'R.id',
+            'name' => 'R.name',
+        ])->all();
+
         $this->set('user', $user);
-        $this->set('_serialize', ['user']);
+        $this->set('userGuilds', $userGuilds);
+        $this->set('_serialize', [
+            'user',
+            'userGuilds',
+        ]);
     }
 }
 

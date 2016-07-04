@@ -209,6 +209,25 @@ class CellsTable extends Table
             ]);
     }
 
+    public function findUsersOwners($arr = [])
+    {
+        return $this->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'users',
+                'alias' => 'L',
+                'type' => 'INNER',
+                'conditions' => 'L.id = Cells.left_id',
+            ])->join([
+                'table' => $arr['right'],
+                'alias' => 'R',
+                'type' => 'INNER',
+                'conditions' => 'R.id = Cells.right_id',
+            ])->where([
+                'Cells.name' => 'users-owners-' . $arr['right'],
+            ]);
+    }
+
     public function findKVSAll($arr = [])
     {
         return $this->find()

@@ -104,6 +104,7 @@ class GuildsController extends AppController
      */
     public function view($id = null)
     {
+        $user = $this->Auth->user();
         $guild = $this->Guilds->get($id);
         $boards = $this->Cells->findBoardsOwners([
                 'right' => 'guilds',
@@ -132,6 +133,7 @@ class GuildsController extends AppController
                 'state' => 'counter'
             ])->all();
 
+        $this->set('user', $user);
         $this->set('guild', $guild);
         $this->set('guildSymbols', $guildSymbols);
         $this->set('boards', $boards);
@@ -139,7 +141,9 @@ class GuildsController extends AppController
         $this->set('publishedDocs', $publishedDocs);
         $this->set('draftDocs', $draftDocs);
         $this->set('counterDocs', $counterDocs);
+        $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
+            'user',
             'guild',
             'guildSymbols',
             'boards',
@@ -147,6 +151,7 @@ class GuildsController extends AppController
             'publishedDocs',
             'draftDocs',
             'counterDocs',
+            'csrf',
         ]);
     }
 
@@ -162,6 +167,10 @@ class GuildsController extends AppController
      */
     public function entry()
     {
+        // パラメーターの取得
+        $userId = $this->request->data('userId');
+        $guildId = $this->request->data('guildId');
+
         // エラー時のリダイレクト先
         $failTo = ['controller' => 'Guilds', 'action' => 'index'];
         $doneTo = ['action' => 'view', $guildId];
@@ -171,10 +180,6 @@ class GuildsController extends AppController
             Log::write('error', __('Invalid method of '. $this->request->method()));
             return $this->redirect($failTo);
         }
-
-        // パラメーターの取得
-        $userId = $this->request->data('userId');
-        $guildId = $this->request->data('guildId');
 
         // ユーザーの取得/チェック
         $usersTable = TableRegistry::get('Users');
@@ -186,6 +191,8 @@ class GuildsController extends AppController
 
         // 入会
         //$user->guild_id = $guildId;// TODO
+
+        // 保存
         if (!$usersTable->save($user)) {
             Log::write('error', __('Failed to save Users of ID ' . $user->id));
             Log::write('error', json_encode($user->errors()));

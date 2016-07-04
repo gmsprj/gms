@@ -97,7 +97,21 @@
 
         <div class="col-sm-6">
             <h4>入会</h4>
-            <p>{{ $ctrl.guild.name }}への入会には<a target="_self" href="/users/signin">サインイン</a>が必要です。</p>
+            <div ng-if="$ctrl.user == null">
+                <p>{{ $ctrl.guild.name }}への入会には<a target="_self" href="/users/signin">サインイン</a>が必要です。</p>
+            </div>
+            <div ng-if="$ctrl.user">
+                <form method="post" accept-charset="utf-8" action="/guilds/entry">
+                    <div style="display:none;">
+                        <input type="hidden" name="_method" value="POST"/>
+                        <input type="hidden" name="_csrfToken" value="{{ $ctrl.csrf }}"/>
+                        <input type="hidden" name="userId" value="{{ $ctrl.user.id }}"/>
+                        <input type="hidden" name="guildId" value="{{ $ctrl.guild.id }}"/>
+                    </div>
+                    <input type="submit" class="btn btn-default" value="{{ $ctrl.guild.name }}に入会する" />
+                </form>
+
+            </div>
         </div>
     </div>
     <hr/>

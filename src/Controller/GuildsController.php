@@ -112,7 +112,7 @@ class GuildsController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Auth->user();
+        $authUser = $this->Auth->user();
         $guild = $this->Guilds->get($id);
         $boards = $this->Cells->findCells('boards', 'owners', 'guilds')
             ->where([
@@ -152,6 +152,7 @@ class GuildsController extends AppController
             ])->limit(5);
         $wasEntry = $this->Cells->findCells('users', 'owners', 'guilds')
             ->where([
+                'L.id' => $authUser['id'],
                 'R.id' => $id,
             ])->first();
         $headlineBoard = $this->Cells->findCells('boards', 'owners', 'guilds')
@@ -181,7 +182,7 @@ class GuildsController extends AppController
                 'created' => 'DESC',
             ])->limit(5);
 
-        $this->set('user', $user);
+        $this->set('authUser', $authUser);
         $this->set('guild', $guild);
         $this->set('guildSymbols', $guildSymbols);
         $this->set('boards', $boards);
@@ -193,7 +194,7 @@ class GuildsController extends AppController
         $this->set('wasEntry', $wasEntry);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
-            'user',
+            'authUser',
             'guild',
             'guildSymbols',
             'boards',

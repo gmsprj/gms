@@ -79,6 +79,7 @@ class UsersController extends AppController
     public function signout()
     {
         $this->Flash->success(__('サインアウトました。'));
+        $this->request->session()->destroy();
         return $this->redirect($this->Auth->logout());
     }
 
@@ -116,27 +117,25 @@ class UsersController extends AppController
             return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
         }
 
-        $user = $this->Users->get($id);
-        Log::debug(sprintf('User: %s', json_encode($user)));
-        if (!$user) {
-            $this->Flash->error(__('ユーザーが見つかりません。'));
-            return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
-        }
+        $authUser = $this->Auth->user();
+        $viewUser = $this->Users->get($id);
 
-        $userGuilds = $this->Cells->findCells('users', 'owners', 'guilds')
+        $viewUserGuilds = $this->Cells->findCells('users', 'owners', 'guilds')
             ->where([
-                'L.id' => $user->id,
+                'L.id' => $viewUser->id,
             ])->select([
                 'id' => 'R.id',
                 'name' => 'R.name',
             ])->all();
 
-        $this->set('user', $user);
-        $this->set('userGuilds', $userGuilds);
+        $this->set('authUser', $authUser);
+        $this->set('viewUser', $viewUser);
+        $this->set('viewUserGuilds', $viewUserGuilds);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
-            'user',
-            'userGuilds',
+            'authUser',
+            'viewUser',
+            'viewUserGuilds',
             'csrf',
         ]);
     }

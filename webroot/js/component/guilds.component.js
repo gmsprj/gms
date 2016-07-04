@@ -32,7 +32,7 @@ mod.component('guildsView', {
             //console.log(path);
 
             $http.get(path).then(function(res) {
-                self.user = res.data.user;
+                self.authUser = res.data.authUser;
                 self.guild = res.data.guild;
                 self.guildSymbolUrl = res.data.guildSymbols[0].url;
                 self.boards = res.data.boards;

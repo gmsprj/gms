@@ -1,4 +1,4 @@
-<div class="container" ng-if="$ctrl.user">
+<div class="container">
     <div class="row">
         <div class="col-sm-12">
             <h3>ユーザー</h3>
@@ -9,8 +9,8 @@
     <div class="row">
         <div class="col-sm-12">
             <ul>
-                <li>ユーザーID: {{ $ctrl.user.id }}</li>
-                <li>ユーザー名: {{ $ctrl.user.name }}</li>
+                <li>ユーザーID: {{ $ctrl.viewUser.id }}</li>
+                <li>ユーザー名: {{ $ctrl.viewUser.name }}</li>
             </ul>
         </div>
     </div>
@@ -18,22 +18,24 @@
 
     <div class="row">
         <div class="col-sm-12">
-            <h4>{{ $ctrl.user.name }}の所属ギルド</h4>
-            <p ng-if="$ctrl.userGuilds.length === 0">
+            <h4>{{ $ctrl.viewUser.name }}の所属ギルド</h4>
+            <p ng-if="$ctrl.viewUserGuilds.length === 0">
                 所属しているギルドはありません。
             </p>
-            <ul ng-repeat="el in $ctrl.userGuilds">
+            <ul ng-repeat="el in $ctrl.viewUserGuilds">
                 <li>
                     <a target="_self" href="/guilds/view/{{ el.id }}">{{ el.name }}</a>
-                    <form style="display:inline-block;" method="post" accept-charset="utf-8" action="/guilds/leave">
-                        <div style="display:none;">
-                            <input type="hidden" name="_method" value="POST"/>
-                            <input type="hidden" name="_csrfToken" value="{{ $ctrl.csrf }}"/>
-                            <input type="hidden" name="userId" value="{{ $ctrl.user.id }}"/>
-                            <input type="hidden" name="guildId" value="{{ el.id }}"/>
-                        </div>
-                        <input type="submit" value="退会する"/>
-                    </form>
+                    <div ng-if="$ctrl.viewUser.id === $ctrl.authUser.id" style="display:inline-block;">
+                        <form method="post" accept-charset="utf-8" action="/guilds/leave">
+                            <div style="display:none;">
+                                <input type="hidden" name="_method" value="POST"/>
+                                <input type="hidden" name="_csrfToken" value="{{ $ctrl.csrf }}"/>
+                                <input type="hidden" name="userId" value="{{ $ctrl.authUser.id }}"/>
+                                <input type="hidden" name="guildId" value="{{ el.id }}"/>
+                            </div>
+                            <input type="submit" value="退会する"/>
+                        </form>
+                    </div>
                 </li>
             </ul>
         </div>

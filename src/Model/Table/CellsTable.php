@@ -103,6 +103,47 @@ class CellsTable extends Table
         return true;
     }
 
+    public function existsUsersOwners($arr = [])
+    {
+        $el = $this->find()
+            ->hydrate(false)
+            ->join([
+                'table' => 'users',
+                'alias' => 'L',
+                'type' => 'INNER',
+                'conditions' => 'L.id = Cells.left_id',
+            ])->join([
+                'table' => $arr['right'],
+                'alias' => 'R',
+                'type' => 'INNER',
+                'conditions' => 'R.id = Cells.right_id',
+            ])->select([
+                'id' => 'L.id',
+            ])->where([
+                'Cells.name LIKE' => 'users-owners-' . $arr['right'],
+                'Cells.left_id' => $arr['id'],
+            ])->first();
+        return $el != null;
+    }
+
+    public function addUsersOwners($arr = [])
+    {
+        $cellsTab = TableRegistry::get('Cells');
+
+        $cell = $cellsTab->newEntity([
+            'name' => 'users-owners-' . $arr['right'],
+            'left_id' => $arr['id'],
+            'right_id' => $arr['rightId'],
+        ]);
+
+        if (!$cellsTab->save($cell)) {
+            $this->Flash->error(__('Internal error'));
+            Log::write('error', json_encode($cell->errors()));
+            return false;
+        }
+
+        return true;
+    }
     public function findTextsNewsAll($arr = [])
     {
         return $this->find()

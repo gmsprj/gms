@@ -141,6 +141,10 @@ class GuildsController extends AppController
         $this->set('publishedDocs', $publishedDocs);
         $this->set('draftDocs', $draftDocs);
         $this->set('counterDocs', $counterDocs);
+        $this->set('wasEntry', $this->Cells->existsUsersOwners([
+            'right' => 'guilds',
+            'id' => $user['id'],
+        ]));
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
             'user',
@@ -151,6 +155,7 @@ class GuildsController extends AppController
             'publishedDocs',
             'draftDocs',
             'counterDocs',
+            'wasEntry',
             'csrf',
         ]);
     }
@@ -171,7 +176,7 @@ class GuildsController extends AppController
         $userId = $this->request->data('userId');
         $guildId = $this->request->data('guildId');
 
-        // エラー時のリダイレクト先
+        // リダイレクト先
         $failTo = ['controller' => 'Guilds', 'action' => 'index'];
         $doneTo = ['action' => 'view', $guildId];
 
@@ -190,7 +195,16 @@ class GuildsController extends AppController
         }
 
         // 入会
-        //$user->guild_id = $guildId;// TODO
+        $arr = [
+            'right' => 'guilds',
+            'id' => $userId,
+        ];
+        if ($this->Cells->existsUsersOwners($arr)) {
+            $this->Flash->error(__('既に入会済みです。'));
+            return $this->redirect($doneTo);
+        } else {
+            $this->Cells->addUsersOwners($arr);
+        }
 
         // 保存
         if (!$usersTable->save($user)) {

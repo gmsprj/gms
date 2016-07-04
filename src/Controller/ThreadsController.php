@@ -70,12 +70,13 @@ class ThreadsController extends AppController
 
         // 認証ユーザーから投稿者ネームを得る
         // TODO: 板毎にデフォルトの「名無しさん」等が必要になった場合はここを変更
-        $authUser = $this->Auth->user();
-        $postName = $authUser ? $authUser['name'] : __('名無しさん');
+        $user = $this->Auth->user();
+        $postName = $user ? $user['name'] : __('名無しさん');
 
         // テンプレートに設定
-        $this->set('user', $authUser);
+        $this->set('user', $user);
         $this->set('board', $board);
+        $this->set('enableForm', $board->isAllowForm($user, $this->Cells));
         $this->set('threads', $threads);
         $this->set('thread', $thread);
         $this->set('posts', $posts);
@@ -83,6 +84,7 @@ class ThreadsController extends AppController
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
             'user',
+            'enableForm',
             'board',
             'threads',
             'thread',
@@ -116,7 +118,7 @@ class ThreadsController extends AppController
         $postContent = $this->request->data('postContent');
         $boardId = $this->request->data('boardId');
 
-        $authUser = $this->Auth->user();
+        $user = $this->Auth->user();
 
         $failTo = ['controller' => 'Boards', 'action' => 'view', $boardId];
         $doneTo = ['controller' => 'Boards', 'action' => 'view', $boardId];
@@ -158,7 +160,6 @@ class ThreadsController extends AppController
         }
 
         // News
-
         $this->Cells->addTextsNews([
             'right' => 'boards',
             'rightId' => $boardId,

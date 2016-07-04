@@ -29,4 +29,12 @@ class Board extends Entity
         '*' => true,
         'id' => false,
     ];
+
+    public function isAllowForm($user, $cellsTab) {
+        $foundBoard = $cellsTab->findCells('boards', 'owners', 'sites')
+            ->where([
+                'L.id' => $this->id,
+            ])->first();
+        return $user || $foundBoard;
+    }
 }

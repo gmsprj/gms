@@ -38,37 +38,38 @@
         </div>
         <hr/>
 
-        <div class="panel panel-default" ng-if="$ctrl.user">
+        {{ $ctrl.boardParentName }}
+        <div class="panel panel-default" ng-if="$ctrl.enableForm">
             <div class="panel-heading">コメント投稿</div>
-            <div class="panel-body">
-                <form method="post" accept-charset="utf-8" action="/posts/add">
-                    <div style="display:none;">
-                        <input type="hidden" name="_method" value="POST"/>
-                        <input type="hidden" name="_csrfToken" value="{{ $ctrl.csrf }}"/>
-                        <input type="hidden" name="threadId" value="{{ $ctrl.thread.id }}"/>
-                    </div>
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <div class="col-xs-1">
-                            <!--<label for="name" class="col-xs-1 control-label text-muted">投稿者名</label>-->
-                            <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                <div class="panel-body">
+                    <form method="post" accept-charset="utf-8" action="/posts/add">
+                        <div style="display:none;">
+                            <input type="hidden" name="_method" value="POST"/>
+                            <input type="hidden" name="_csrfToken" value="{{ $ctrl.csrf }}"/>
+                            <input type="hidden" name="threadId" value="{{ $ctrl.thread.id }}"/>
+                        </div>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-xs-1">
+                                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                </div>
+                                <div class="col-xs-11">
+                                    <input name="name" type="text" class="form-control" value="{{ $ctrl.postName }}" placeholder="{{ $ctrl.postName }}" />
+                                </div>
                             </div>
-                            <div class="col-xs-11">
-                                <input name="name" type="text" class="form-control" value="{{ $ctrl.postName }}" placeholder="{{ $ctrl.postName }}" />
+                            <div class="form-group">
+                                <label for="content" class="col-xs-1 control-label text-muted">内容</label>
+                                <div class="col-xs-11">
+                                    <textarea class="col-xs-12" name="content" rows="5" placeholder="内容"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-offset-1 col-xs-11">
+                                    <input type="submit" class="btn btn-default" value="書き込む" />
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="content" class="col-xs-1 control-label text-muted">内容</label>
-                            <div class="col-xs-11">
-                                <textarea class="col-xs-12" name="content" rows="5" placeholder="内容"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-offset-1 col-xs-11">
-                                <input type="submit" class="btn btn-default" value="書き込む" />
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

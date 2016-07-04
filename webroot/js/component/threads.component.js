@@ -27,6 +27,7 @@ mod.component('threadsView', {
 
             $http.get(path).then(function(res) {
                 //console.log(res.data);
+                self.user = res.data.user;
                 self.postName = res.data.postName;
                 self.board = res.data.board;
                 self.threads = res.data.threads;

@@ -86,6 +86,7 @@ class GuildsController extends AppController
         $this->set('customDocs', $customDocs);
         $this->set('_serialize', [
             'site',
+            'board',
             'threads',
             'guilds',
             'news',
@@ -162,12 +163,13 @@ class GuildsController extends AppController
     public function entry()
     {
         // エラー時のリダイレクト先
-        $redirect = ['controller' => 'Guilds', 'action' => 'index'];
+        $failTo = ['controller' => 'Guilds', 'action' => 'index'];
+        $doneTo = ['action' => 'view', $guildId];
 
         // メソッド名をチェック
         if (!$this->request->is('post')) {
             Log::write('error', __('Invalid method of '. $this->request->method()));
-            return $this->redirect($redirect);
+            return $this->redirect($failTo);
         }
 
         // パラメーターの取得
@@ -179,22 +181,22 @@ class GuildsController extends AppController
         $user = $usersTable->get($userId);
         if (!$user) {
             Log::write('error', __('Invalid Users ID of ' . $userId));
-            return $this->redirect($redirect);
+            return $this->redirect($failTo);
         }
 
         // 入会
-        //$user->guild_id = $guildId;
+        //$user->guild_id = $guildId;// TODO
         if (!$usersTable->save($user)) {
             Log::write('error', __('Failed to save Users of ID ' . $user->id));
             Log::write('error', json_encode($user->errors()));
-            return $this->redirect($redirect);
+            return $this->redirect($failTo);
         }
 
         // セッションの更新
         $this->Auth->setUser($user->toArray());
 
         $this->Flash->success(__('入会しました。'));
-        return $this->redirect(['action' => 'view', $guildId]);
+        return $this->redirect($doneTo);
     }
 }
 

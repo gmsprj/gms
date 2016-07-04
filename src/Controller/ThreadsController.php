@@ -73,6 +73,7 @@ class ThreadsController extends AppController
         $postName = $authUser ? $authUser['name'] : __('名無しさん');
 
         // テンプレートに設定
+        $this->set('user', $authUser);
         $this->set('board', $board);
         $this->set('threads', $threads);
         $this->set('thread', $thread);
@@ -80,6 +81,7 @@ class ThreadsController extends AppController
         $this->set('postName', $postName);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
+            'user',
             'board',
             'threads',
             'thread',

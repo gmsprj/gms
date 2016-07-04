@@ -26,8 +26,7 @@ class SitesController extends AppController
      */
     public function index()
     {
-        $this->set('sites', $this->Sites->find('all'));
-        $this->set('_serialize', ['sites']);
+        $this->set('_serialize', []);
     }
 
     /**
@@ -40,6 +39,10 @@ class SitesController extends AppController
     public function view($id = null)
     {
         $this->set('site', $this->Sites->get($id));
-        $this->set('_serialize', ['site']);
+        $this->set('user', $this->Auth->user());
+        $this->set('_serialize', [
+            'site',
+            'user',
+        ]);
     }
 }

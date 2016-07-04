@@ -1,2 +1,20 @@
-Hello
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>ユーザー</h3>
+        </div>
+    </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <ul ng-if="$ctrl.user">
+                <li>ユーザーID: {{ $ctrl.user.id }}</li>
+                <li>ユーザー名: {{ $ctrl.user.name }}</li>
+            </ul>
+        </div>
+    </div>
+    <hr/>
+
+</div>
 

@@ -117,6 +117,7 @@ class UsersController extends AppController
 
         $user = $this->Auth->user();
         if (!$user) {
+            $this->Flash->error(__('サインインしてください(´・ω・｀)'));
             return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
         }
 

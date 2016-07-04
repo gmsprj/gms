@@ -1,27 +1,28 @@
 (function() {
 'use strict';
 
-var gm = angular.module('gm');
+var mod = angular.module('gm');
 
-gm.component('sitesHeader', {
+mod.component('sitesHeader', {
     templateUrl: '/js/template/sites-header.html',
     controller: ['$http',
-        function sitesHeaderController($http) {
+        function sitesHeaderCtrl($http) {
             var self = this;
 
             $http.get('/sites/view/1.json').then(function(res) {
                 //console.log(res);
+                //console.log(res.data.user);
                 self.site = res.data.site;
+                self.user = res.data.user;
             });
         }
     ]
 });
 
-gm.component('sitesFooter', {
+mod.component('sitesFooter', {
     templateUrl: '/js/template/sites-footer.html',
     controller: ['$http',
-        function sitesFooterController($http) {
-            var self = this;
+        function sitesFooterCtrl($http) {
         }
     ]
 });

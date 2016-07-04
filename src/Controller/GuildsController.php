@@ -19,7 +19,10 @@ class GuildsController extends AppController
         parent::initialize();
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
-        $this->Auth->allow(['entry']);
+        $this->Auth->allow([
+            'entry',
+            'leave',
+        ]);
         $this->loadModel('Boards');
         $this->loadModel('Threads');
         $this->loadModel('Docs');
@@ -217,6 +220,42 @@ class GuildsController extends AppController
         $this->Auth->setUser($user->toArray());
 
         $this->Flash->success(__('入会しました。'));
+        return $this->redirect($doneTo);
+    }
+
+    /**
+     * Leave method
+     *
+     * ギルドからの入会を処理する。
+     * 退会に失敗した場合、/guilds/index へリダイレクト。
+     * 退会に成功した場合、退会したギルドへリダイレクト。
+     *
+     * @param string request->data('userId') ユーザーID
+     * @param string request->data('guildId') ギルドID
+     */
+    public function leave()
+    {
+        // パラメーターの取得
+        $userId = $this->request->data('userId');
+        $guildId = $this->request->data('guildId');
+
+        // リダイレクト先
+        $failTo = ['action' => 'index'];
+        $doneTo = ['controller' => 'Users', 'action' => 'view', $userId];
+
+        // 退会
+        $cells = $this->Cells->findCells('users', 'owners', 'guilds')
+            ->where([
+                'R.id' => $guildId,
+            ])->all();
+        //Log::write('debug', $cells);
+
+        $cellsTab = TableRegistry::get('Cells');
+        foreach ($cells as $el) {
+            $entity = $cellsTab->get($el['id']);
+            $cellsTab->delete($entity);
+        }
+
         return $this->redirect($doneTo);
     }
 }

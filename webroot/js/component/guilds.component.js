@@ -37,7 +37,6 @@ mod.component('guildsView', {
                 self.boards = res.data.boards;
                 self.publishedDocs = res.data.publishedDocs;
                 self.draftDocs = res.data.draftDocs;
-                self.counterDocs = res.data.counterDocs;
                 self.news = res.data.news;
                 self.wasEntry = res.data.wasEntry;
                 self.csrf = res.data.csrf;

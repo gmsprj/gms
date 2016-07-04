@@ -49,4 +49,14 @@ class User extends Entity
     {
         return (new DefaultPasswordHasher)->hash($password);
     }
+
+    public function hasOwner($cells, $rights, $rightsId)
+    {
+        return $cells->findCells('users', 'owners', $rights)
+            ->where([
+                'R.id' => $rightsId,
+            ])->select([
+                'id' => 'R.id',
+            ])->first() != null;
+    }
 }

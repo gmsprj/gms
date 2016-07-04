@@ -33,30 +33,18 @@ class GuildsController extends AppController
      */
     public function index()
     {
-        $news = $this->Cells->findTextsNewsAll()
+        $news = $this->Cells->findAllTextsNews()
             ->limit(5);
-        $symbol = $this->Cells->findImagesSyms([
-                'right' => 'sites',
+        $symbol = $this->Cells->findCells('images', 'syms', 'sites')
+            ->select([
+                'url' => 'L.url',
             ])->first();
-        $customDocs = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'docs',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id'
-            ])->join([
-                'table' => 'guilds',
-                'alias' => 'R',
-                'type' => 'INNER',
-                'conditions' => 'R.id = Cells.right_id'
-            ])->select([
+        $customDocs = $this->Cells->findCells('docs', 'owners', 'guilds')
+            ->select([
                 'guildId' => 'R.id',
                 'guildName' => 'R.name',
                 'docId' => 'L.id',
                 'docName' => 'L.name',
-            ])->where([
-                'Cells.name' => 'docs-owners-guilds'
             ])->all();
         $site = $this->Sites->get(1);
         $threads = $this->Cells->find()
@@ -106,32 +94,42 @@ class GuildsController extends AppController
     {
         $user = $this->Auth->user();
         $guild = $this->Guilds->get($id);
-        $boards = $this->Cells->findBoardsOwners([
-                'right' => 'guilds',
-                'rightId' => $id,
+        $boards = $this->Cells->findCells('boards', 'owners', 'guilds')
+            ->where([
+                'R.id' => $id,
+            ])->select([
+                'id' => 'L.id',
+                'name' => 'L.name',
             ])->all();
-        $guildSymbols = $this->Cells->findImagesSyms([
-                'right' => 'guilds',
-                'rightId' => $id,
+        $guildSymbols = $this->Cells->findCells('images', 'syms', 'guilds')
+            ->where([
+                'R.id' => $id,
+            ])->select([
+                'url' => 'L.url',
             ])->all();
-        $news = $this->Cells->findTextsNews([
-                'right' => 'guilds',
+        $publishedDocs = $this->Cells->findCells('docs', 'owners', 'guilds')
+            ->where([
+                'R.id' => $id,
+                'L.state' => 'published',
+            ])->select([
+                'id' => 'L.id',
+                'name' => 'L.name',
+            ])->all();
+        $draftDocs = $this->Cells->findCells('docs', 'owners', 'guilds')
+            ->where([
+                'R.id' => $id,
+                'L.state' => 'draft',
+            ])->select([
+                'id' => 'L.id',
+                'name' => 'L.name',
+            ])->all();
+        $news = $this->Cells->findCells('texts', 'news', 'guilds')
+            ->where([
+                'R.id' => $id,
+            ])->select([
+                'content' => 'L.content',
+                'created' => 'L.created',
             ])->limit(5);
-        $publishedDocs = $this->Cells->findDocsOwners([
-                'right' => 'guilds',
-                'rightId' => $id,
-                'state' => 'published'
-            ])->all();
-        $draftDocs = $this->Cells->findDocsOwners([
-                'right' => 'guilds',
-                'rightId' => $id,
-                'state' => 'draft'
-            ])->all();
-        $counterDocs = $this->Cells->findDocsOwners([
-                'right' => 'guilds',
-                'rightId' => $id,
-                'state' => 'counter'
-            ])->all();
 
         $this->set('user', $user);
         $this->set('guild', $guild);
@@ -140,11 +138,10 @@ class GuildsController extends AppController
         $this->set('news', $news);
         $this->set('publishedDocs', $publishedDocs);
         $this->set('draftDocs', $draftDocs);
-        $this->set('counterDocs', $counterDocs);
-        $this->set('wasEntry', $this->Cells->existsUsersOwners([
-            'right' => 'guilds',
-            'id' => $user['id'],
-        ]));
+        $this->set('wasEntry', $this->Cells->findCells('users', 'owners', 'guilds')
+            ->where([
+                'R.id' => $id,
+            ])->first());
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
             'user',
@@ -154,7 +151,6 @@ class GuildsController extends AppController
             'news',
             'publishedDocs',
             'draftDocs',
-            'counterDocs',
             'wasEntry',
             'csrf',
         ]);
@@ -200,11 +196,14 @@ class GuildsController extends AppController
             'rightId' => $guildId,
             'id' => $userId,
         ];
-        if ($this->Cells->existsUsersOwners($arr)) {
+        if ($user->hasOwner($this->Cells, 'guilds', $guildId)) {
             $this->Flash->error(__('既に入会済みです。'));
             return $this->redirect($doneTo);
         } else {
-            $this->Cells->addUsersOwners($arr);
+            $this->Cells->addCells('users', 'owners', 'guilds', [
+                'left_id' => $userId,
+                'right_id' => $guildId,
+            ]);
         }
 
         // 保存

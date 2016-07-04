@@ -105,19 +105,12 @@ class DocsController extends AppController
                 'Cells.name' => 'docs-owners-guilds',
                 'L.id' => $id,
             ])->first();
-        $thread = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'threads',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id'
-            ])->select([
+        $thread = $this->Cells->findCells('threads', 'refs', 'docs')
+            ->select([
                 'id' => 'L.id',
                 'name' => 'L.name',
             ])->where([
-                'Cells.name' => 'threads-refs-docs',
-                'Cells.right_id' => $id,
+                'R.id' => $id,
             ])->first();
         $posts = $this->Posts->find()
             ->where([
@@ -237,9 +230,11 @@ class DocsController extends AppController
         $user = $this->Auth->user();
         $doc = $this->Docs->get($id);
 
-        $thread = $this->Cells->findThreadsRefs([
-                'right' => 'docs',
-                'rightId' => $id,
+        $thread = $this->Cells->findCells('threads', 'refs', 'docs')
+            ->select([
+                'id' => 'L.id',
+            ])->where([
+                'R.id' => $id,
             ])->first();
 
         $this->set('user', $user);

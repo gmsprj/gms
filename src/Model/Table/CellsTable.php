@@ -91,6 +91,22 @@ class CellsTable extends Table
             ]);
     }
 
+    public function addCells($lefts, $types, $rights, $ids)
+    {
+        $cell = $this->newEntity([
+            'name' => $lefts . '-' . $types . '-' . $rights,
+            'left_id' => $ids['left_id'],
+            'right_id' => $ids['right_id'],
+        ]);
+
+        if (!$this->save($cell)) {
+            Log::write('error', json_encode($cell->errors()));
+            return false;
+        }
+
+        return true;
+    }
+
     public function addTextsNews($arr = [])
     {
         $textTab = TableRegistry::get('Texts');
@@ -122,48 +138,7 @@ class CellsTable extends Table
         return true;
     }
 
-    public function existsUsersOwners($arr = [])
-    {
-        $el = $this->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'users',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id',
-            ])->join([
-                'table' => $arr['right'],
-                'alias' => 'R',
-                'type' => 'INNER',
-                'conditions' => 'R.id = Cells.right_id',
-            ])->select([
-                'id' => 'L.id',
-            ])->where([
-                'Cells.name LIKE' => 'users-owners-' . $arr['right'],
-                'Cells.left_id' => $arr['id'],
-            ])->first();
-        return $el != null;
-    }
-
-    public function addUsersOwners($arr = [])
-    {
-        $cellsTab = TableRegistry::get('Cells');
-
-        $cell = $cellsTab->newEntity([
-            'name' => 'users-owners-' . $arr['right'],
-            'left_id' => $arr['id'],
-            'right_id' => $arr['rightId'],
-        ]);
-
-        if (!$cellsTab->save($cell)) {
-            $this->Flash->error(__('Internal error'));
-            Log::write('error', json_encode($cell->errors()));
-            return false;
-        }
-
-        return true;
-    }
-    public function findTextsNewsAll($arr = [])
+    public function findAllTextsNews()
     {
         return $this->find()
             ->hydrate(false)
@@ -179,130 +154,6 @@ class CellsTable extends Table
                 'Cells.name LIKE' => '%texts-news-%',
             ])->order([
                 'L.created' => 'DESC',
-            ]);
-    }
-
-    public function findTextsNews($arr = [])
-    {
-        return $this->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'texts',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id',
-            ])->select([
-                'content' => 'L.content',
-                'created' => 'L.created',
-            ])->where([
-                'Cells.name' => 'texts-news-' . $arr['right'],
-            ])->order([
-                'L.created' => 'DESC',
-            ]);
-    }
-
-    public function findImagesSyms($arr = [])
-    {
-        return $this->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'images',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id'
-            ])->select([
-                'url' => 'L.url',
-            ])->where([
-                'Cells.name' => 'images-syms-' . $arr['right'],
-            ]);
-    }
-
-    /**
-     * @param $arr['right']
-     * @param $arr['rightId']
-     * @param $arr['state']
-     */
-    public function findDocsOwners($arr = [])
-    {
-        return $this->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'docs',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id',
-            ])->join([
-                'table' => 'guilds',
-                'alias' => 'R',
-                'type' => 'INNER',
-                'conditions' => 'R.id = Cells.right_id',
-            ])->select([
-                'id' => 'L.id',
-                'name' => 'L.name',
-            ])->where([
-                'Cells.name' => 'docs-owners-' . $arr['right'],
-                'R.id' => $arr['rightId'],
-                'L.state' => $arr['state'],
-            ]);
-    }
-
-    public function findBoardsOwners($arr = [])
-    {
-        return $this->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'boards',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id',
-            ])->join([
-                'table' => $arr['right'],
-                'alias' => 'R',
-                'type' => 'INNER',
-                'conditions' => 'R.id = Cells.right_id',
-            ])->select([
-                'id' => 'L.id',
-                'name' => 'L.name',
-            ])->where([
-                'Cells.name' => 'boards-owners-' . $arr['right'],
-                'R.id' => $arr['rightId'],
-            ]);
-    }
-
-    public function findUsersOwners($arr = [])
-    {
-        return $this->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'users',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id',
-            ])->join([
-                'table' => $arr['right'],
-                'alias' => 'R',
-                'type' => 'INNER',
-                'conditions' => 'R.id = Cells.right_id',
-            ])->where([
-                'Cells.name' => 'users-owners-' . $arr['right'],
-            ]);
-    }
-
-    public function findThreadsRefs($arr = [])
-    {
-        return $this->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'threads',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id'
-            ])->select([
-                'id' => 'L.id',
-                'name' => 'L.name',
-            ])->where([
-                'Cells.name' => 'threads-refs-' . $arr['right'],
-                'Cells.right_id' => $arr['rightId'],
             ]);
     }
 }

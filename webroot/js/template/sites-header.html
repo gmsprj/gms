@@ -21,22 +21,18 @@
                 ゲスト
             <span class="caret"></span>
           </a>
-          <ul class="dropdown-menu">
+          
+          <ul class="dropdown-menu" ng-if="$ctrl.user == null">
             <li><a target="_self" href="/users/signup">サインアップ</a></li>
             <li role="separator" class="divider"></li>
             <li><a target="_self" href="/users/signin">サインイン</a></li>
-            <!--
-            <?php if ($user): ?>
-                <li><a href="/users/view/<?= h($user['id']) ?>"><?= __('マイページ') ?></a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="/users/signout"><?= __('サインアウト') ?></a></li>
-            <?php else: ?>
-                <li><a href="/users/signup"><?= __('サインアップ') ?></a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="/users/signin"><?= __('サインイン') ?></a></li>
-            <?php endif; ?>
-            -->
           </ul>
+          <ul class="dropdown-menu" ng-if="$ctrl.user">
+            <li><a href="/users/view/{{ $ctrl.user.id }}">マイページ</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/users/signout">サインアウト</a></li>
+          </ul>
+
         </li>
       </ul>
     </div>

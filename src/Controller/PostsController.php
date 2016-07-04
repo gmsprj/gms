@@ -62,7 +62,7 @@ class PostsController extends AppController
     {
         // メソッド名をチェック
         if (!$this->request->is('post')) {
-            Log::write('error', 'Invalid method of ' . $this->request->method());
+            Log::error('Invalid method of ' . $this->request->method());
             return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
         }
 
@@ -70,9 +70,9 @@ class PostsController extends AppController
         $authUser = $this->Auth->user();
         $name = $this->request->data('name');
         $content = $this->request->data('content');
+        $userId = $this->request->data('userId');
         $threadId = $this->request->data('threadId');
         $thread = $this->Threads->get($threadId);
-        $created = new DateTime(date('Y-m-d H:i:s'));
         $redirect = ['controller' => 'Threads', 'action' => 'view', $threadId];
 
         // ポストの作成
@@ -80,16 +80,19 @@ class PostsController extends AppController
         $newPost = $postsTable->newEntity([
             'name' => $name,
             'content' => $content,
+            'user_id' => $userId,
             'thread_id' => $threadId,
         ]);
         
         if ($newPost->errors()) {
             $this->Flash->error(__('Invalid input data'));
+            Log::error(json_encode($newPost->errors()));
             return $this->redirect($redirect);
         }
 
         if (!$postsTable->save($newPost)) {
-            $this->Flash->error(__('Invalid input data'));
+            $this->Flash->error(__('Failed to save'));
+            Log::error(json_encode($newPost->errors()));
         }
         
         return $this->redirect($redirect);

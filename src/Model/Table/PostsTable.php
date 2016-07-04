@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
 /**
  * Posts Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\BelongsTo $Threads
  */
 class PostsTable extends Table
@@ -31,6 +32,9 @@ class PostsTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id'
+        ]);
         $this->belongsTo('Threads', [
             'foreignKey' => 'thread_id',
             'joinType' => 'INNER'
@@ -69,6 +73,7 @@ class PostsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['thread_id'], 'Threads'));
         return $rules;
     }

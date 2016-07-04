@@ -48,6 +48,27 @@ CREATE TABLE sites (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /**
+ * users
+ *
+ * 登録ユーザーの情報が保存される。
+ */
+
+DROP TABLE IF EXISTS users;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE users (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ユーザーのID',
+  name varchar(64) NOT NULL COMMENT 'ユーザーの名前',
+  email varchar(256) NOT NULL COMMENT 'ユーザーのメールアドレス',
+  password varchar(256) NOT NULL COMMENT 'ユーザーのログイン・パスワード',
+  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ユーザーの作成日',
+  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ユーザーの更新日',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ユーザーのリスト';
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/**
  * boards
  *
  * 「板/スレッド/ポスト」の内、板の情報が保存される。
@@ -105,9 +126,12 @@ CREATE TABLE posts (
   created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ポストの作成日',
   modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ポストの更新日',
   thread_id int(11) NOT NULL COMMENT '所属するスレッドのID',
+  user_id int(11) NOT NULL DEFAULT 1 COMMENT '投稿者のID',
   PRIMARY KEY (id),
   KEY thread_id (thread_id),
-  CONSTRAINT thread_posts_ibfk_1 FOREIGN KEY (thread_id) REFERENCES threads (id)
+  CONSTRAINT thread_posts_ibfk_1 FOREIGN KEY (thread_id) REFERENCES threads (id),
+  KEY user_id (user_id),
+  CONSTRAINT post_user_ibfk_1 FOREIGN KEY (user_id) REFERENCES users (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='スレッドへのポスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -139,28 +163,6 @@ CREATE TABLE guilds (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ギルドのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-/**
- * users
- *
- * 登録ユーザーの情報が保存される。
- * 依存関係は guilds を参照。
- */
-
-DROP TABLE IF EXISTS users;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE users (
-  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ユーザーのID',
-  name varchar(64) NOT NULL COMMENT 'ユーザーの名前',
-  email varchar(256) NOT NULL COMMENT 'ユーザーのメールアドレス',
-  password varchar(256) NOT NULL COMMENT 'ユーザーのログイン・パスワード',
-  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ユーザーの作成日',
-  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ユーザーの更新日',
-  PRIMARY KEY (id)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ユーザーのリスト';
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /**
  * docs

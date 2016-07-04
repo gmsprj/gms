@@ -18,6 +18,7 @@ class PostsFixture extends TestFixture
     // @codingStandardsIgnoreStart
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => 'ポストのID', 'autoIncrement' => true, 'precision' => null],
+        'user_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => '0', 'comment' => '投稿者のID（名無しなら0）', 'precision' => null, 'autoIncrement' => null],
         'name' => ['type' => 'string', 'length' => 128, 'null' => false, 'default' => null, 'comment' => 'ポストの投稿者名', 'precision' => null, 'fixed' => null],
         'content' => ['type' => 'text', 'length' => null, 'null' => false, 'default' => null, 'comment' => 'ポストの投稿内容', 'precision' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => 'ポストの作成日', 'precision' => null],
@@ -45,10 +46,11 @@ class PostsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
+            'user_id' => 1,
             'name' => 'Lorem ipsum dolor sit amet',
             'content' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-            'created' => '2016-07-01 20:32:52',
-            'modified' => '2016-07-01 20:32:52',
+            'created' => '2016-07-05 05:29:23',
+            'modified' => '2016-07-05 05:29:23',
             'thread_id' => 1
         ],
     ];

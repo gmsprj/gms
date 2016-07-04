@@ -1,0 +1,32 @@
+#!/bin/bash
+DBNAME=$GM_DBNAME
+DBUSER=$GM_DBUSER
+DBPASS=$GM_DBPASS
+BASEDIR=$(dirname "$0")
+SQLPATH="$BASEDIR/../db/gm-usersadd.sql"
+
+NAME="$1"
+EMAIL="$2"
+
+if [ -z "$NAME" ]; then
+    echo "Need user name."
+    exit 1
+fi
+
+if [ -z "$EMAIL" ]; then
+    echo "Need user email."
+    exit 1
+fi
+
+PASSWORD="`head /dev/urandom | md5sum | base64`"
+
+mysql -u $DBUSER -p$DBPASS $DBNAME <<EOF
+`cat $SQLPATH | sed "s/{{ name }}/$NAME/g" | sed "s/{{ email }}/$EMAIL/g" | sed "s/{{ password }}/$PASSWORD/g"`
+EOF
+
+#echo $NAME
+#echo $EMAIL
+#echo $PASSWORD
+
+exit 0
+

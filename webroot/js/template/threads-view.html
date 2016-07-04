@@ -24,7 +24,16 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-sm-12">
-                            <span>{{ $index+1 }}</span> <strong>{{ el.name }}</strong> <span class="text-muted">{{ el.created }}</span>
+                            <span>{{ $index+1 }}</span> 
+                            <span ng-if="el.user_id != 1">
+                                <a ng-if="el.user_id != 1" target="_self" href="/users/view/{{ el.user_id }}">
+                                    <strong>{{ el.name }}</strong> 
+                                </a>
+                            </span>
+                            <span ng-if="el.user_id == 1">
+                                <strong>{{ el.name }}</strong>
+                            </span>
+                            <span class="text-muted">{{ el.created }}</span>
                         </div>
                     </div>
                 </div>
@@ -38,7 +47,6 @@
         </div>
         <hr/>
 
-        {{ $ctrl.boardParentName }}
         <div class="panel panel-default" ng-if="$ctrl.enableForm">
             <div class="panel-heading">コメント投稿</div>
                 <div class="panel-body">
@@ -47,6 +55,7 @@
                             <input type="hidden" name="_method" value="POST"/>
                             <input type="hidden" name="_csrfToken" value="{{ $ctrl.csrf }}"/>
                             <input type="hidden" name="threadId" value="{{ $ctrl.thread.id }}"/>
+                            <input type="hidden" name="userId" value="{{ $ctrl.user ? $ctrl.user.id : 1 }}"/>
                         </div>
                         <div class="form-horizontal">
                             <div class="form-group">

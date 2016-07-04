@@ -75,13 +75,6 @@ class PostsController extends AppController
         $created = new DateTime(date('Y-m-d H:i:s'));
         $redirect = ['controller' => 'Threads', 'action' => 'view', $threadId];
 
-        // 板の親が guilds でかつ、認証ユーザーがサインイン・ユーザーでないなら書き込み不可
-        $board = $this->Boards->get($thread->board_id);
-        if ($board && $board->parent_name == 'guilds' && !$authUser) {
-            $this->Flash->error(__('Can\'t write'));
-            return $this->redirect($redirect);
-        }
-
         // ポストの作成
         $postsTable = TableRegistry::get('Posts');
         $newPost = $postsTable->newEntity([

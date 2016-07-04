@@ -115,17 +115,12 @@ class ThreadsController extends AppController
         $postName = $this->request->data('postName');
         $postContent = $this->request->data('postContent');
         $boardId = $this->request->data('boardId');
-        $authUser = $this->Auth->user();
-        $redirect = ['controller' => 'Boards', 'action' => 'view', $boardId];
 
-        // 板の親が guilds でかつ、認証ユーザーでないなら書き込み不可
-        $board = $this->Boards->get($boardId);
-        if ($board && $board->parent_name == 'guilds' && !$authUser) {
-            $this->Flash->error(__('書込みできません。'));
-            $this->redirect($redirect);
-            return;
-        }
-        
+        $authUser = $this->Auth->user();
+
+        $failTo = ['controller' => 'Boards', 'action' => 'view', $boardId];
+        $doneTo = ['controller' => 'Boards', 'action' => 'view', $boardId];
+
         // スレッドの作成
         $threadsTable = TableRegistry::get('Threads');
         $newThread = $threadsTable->newEntity([
@@ -135,14 +130,12 @@ class ThreadsController extends AppController
 
         if ($newThread->errors()) {
             $this->Flash->error(__('入力が不正です。'));
-            return $this->redirect($redirect);
+            return $this->redirect($failTo);
         }
         
-        if ($threadsTable->save($newThread)) {
-            ;
-        } else {
+        if (!$threadsTable->save($newThread)) {
             $this->Flash->error(__('登録に失敗しました。'));
-            return $this->redirect($redirect);
+            return $this->redirect($failTo);
         }
 
         // ポストの作成
@@ -156,12 +149,10 @@ class ThreadsController extends AppController
         if ($newPost->errors()) {
             $this->Flash->error(__('入力が不正です。'));
             $threadsTable->delete($newThread);
-            return $this->redirect($redirect);
+            return $this->redirect($failTo);
         }
         
-        if ($postsTable->save($newPost)) {
-            
-        } else {
+        if (!$postsTable->save($newPost)) {
             $this->Flash->error(__('登録に失敗しました。'));
             $threadsTable->delete($newThread);
         }
@@ -174,7 +165,7 @@ class ThreadsController extends AppController
             'content' => sprintf('%sに新規スレッド「%s」が作成されました。', $board->name, $threadName),
         ]);
 
-        return $this->redirect($redirect);
+        return $this->redirect($doneTo);
     }
 }
 

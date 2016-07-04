@@ -38,7 +38,7 @@
         </div>
         <hr/>
 
-        <div class="panel panel-default">
+        <div class="panel panel-default" ng-if="$ctrl.user">
             <div class="panel-heading">コメント投稿</div>
             <div class="panel-body">
                 <form method="post" accept-charset="utf-8" action="/posts/add">

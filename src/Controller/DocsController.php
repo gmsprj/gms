@@ -220,7 +220,7 @@ class DocsController extends AppController
 
         // texts-news-guilds
 
-        $this->addTextsNews([
+        $this->Cells->addTextsNews([
             'right' => 'guilds',
             'rightId' => $guildId,
             'content' => sprintf('%sで「%s」が提案されました。', $guild->name, $docName)
@@ -267,7 +267,7 @@ class DocsController extends AppController
         $tab = TableRegistry::get('Docs');
         $tab->save($doc);
 
-        $this->addTextsNews([
+        $this->Cells->addTextsNews([
             'right' => 'docs',
             'rightId' => $id,
             'content' => __(sprintf('文書「%s」が更新されました。', $oldName))

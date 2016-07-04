@@ -197,6 +197,7 @@ class GuildsController extends AppController
         // 入会
         $arr = [
             'right' => 'guilds',
+            'rightId' => $guildId,
             'id' => $userId,
         ];
         if ($this->Cells->existsUsersOwners($arr)) {

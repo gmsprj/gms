@@ -72,6 +72,25 @@ class CellsTable extends Table
         return $rules;
     }
 
+    public function findCells($lefts, $types, $rights)
+    {
+        return $this->find()
+            ->hydrate(false)
+            ->join([
+                'table' => $lefts,
+                'alias' => 'L',
+                'type' => 'INNER',
+                'conditions' => 'L.id = Cells.left_id',
+            ])->join([
+                'table' => $rights,
+                'alias' => 'R',
+                'type' => 'INNER',
+                'conditions' => 'R.id = Cells.right_id',
+            ])->where([
+                'Cells.name' => sprintf('%s-%s-%s', $lefts, $types, $rights), 
+            ]);
+    }
+
     public function addTextsNews($arr = [])
     {
         $textTab = TableRegistry::get('Texts');

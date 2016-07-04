@@ -122,12 +122,13 @@ class UsersController extends AppController
             return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
         }
 
-        $userGuilds = $this->Cells->findUsersOwners([
-            'right' => 'guilds',
-        ])->select([
-            'id' => 'R.id',
-            'name' => 'R.name',
-        ])->all();
+        $userGuilds = $this->Cells->findCells('users', 'owners', 'guilds')
+            ->where([
+                'L.id' => $user['id'],
+            ])->select([
+                'id' => 'R.id',
+                'name' => 'R.name',
+            ])->all();
 
         $this->set('user', $user);
         $this->set('userGuilds', $userGuilds);

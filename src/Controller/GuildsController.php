@@ -33,9 +33,9 @@ class GuildsController extends AppController
      */
     public function index()
     {
-        $news = $this->findTextsNewsAll()
+        $news = $this->Cells->findTextsNewsAll()
             ->limit(5);
-        $symbol = $this->findImagesSyms([
+        $symbol = $this->Cells->findImagesSyms([
                 'right' => 'sites',
             ])->first();
         $customDocs = $this->Cells->find()
@@ -104,28 +104,28 @@ class GuildsController extends AppController
     public function view($id = null)
     {
         $guild = $this->Guilds->get($id);
-        $boards = $this->findBoardsOwners([
+        $boards = $this->Cells->findBoardsOwners([
                 'right' => 'guilds',
                 'rightId' => $id,
             ])->all();
-        $guildSymbols = $this->findImagesSyms([
+        $guildSymbols = $this->Cells->findImagesSyms([
                 'right' => 'guilds',
                 'rightId' => $id,
             ])->all();
-        $news = $this->findTextsNews([
+        $news = $this->Cells->findTextsNews([
                 'right' => 'guilds',
             ])->limit(5);
-        $publishedDocs = $this->findDocsOwners([
+        $publishedDocs = $this->Cells->findDocsOwners([
                 'right' => 'guilds',
                 'rightId' => $id,
                 'state' => 'published'
             ])->all();
-        $draftDocs = $this->findDocsOwners([
+        $draftDocs = $this->Cells->findDocsOwners([
                 'right' => 'guilds',
                 'rightId' => $id,
                 'state' => 'draft'
             ])->all();
-        $counterDocs = $this->findDocsOwners([
+        $counterDocs = $this->Cells->findDocsOwners([
                 'right' => 'guilds',
                 'rightId' => $id,
                 'state' => 'counter'

@@ -57,7 +57,7 @@ class DocsController extends AppController
 
         // Name and Description
 
-        $nd = $this->findKVSAll()->where([
+        $nd = $this->Cells->findKVSAll()->where([
                 'L.content' => '文書について'
             ])->first();
 
@@ -236,7 +236,7 @@ class DocsController extends AppController
     {
         $doc = $this->Docs->get($id);
 
-        $thread = $this->findThreadsRefs([
+        $thread = $this->Cells->findThreadsRefs([
                 'right' => 'docs',
                 'rightId' => $id,
             ])->first();

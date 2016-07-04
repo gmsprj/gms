@@ -48,11 +48,22 @@ mod.component('docsEdit', {
             //console.log(path);
 
             $http.get(path).then(function(res) {
-                // console.log(res);
+                //console.log(res);
                 self.user = res.data.user;
+                self.guilds = res.data.guilds;
                 self.doc = res.data.doc;
                 self.thread = res.data.thread;
                 self.csrf = res.data.csrf;
+
+                //console.log(res.data.currentGuild.id);
+                for (var i = 0, len = self.guilds.length; i < len; ++i) {
+                    var el = self.guilds[i];
+                    if (el.id == res.data.currentGuild.id) {
+                        self.selectedGuildIndex = i;
+                        //console.log(el);
+                        break;
+                    }
+                }
             });
         }
     ]

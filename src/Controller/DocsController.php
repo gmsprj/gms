@@ -238,6 +238,18 @@ class DocsController extends AppController
     public function edit($id = null)
     {
         $user = $this->Auth->user();
+        $currentGuild = $this->Cells->findCells('users', 'owners', 'guilds')
+            ->select([
+                'id' => 'R.id',
+                'name' => 'R.name',
+            ])->where([
+                'L.id' => $user['id'],
+            ])->first();
+        $guilds = $this->Guilds->find()
+            ->select([
+                'id',
+                'name',
+            ])->all();
         $doc = $this->Docs->get($id);
 
         $thread = $this->Cells->findCells('threads', 'refs', 'docs')
@@ -248,11 +260,15 @@ class DocsController extends AppController
             ])->first();
 
         $this->set('user', $user);
+        $this->set('guilds', $guilds);
+        $this->set('currentGuild', $currentGuild);
         $this->set('doc', $doc);
         $this->set('thread', $thread);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
             'user', 
+            'guilds', 
+            'currentGuild', 
             'doc',
             'thread',
             'csrf',
@@ -264,6 +280,7 @@ class DocsController extends AppController
         $id = $this->request->data('id');
         $name = $this->request->data('name');
         $content = $this->request->data('content');
+        $guildId = $this->request->data('guildId');
         $threadId = $this->request->data('threadId');
         $doneTo = ['controller' => 'Docs', 'action' => 'view', $id];
 
@@ -271,6 +288,8 @@ class DocsController extends AppController
         $oldName = $doc->name;
         $doc->name = $name;
         $doc->content = $content;
+
+        die('TODO: remove cells by old guild id');
         
         $tab = TableRegistry::get('Docs');
         $tab->save($doc);

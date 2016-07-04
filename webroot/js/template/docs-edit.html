@@ -28,6 +28,15 @@
                     <div class="form-group">
                         <label for="threadId" class="col-xs-2 control-label text-muted">参照先スレッド</label>
                         <div class="col-xs-10">
+                            <select name="guildId"
+                                ng-options="el.name for el in $ctrl.guilds track by el.id"
+                                ng-model="$ctrl.guilds[$ctrl.selectedGuildIndex]">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="threadId" class="col-xs-2 control-label text-muted">参照先スレッド</label>
+                        <div class="col-xs-10">
                             <input class="col-sm-12" type="text" name="threadId" value="{{ $ctrl.thread.id }}" placeholder="参照先スレッドID"/>
                         </div>
                     </div>

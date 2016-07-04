@@ -32,6 +32,8 @@ class DocsController extends AppController
      */
     public function index()
     {
+        $user = $this->Auth->user();
+
         // Guilds and Docs
 
         $customDocs = $this->Cells->find()
@@ -63,10 +65,12 @@ class DocsController extends AppController
 
         // Set
 
+        $this->set('user', $user);
         $this->set('nd', $nd);
         $this->set('customDocs', $customDocs);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
+            'user',
             'nd',
             'customDocs',
             'csrf',
@@ -82,6 +86,7 @@ class DocsController extends AppController
      */
     public function view($id = null)
     {
+        $user = $this->Auth->user();
         $customDoc = $this->Cells->find()
             ->hydrate(false)
             ->join([
@@ -126,10 +131,12 @@ class DocsController extends AppController
                 'thread_id' => $thread['id'],
             ])->all();
 
+        $this->set('user', $user);
         $this->set('thread', $thread);
         $this->set('posts', $posts);
         $this->set('customDoc', $customDoc);
         $this->set('_serialize', [
+            'user',
             'thread',
             'posts',
             'customDoc',
@@ -234,6 +241,7 @@ class DocsController extends AppController
      */
     public function edit($id = null)
     {
+        $user = $this->Auth->user();
         $doc = $this->Docs->get($id);
 
         $thread = $this->Cells->findThreadsRefs([
@@ -241,10 +249,12 @@ class DocsController extends AppController
                 'rightId' => $id,
             ])->first();
 
+        $this->set('user', $user);
         $this->set('doc', $doc);
         $this->set('thread', $thread);
         $this->set('csrf', $this->Csrf->request->_csrfToken);
         $this->set('_serialize', [
+            'user', 
             'doc',
             'thread',
             'csrf',

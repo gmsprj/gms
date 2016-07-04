@@ -11,6 +11,7 @@ mod.component('docsIndex', {
 
             $http.get('/docs.json').then(function(res) {
                 //console.log(res);
+                self.user = res.data.user;
                 self.nd = res.data.nd;
                 self.customDocs = res.data.customDocs;
                 self.csrf = res.data.csrf;
@@ -29,6 +30,7 @@ mod.component('docsView', {
 
             $http.get(path).then(function(res) {
                 //console.log(res);
+                self.user = res.data.user;
                 self.thread = res.data.thread;
                 self.posts = res.data.posts;
                 self.customDoc = res.data.customDoc;
@@ -46,7 +48,8 @@ mod.component('docsEdit', {
             //console.log(path);
 
             $http.get(path).then(function(res) {
-               // console.log(res);
+                // console.log(res);
+                self.user = res.data.user;
                 self.doc = res.data.doc;
                 self.thread = res.data.thread;
                 self.csrf = res.data.csrf;

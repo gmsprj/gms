@@ -1,4 +1,8 @@
-<div class="container">
+<div class="container" ng-if="$ctrl.user == null">
+<p>文書の編集にはサインインが必要です。</p>
+</div>
+
+<div class="container" ng-if="$ctrl.user">
     <div class="row">
         <div class="col-sm-12">
             <h3>「{{ $ctrl.doc.name }}」の編集</h3>

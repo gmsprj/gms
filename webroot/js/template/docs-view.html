@@ -17,12 +17,12 @@
     </div>
     <hr/>
 
-    <div class="row">
+    <div class="row" ng-if="$ctrl.user">
         <div class="col-sm-12">
             <a target="_self" href="/docs/edit/{{ $ctrl.customDoc.docId }}">編集する</a>
         </div>
+        <hr/>
     </div>
-    <hr/>
 
     <div class="row">
         <div class="col-sm-12">

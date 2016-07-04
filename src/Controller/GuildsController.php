@@ -185,6 +185,13 @@ class GuildsController extends AppController
             return $this->redirect($failTo);
         }
 
+        // ギルドの取得/チェック
+        $guild = $this->Guilds->get($guildId);
+        if (!$guild) {
+            Log::error(__('Invalid Guilds ID of ' . $guildId));
+            return $this->redirect($failTo);
+        }
+
         // ユーザーの取得/チェック
         $usersTable = TableRegistry::get('Users');
         $user = $usersTable->get($userId);
@@ -194,11 +201,6 @@ class GuildsController extends AppController
         }
 
         // 入会
-        $arr = [
-            'right' => 'guilds',
-            'rightId' => $guildId,
-            'id' => $userId,
-        ];
         if ($user->hasOwner($this->Cells, 'guilds', $guildId)) {
             $this->Flash->error(__('既に入会済みです。'));
             return $this->redirect($doneTo);
@@ -218,6 +220,13 @@ class GuildsController extends AppController
 
         // セッションの更新
         $this->Auth->setUser($user->toArray());
+
+        // ニュースを発信
+        $this->Cells->addTextsNews([
+            'right' => 'guilds',
+            'rightId' => $guildId,
+            'content' => __(sprintf('ユーザー「%s」がギルド「%s」に入会しました。', $user->name, $guild->name)),
+        ]);
 
         $this->Flash->success(__('入会しました。'));
         return $this->redirect($doneTo);

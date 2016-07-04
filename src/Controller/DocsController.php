@@ -153,14 +153,12 @@ class DocsController extends AppController
         $docState = $this->request->data('docState');
 
         // 必須パラメーターのチェック
-
         if (!$guildId || !$docName || !$docContent || !$docState) {
             $this->Flash->error(__('不正な入力です。'));
             return $this->redirect($failTo);
         }
 
         // Users
-
         $user = $this->Auth->user();
         if (!$user) {
             $this->Flash->error(__('文書の提案にはサインインが必要です。'));
@@ -168,16 +166,14 @@ class DocsController extends AppController
         }
 
         // Guilds
-
         $guild = $this->Guilds->get($guildId);
         if (!$guild) {
-            $this->Flash->error(__('Not found guild id'));
+            $this->Flash->error(__('ギルドが見つかりません。'));
             Log::write('error', 'Not found guild id ' + $guildId);
             return $this->redirect($failTo);
         }
         
         // Docs
-
         $tab = TableRegistry::get('Docs');
         $doc = $tab->newEntity([
             'name' => $docName,
@@ -197,8 +193,7 @@ class DocsController extends AppController
             return $this->redirect($failTo);
         }
 
-        // Cells for thread-ref-doc (optional)
-        
+        // 参照先スレッド（オプション）
         if ($threadId) {
             $tab = TableRegistry::get('Cells');
             $cell = $tab->newEntity([
@@ -214,15 +209,13 @@ class DocsController extends AppController
             }
         }
 
-        // Cells for docs-owners-guilds
-
+        // Cells で繋ぐ
         $this->Cells->addCells('docs', 'owners', 'guilds', [
             'left_id' => $doc->id,
             'right_id' => $guildId,
         ]);
 
-        // texts-news-guilds
-
+        // ニュースを発信
         $this->Cells->addTextsNews([
             'right' => 'guilds',
             'rightId' => $guildId,
@@ -276,6 +269,9 @@ class DocsController extends AppController
         ]);
     }
 
+    /**
+     * Update method
+     */
     public function update()
     {
         // Get parameters
@@ -313,8 +309,8 @@ class DocsController extends AppController
 
         // News
         if (!$this->Cells->addTextsNews([
-            'right' => 'docs',
-            'rightId' => $id,
+            'right' => 'guilds',
+            'rightId' => $guildId,
             'content' => __(sprintf('文書「%s」が更新されました。', $oldName))
         ])) {
         }

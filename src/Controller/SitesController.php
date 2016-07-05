@@ -14,9 +14,24 @@ use Cake\Log\Log;
  */
 class SitesController extends AppController
 {
+    public $paginate = [
+        'page' => 1,
+        'limit' => 10,
+        'maxLimit' => 100,
+        'fields' => [
+            'id', 'name', 'description'
+        ],
+        'sortWhitelist' => [
+            'id', 'name', 'description'
+        ]
+    ];
+
     public function initialize()
     {
         parent::initialize();
+        $this->loadComponent('Csrf');
+        $this->viewBuilder()->layout('gm-default');
+        $this->Auth->allow([]);
     }
 
     /**
@@ -26,7 +41,11 @@ class SitesController extends AppController
      */
     public function index()
     {
-        $this->set('_serialize', []);
+        $sites = $this->Sites->find()->all();
+
+        $this->set('_serialize', [
+            'sites', $sites,
+        ]);
     }
 
     /**
@@ -38,11 +57,13 @@ class SitesController extends AppController
      */
     public function view($id = null)
     {
-        $this->set('site', $this->Sites->get($id));
-        $this->set('user', $this->Auth->user());
+        Log::debug('----');
+        Log::debug($this->request->header('Accept'));
+        Log::debug('----');
+        $site = $this->Sites->get($id);
+        $this->set('site', $site);
         $this->set('_serialize', [
             'site',
-            'user',
         ]);
     }
 }

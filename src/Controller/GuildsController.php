@@ -14,6 +14,18 @@ use Cake\Log\Log;
  */
 class GuildsController extends AppController
 {
+    public $paginate = [
+        'page' => 1,
+        'limit' => 10,
+        'maxLimit' => 100,
+        'fields' => [
+            'id', 'name', 'description'
+        ],
+        'sortWhitelist' => [
+            'id', 'name', 'description'
+        ]
+    ];
+
     public function initialize()
     {
         parent::initialize();
@@ -38,68 +50,11 @@ class GuildsController extends AppController
      */
     public function index()
     {
-        $news = $this->Cells->findAllTextsNews()
-            ->limit(5);
-        $symbol = $this->Cells->findCells('images', 'syms', 'sites')
-            ->select([
-                'url' => 'L.url',
-            ])->first();
-        $customDocs = $this->Cells->findCells('docs', 'owners', 'guilds')
-            ->select([
-                'guildId' => 'R.id',
-                'guildName' => 'R.name',
-                'docId' => 'L.id',
-                'docName' => 'L.name',
-            ])->all();
-        $site = $this->Sites->get(1);
-        $threads = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'boards',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id',
-            ])->join([
-                'table' => 'threads',
-                'alias' => 'T',
-                'type' => 'INNER',
-                'conditions' => 'L.id = T.board_id',
-            ])->select([
-                'id' => 'T.id',
-                'name' => 'T.name',
-            ])->where([
-                'Cells.name' => 'boards-owners-sites',
-                'Cells.right_id' => $site->id,
-            ])->all();
-        $board = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'boards',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id',
-            ])->select([
-                'id' => 'L.id',
-                'name' => 'L.name',
-            ])->where([
-                'Cells.name' => 'boards-owners-sites',
-                'Cells.right_id' => $site->id,
-            ])->first();
+        $guilds = $this->Guilds->find()->all();
 
-        $this->set('guilds', $this->Guilds->find('all'));
-        $this->set('news', $news);
-        $this->set('board', $board);
-        $this->set('threads', $threads);
-        $this->set('symbol', $symbol);
-        $this->set('customDocs', $customDocs);
+        $this->set('guilds', $guilds);
         $this->set('_serialize', [
-            'site',
-            'board',
-            'threads',
             'guilds',
-            'news',
-            'symbol',
-            'customDocs'
         ]);
     }
 
@@ -112,98 +67,13 @@ class GuildsController extends AppController
      */
     public function view($id = null)
     {
-        $authUser = $this->Auth->user();
         $guild = $this->Guilds->get($id);
-        $boards = $this->Cells->findCells('boards', 'owners', 'guilds')
-            ->where([
-                'R.id' => $id,
-            ])->select([
-                'id' => 'L.id',
-                'name' => 'L.name',
-            ])->all();
-        $guildSymbols = $this->Cells->findCells('images', 'syms', 'guilds')
-            ->where([
-                'R.id' => $id,
-            ])->select([
-                'url' => 'L.url',
-            ])->all();
-        $publishedDocs = $this->Cells->findCells('docs', 'owners', 'guilds')
-            ->where([
-                'R.id' => $id,
-                'L.state' => 'published',
-            ])->select([
-                'id' => 'L.id',
-                'name' => 'L.name',
-            ])->all();
-        $draftDocs = $this->Cells->findCells('docs', 'owners', 'guilds')
-            ->where([
-                'R.id' => $id,
-                'L.state' => 'draft',
-            ])->select([
-                'id' => 'L.id',
-                'name' => 'L.name',
-            ])->all();
-        $news = $this->Cells->findCells('texts', 'news', 'guilds')
-            ->where([
-                'R.id' => $id,
-            ])->select([
-                'content' => 'L.content',
-                'created' => 'L.created',
-            ])->limit(5);
-        $wasEntry = $this->Cells->findCells('users', 'owners', 'guilds')
-            ->where([
-                'L.id' => $authUser['id'],
-                'R.id' => $id,
-            ])->first();
-        $headlineBoard = $this->Cells->findCells('boards', 'owners', 'guilds')
-            ->where([
-                'R.id' => $id,
-            ])->select([
-                'id' => 'L.id',
-            ])->order([
-                'L.created' => 'DESC',
-            ])->first();
-        $headlineThread = $this->Threads->find()
-            ->select([
-                'id',
-                'name',
-            ])->where([
-                'board_id' => $headlineBoard['id'],
-            ])->order([
-                'created' => 'DESC',
-            ])->first();
-        $headlinePosts = $this->Posts->find()
-            ->select([
-                'name',
-                'content',
-            ])->where([
-                'thread_id' => $headlineThread->id,
-            ])->order([
-                'created' => 'DESC',
-            ])->limit(5);
+        $csrf = $this->Csrf->request->_csrfToken;
 
-        $this->set('authUser', $authUser);
         $this->set('guild', $guild);
-        $this->set('guildSymbols', $guildSymbols);
-        $this->set('boards', $boards);
-        $this->set('news', $news);
-        $this->set('headlineThread', $headlineThread);
-        $this->set('headlinePosts', $headlinePosts);
-        $this->set('publishedDocs', $publishedDocs);
-        $this->set('draftDocs', $draftDocs);
-        $this->set('wasEntry', $wasEntry);
-        $this->set('csrf', $this->Csrf->request->_csrfToken);
+        $this->set('csrf', $csrf);
         $this->set('_serialize', [
-            'authUser',
             'guild',
-            'guildSymbols',
-            'boards',
-            'news',
-            'headlineThread',
-            'headlinePosts',
-            'publishedDocs',
-            'draftDocs',
-            'wasEntry',
             'csrf',
         ]);
     }

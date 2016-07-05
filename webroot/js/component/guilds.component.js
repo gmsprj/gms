@@ -9,15 +9,14 @@ mod.component('guildsIndex', {
         function GuildsIndexCtrl($http) {
             var self = this;
 
-            $http.get('/guilds.json').then(function(res) {
+            $http.get('/guilds').then(function(res) {
                 //console.log(res);
                 self.guilds = res.data.guilds;
-                self.news = res.data.news;
-                self.symbol = res.data.symbol;
-                self.customDocs = res.data.customDocs;
+            });
+
+            $http.get('/sites/1').then(function(res) {
+                //console.log(res);
                 self.site = res.data.site;
-                self.threads = res.data.threads;
-                self.board = res.data.board;
             });
         }
     ]

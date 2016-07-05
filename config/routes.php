@@ -49,6 +49,12 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Guilds', 'action' => 'index']);
 
     /**
+     * API resouces
+     */
+    $routes->resources('Guilds');
+    $routes->resources('Sites');
+
+    /**
      * JSON
      * /guilds.json 等で JSON を取得出来るようにする
      */

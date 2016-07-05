@@ -54,6 +54,7 @@ class User extends Entity
     {
         return $cells->findCells('users', 'owners', $rights)
             ->where([
+                'L.id' => $this->id,
                 'R.id' => $rightsId,
             ])->select([
                 'id' => 'R.id',

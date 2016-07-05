@@ -113,13 +113,20 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
+        $failTo = ['controller' => 'Guilds', 'action' => 'index'];
+
         if (!$this->request->is('get')) {
-            return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
+            return $this->redirect($failTo);
         }
 
+        // 現在の認証ユーザー
         $authUser = $this->Auth->user();
-        $viewUser = $this->Users->get($id);
+        if (!$authUser) {
+            return $this->redirect($failTo);
+        }
 
+        // users/view/id で見えるユーザー
+        $viewUser = $this->Users->get($id);
         $viewUserGuilds = $this->Cells->findCells('users', 'owners', 'guilds')
             ->where([
                 'L.id' => $viewUser->id,

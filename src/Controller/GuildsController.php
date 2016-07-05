@@ -242,8 +242,8 @@ class GuildsController extends AppController
         }
 
         // ユーザーの取得/チェック
-        $usersTable = TableRegistry::get('Users');
-        $user = $usersTable->get($userId);
+        $usersTab = TableRegistry::get('Users');
+        $user = $usersTab->get($userId);
         if (!$user) {
             Log::write('error', __('Invalid Users ID of ' . $userId));
             return $this->redirect($failTo);
@@ -261,7 +261,7 @@ class GuildsController extends AppController
         }
 
         // 保存
-        if (!$usersTable->save($user)) {
+        if (!$usersTab->save($user)) {
             Log::write('error', __('Failed to save Users of ID ' . $user->id));
             Log::write('error', json_encode($user->errors()));
             return $this->redirect($failTo);

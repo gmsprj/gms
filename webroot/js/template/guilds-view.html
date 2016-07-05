@@ -69,13 +69,13 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <h4>文書</h4>
+            <h4><a target="_self" href="/docs">文書</a></h4>
             <ul ng-repeat="el in $ctrl.publishedDocs">
                 <li><a target="_self" href="/docs/view/{{ el.id }}">{{ el.name }}</a></li>
             </ul>
         </div>
         <div class="col-sm-6">
-            <h4>提案</h4>
+            <h4><a target="_self" href="/docs">提案</a></h4>
             <ul ng-repeat="el in $ctrl.draftDocs">
                 <li><a target="_self" href="/docs/view/{{ el.id }}">{{ el.name }}</a></li>
             </ul>
@@ -85,7 +85,7 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <h4>板一覧</h4>
+            <h4>板</h4>
             <ul ng-repeat="el in $ctrl.boards">
                 <li><a target="_self" href="/boards/view/{{ el.id }}">{{ el.name }}</a></li>
             </ul>

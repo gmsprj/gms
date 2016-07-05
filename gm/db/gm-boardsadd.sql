@@ -11,7 +11,7 @@ INSERT INTO threads (
     name,
     board_id
 ) VALUES (
-    '{{ name }}',
+    '{{ name }}のスレッド',
     @board_id
 );
 SET @thread_id = LAST_INSERT_ID();

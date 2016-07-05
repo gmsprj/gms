@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-sm-6">
-            <h4>ギルド一覧</h4>
+            <h4><a target="_self" href="/guilds">ギルド</a></h4>
             <ul ng-repeat="el in $ctrl.guilds">
                 <li><a href="/guilds/view/{{ el.id }}">{{ el.name }}</a></li>
             </ul>
@@ -25,13 +25,13 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <h4><a target="_self" href="/boards/view/{{ $ctrl.board.id }}">{{ $ctrl.board.name }}</a>のスレッド一覧</h4>
+            <h4><a target="_self" href="/boards/view/{{ $ctrl.board.id }}">{{ $ctrl.board.name }}</a></h4>
             <ul ng-repeat="el in $ctrl.threads">
                 <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
             </ul>
         </div>
         <div class="col-sm-6">
-            <h4>文書一覧</h4>
+            <h4><a target="_self" href="/docs">文書</a></h4>
             <ul ng-repeat="el in $ctrl.customDocs">
                 <li><a target="_self" href="/docs/view/{{ el.docId }}">{{ el.docName }}</a> (<a target="_self" href="/guilds/view/{{ el.guildId }}">{{ el.guildName }}</a>)</li>
             </ul>

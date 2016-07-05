@@ -100,7 +100,7 @@ class CellsTable extends Table
         ]);
 
         if (!$this->save($cell)) {
-            Log::write('error', json_encode($cell->errors()));
+            Log::error(json_encode($cell->errors()));
             return false;
         }
 
@@ -118,7 +118,7 @@ class CellsTable extends Table
 
         if (!$textTab->save($text)) {
             $this->Flash->error(__('Internal error'));
-            Log::write('error', json_encode($text->errors()));
+            Log::error(json_encode($text->errors()));
             return false;
         }
 
@@ -130,7 +130,7 @@ class CellsTable extends Table
 
         if (!$cellsTab->save($cell)) {
             $this->Flash->error(__('Internal error'));
-            Log::write('error', json_encode($cell->errors()));
+            Log::error(json_encode($cell->errors()));
             $textTab->delete($text);
             return false;
         }

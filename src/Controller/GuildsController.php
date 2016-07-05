@@ -230,7 +230,7 @@ class GuildsController extends AppController
 
         // メソッド名をチェック
         if (!$this->request->is('post')) {
-            Log::write('error', __('Invalid method of '. $this->request->method()));
+            Log::error(__('Invalid method of '. $this->request->method()));
             return $this->redirect($failTo);
         }
 
@@ -245,7 +245,7 @@ class GuildsController extends AppController
         $usersTab = TableRegistry::get('Users');
         $user = $usersTab->get($userId);
         if (!$user) {
-            Log::write('error', __('Invalid Users ID of ' . $userId));
+            Log::error(__('Invalid Users ID of ' . $userId));
             return $this->redirect($failTo);
         }
 
@@ -262,8 +262,8 @@ class GuildsController extends AppController
 
         // 保存
         if (!$usersTab->save($user)) {
-            Log::write('error', __('Failed to save Users of ID ' . $user->id));
-            Log::write('error', json_encode($user->errors()));
+            Log::error(__('Failed to save Users of ID ' . $user->id));
+            Log::error(json_encode($user->errors()));
             return $this->redirect($failTo);
         }
 
@@ -306,7 +306,7 @@ class GuildsController extends AppController
             ->where([
                 'R.id' => $guildId,
             ])->all();
-        //Log::write('debug', $cells);
+        //Log::debug($cells);
 
         $cellsTab = TableRegistry::get('Cells');
         foreach ($cells as $el) {

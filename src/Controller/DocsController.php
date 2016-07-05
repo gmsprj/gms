@@ -169,7 +169,7 @@ class DocsController extends AppController
         $guild = $this->Guilds->get($guildId);
         if (!$guild) {
             $this->Flash->error(__('ギルドが見つかりません。'));
-            Log::write('error', 'Not found guild id ' + $guildId);
+            Log::error('Not found guild id ' + $guildId);
             return $this->redirect($failTo);
         }
         
@@ -183,13 +183,13 @@ class DocsController extends AppController
 
         if ($doc->errors()) {
             $this->Flash->error(__('Invalid input data'));
-            Log::write('error', json_encode($doc->errors()));
+            Log::error(json_encode($doc->errors()));
             return $this->redirect($failTo);
         }
 
         if (!$tab->save($doc)) {
             $this->Flash->error(__('Failed to save'));
-            Log::write('error', json_encode($doc->errors()));
+            Log::error(json_encode($doc->errors()));
             return $this->redirect($failTo);
         }
 
@@ -204,7 +204,7 @@ class DocsController extends AppController
 
             if (!$tab->save($cell)) {
                 $this->Flash->error(__('Failed to save'));
-                Log::write('error', json_encode($cell->errors()));
+                Log::error(json_encode($cell->errors()));
                 return $this->redirect($failTo);
             }
         }

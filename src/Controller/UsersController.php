@@ -49,7 +49,7 @@ class UsersController extends AppController
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('サインアップに失敗しました。もう一度トライしてください。'));
-            Log::write('error', json_encode($user->errors()));
+            Log::error(json_encode($user->errors()));
         }
     }
 

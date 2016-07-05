@@ -108,7 +108,7 @@ class ThreadsController extends AppController
     {
         // メソッド名のチェック
         if (!$this->request->is('post')) {
-            Log::write('error', 'Invalid method of ' . $this->request->method());
+            Log::error('Invalid method of ' . $this->request->method());
             return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
         }
 

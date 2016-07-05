@@ -33,7 +33,7 @@ None.
 | Branch      | Description                                                                           |
 | ----------- |:------------------------------------------------------------------------------------- |
 | 0.1.0       | Posts に user_id を追加。システム初期化時に null ユーザー(id 1)を追加                 |
-| 0.0.9       | Implementation of Users. Refactoring                                                  |
+| 0.0.9       | Users の実装。リファクタリング。                                                      |
 | 0.0.8       | Implementation of Users for Guilds, Docs, Boards, Threads                             |
 | 0.0.7       | Implementation of Docs                                                                |
 | 0.0.6       | Refactoring for DB tables. Implementation of Docs                                     |

@@ -29,11 +29,10 @@ class DocsController extends AppController
     public function initialize()
     {
         parent::initialize();
+
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
         $this->Auth->allow(['add', 'edit', 'update']);// TODO: デバッグ用の allow
-        $this->loadModel('Guilds');
-        $this->loadModel('Posts');
         $this->loadModel('Cells');
     }
 
@@ -44,14 +43,37 @@ class DocsController extends AppController
      */
     public function index()
     {
+        $query = $this->request->query;
+
         if ($this->request->is('get')) {
-            $docs = $this->Cells->findCells('docs', 'owners', 'guilds')
-                ->select([
-                    'id' => 'L.id',
-                    'name' => 'L.name',
-                    'guildId' => 'R.id',
-                    'guildName' => 'R.name',
-                ])->all();
+            $owners = (isset($query['owners']) ? $query['owners'] : null);
+            $ownerId = (isset($query['ownerId']) ? $query['ownerId'] : null);
+            $state = (isset($query['state']) ? $query['state'] : null);
+
+            if ($owners) {
+                $where = [];
+                if ($ownerId) {
+                    $where['R.id'] = $ownerId;
+                }
+                if ($state) {
+                    $where['L.state'] = $state;
+                }
+
+                $docs = $this->Cells->findCells('docs', 'owners', $owners)
+                    ->select([
+                        'id' => 'L.id',
+                        'name' => 'L.name',
+                        'state' => 'L.state',
+                        'created' => 'L.created',
+                        'modified' => 'L.modified',
+                        'ownerId' => 'R.id',
+                        'ownerName' => 'R.name',
+                    ])->where(
+                        $where
+                    )->all();
+            } else {
+                $docs = $this->Docs->find()->all();
+            }
 
             $this->set('docs', $docs);
             $this->set('_serialize', [
@@ -70,12 +92,14 @@ class DocsController extends AppController
     public function view($id = null)
     {
         if ($this->request->is('get')) {
-            $doc = $this->Cells->findCells('docs', 'owners', 'guilds')
+            $owners = (isset($query['owners']) ? $query['owners'] : 'guilds');
+
+            $doc = $this->Cells->findCells('docs', 'owners', $owners)
                 ->select([
                     'id' => 'L.id',
                     'name' => 'L.name',
-                    'guildId' => 'R.id',
-                    'guildName' => 'R.name',
+                    'ownerId' => 'R.id',
+                    'ownerName' => 'R.name',
                 ])->where([
                     'L.id' => $id,
                 ])->first();

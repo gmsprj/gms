@@ -29,6 +29,7 @@ class NewsController extends AppController
     public function initialize()
     {
         parent::initialize();
+
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
         $this->Auth->allow([]);
@@ -42,20 +43,28 @@ class NewsController extends AppController
      */
     public function index()
     {
-        $source = null;
+        $query = &$this->request->query;
+        
+        $owners = (isset($query['owners']) ? $query['owners'] : null);
+        $ownerId = (isset($query['ownerId']) ? $query['ownerId'] : null);
 
-        if (isset($this->request->query['source'])) {
-            $source = $this->request->query['source'];
-        }
+        if ($owners) {
+            $select = [
+                'id' => 'L.id',
+                'content' => 'L.content',
+                'created' => 'L.created',
+                'sourceId' => 'R.id',
+            ];
 
-        if ($source) {
-            $news = $this->Cells->findCells('texts', 'news', $source)
-                ->select([
-                    'id' => 'L.id',
-                    'content' => 'L.content',
-                    'created' => 'L.created',
-                    'sourceId' => 'R.id',
-                ])->all();
+            $where = [];
+            if ($ownerId) {
+                $where['R.id'] = $ownerId;
+            }
+
+            $news = $this->Cells->findCells('texts', 'news', $owners)
+                ->select($select)
+                ->where($where)
+                ->all();
         } else {
             $news = $this->Cells->findAllTextsNews()->all();
         }

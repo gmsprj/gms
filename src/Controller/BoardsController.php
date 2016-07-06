@@ -21,9 +21,22 @@ use DateTime;
  */
 class BoardsController extends AppController
 {
+    public $paginate = [
+        'page' => 1,
+        'limit' => 10,
+        'maxLimit' => 100,
+        'fields' => [
+            'id', 'name', 'description'
+        ],
+        'sortWhitelist' => [
+            'id', 'name', 'description'
+        ]
+    ];
+
     public function initialize()
     {
         parent::initialize();
+
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
         $this->Auth->allow([]);
@@ -37,20 +50,43 @@ class BoardsController extends AppController
      */
     public function index()
     {
-        $owners = $this->request->query('owners');
+        $query = &$this->request->query;
+
+        $owners = (isset($query['owners']) ? $query['owners'] : null);
+        $ownerId = (isset($query['ownerId']) ? $query['ownerId'] : null);
+        $limit = (isset($query['limit']) ? $query['limit'] : null);
+
         if ($owners) {
-            $boards = $this->Cells->findCells('boards', 'owners', $owners)
-                ->select([
-                    'id' => 'L.id',
-                    'name' => 'L.name',
-                    'ownerId' => 'R.id',
-                    'ownerName' => 'R.name',
-                ])->all();
+            $q = $this->Cells->findCells('boards', 'owners', $owners);
+
+            $select = [
+                'id' => 'L.id',
+                'name' => 'L.name',
+                'description' => 'L.description',
+                'created' => 'L.created',
+                'modified' => 'L.modified',
+                'ownerId' => 'R.id',
+                'ownerName' => 'R.name',
+            ];
+            $q->select($select);
+
+            $where = [];
+            if ($ownerId) {
+                $where['R.id'] = $ownerId;
+            }
+            $q->where($where);
+
         } else {
-            $boards = $this->Boards->find()->all();
+            $q = $this->Boards->find();
         }
 
-        $this->set('boards', $boards);
+        if ($limit) {
+            $q->limit($limit);
+        }
+
+        $q->all();
+
+        $this->set('boards', $q);
         $this->set('_serialize', [
             'boards',
         ]);

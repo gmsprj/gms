@@ -8,7 +8,7 @@
 
     <div class="row">
         <div class="col-sm-3">
-            <img class="img-thumbnail" src="{{ $ctrl.guildSymbolUrl }}" />
+            <img class="img-thumbnail" src="{{ $ctrl.symbol.url }}" />
         </div>
         <div class="col-sm-6">
             <p style="white-space: pre;">{{ $ctrl.guild.description }}</p>
@@ -52,9 +52,9 @@
     <div class="row">
         <div class="col-sm-6">
             <h4>ヘッドライン</h4>
-            <p><a target="_self" href="/threads/view/{{ $ctrl.headlineThread.id }}">{{ $ctrl.headlineThread.name }}</a>の新着{{ $ctrl.headlinePosts.length }}コメント</p>
+            <p><a target="_self" href="/threads/view/{{ $ctrl.thread.id }}">{{ $ctrl.thread.name }}</a>の新着{{ $ctrl.posts.length }}コメント</p>
             <ul>
-                <li ng-repeat="el in $ctrl.headlinePosts">{{ el.name }}: {{ el.content }}</li>
+                <li ng-repeat="el in $ctrl.posts">{{ el.name }}: {{ el.content }}</li>
             </ul>
         </div>
         

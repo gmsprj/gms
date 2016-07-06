@@ -19,9 +19,22 @@ use DateTime;
  */
 class ThreadsController extends AppController
 {
+    public $paginate = [
+        'page' => 1,
+        'limit' => 10,
+        'maxLimit' => 100,
+        'fields' => [
+            'id', 'name', 'description'
+        ],
+        'sortWhitelist' => [
+            'id', 'name', 'description'
+        ]
+    ];
+
     public function initialize()
     {
         parent::initialize();
+
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
         $this->Auth->allow(['index', 'view', 'add']);
@@ -37,21 +50,33 @@ class ThreadsController extends AppController
      */
     public function index()
     {
-        $boardId = $this->request->params['board_id'];
-        if ($boardId) {
-            //$board = $this->Boards->get($boardId);
-            //$this->set('board', $board);
-            $threads = $this->Threads->find()
-                ->where([
-                    'board_id' => $boardId,
-                ])->all();
+        $query = $this->request->query;
+
+        $owners = (isset($query['owners']) ? $query['owners'] : null);
+        $ownerId = (isset($query['ownerId']) ? $query['ownerId'] : null);
+        $limit = (isset($query['limit']) ? $query['limit'] : null);
+        
+        if ($owners) {
+            $q = $this->Threads->find();
+            
+            $where = [];
+            if ($ownerId) {
+               $where['board_id'] = $ownerId; 
+            }
+            $q->where($where);
+
         } else {
-            $threads = $this->Threads->find()->all();
+            $q = $this->Threads->find();
         }
 
-        $this->set('threads', $threads);
+        if ($limit) {
+            $q->limit($limit);
+        }
+
+        $q->all();
+
+        $this->set('threads', $q);
         $this->set('_serialize', [
-            'board',
             'threads',
         ]);
     }
@@ -65,47 +90,6 @@ class ThreadsController extends AppController
      */
     public function view($id = null)
     {
-        $thread = $this->Threads->find()
-            ->where(['id' => $id])
-            ->first();
-        if (!$thread) {
-            throw new NotFoundException(__('スレッドが見つかりません。'));
-        }
-
-        $board = $this->Boards->find()
-            ->where(['id' => $thread->board_id])
-            ->first();
-
-        $threads = $this->Threads->find('all')
-            ->where(['board_id' => $thread->board_id]);
-        
-        $posts = $this->Posts->find('all')
-            ->where(['thread_id' => $thread->id]);
-
-        // 認証ユーザーから投稿者ネームを得る
-        // TODO: 板毎にデフォルトの「名無しさん」等が必要になった場合はここを変更
-        $user = $this->Auth->user();
-        $postName = $user ? $user['name'] : __('名無しさん');
-
-        // テンプレートに設定
-        $this->set('user', $user);
-        $this->set('board', $board);
-        $this->set('enableForm', $board->isAllowForm($user, $this->Cells));
-        $this->set('threads', $threads);
-        $this->set('thread', $thread);
-        $this->set('posts', $posts);
-        $this->set('postName', $postName);
-        $this->set('csrf', $this->Csrf->request->_csrfToken);
-        $this->set('_serialize', [
-            'user',
-            'enableForm',
-            'board',
-            'threads',
-            'thread',
-            'posts',
-            'postName',
-            'csrf'
-        ]);
     }
 
     /**

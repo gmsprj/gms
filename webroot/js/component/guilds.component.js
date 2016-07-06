@@ -50,21 +50,54 @@ mod.component('guildsView', {
     controller: ['$http', '$location',
         function GuildsViewCtrl($http, $location) {
             var self = this;
-            var path = $location.$$path + '.json';
-            //console.log(path);
+            var id = $location.$$path.substr($location.$$path.lastIndexOf('/') + 1);
+            var q = '';
 
-            $http.get(path).then(function(res) {
+            $http.get('/api/v1/users?auth').then(function(res) {
                 self.authUser = res.data.authUser;
-                self.guild = res.data.guild;
-                self.guildSymbolUrl = res.data.guildSymbols[0].url;
-                self.boards = res.data.boards;
-                self.publishedDocs = res.data.publishedDocs;
-                self.draftDocs = res.data.draftDocs;
-                self.news = res.data.news;
-                self.headlineThread = res.data.headlineThread;
-                self.headlinePosts = res.data.headlinePosts;
-                self.wasEntry = res.data.wasEntry;
-                self.csrf = res.data.csrf;
+                
+                q = '/api/v1/guilds/' + id;
+                $http.get(q).then(function(res) {
+                    //console.log(res.data);
+                    self.guild = res.data.guild;
+                    self.symbol = self.guild.images[0];
+                });
+
+                q = '/api/v1/docs?owners=guilds&ownerId=' + id + '&state=published';
+                $http.get(q).then(function(res) {
+                    //console.log(res.data);
+                    self.publishedDocs = res.data.docs;
+                });
+
+                q = '/api/v1/docs?owners=guilds&ownerId=' + id + '&state=draft';
+                $http.get(q).then(function(res) {
+                    //console.log(res.data);
+                    self.draftDocs = res.data.docs;
+                });
+
+                q = '/api/v1/boards?owners=guilds&ownerId=' + id;
+                $http.get(q).then(function(res) {
+                    //console.log(res.data);
+                    self.boards = res.data.boards;
+
+                    // Headline of thread
+                    q = '/api/v1/threads?owners=boards&ownerId=' + self.boards[0].id + '&limit=1';
+                    $http.get(q).then(function(res) {
+                        self.thread = (res.data.threads ? res.data.threads[0] : null);
+                        if (self.thread) {
+                            q = '/api/v1/posts?owners=threads&ownerId=' + self.thread.id + '&limit=5';
+                            $http.get(q).then(function(res) {
+                                self.posts = res.data.posts;
+                            });
+                        }
+                    });
+                });
+
+                q = '/api/v1/news?owners=guilds&ownerId=' + id;
+                $http.get(q).then(function(res) {
+                    //console.log(res.data);
+                    self.news = res.data.news;
+                });
             });
         }
     ]

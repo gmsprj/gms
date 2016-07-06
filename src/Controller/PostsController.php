@@ -36,7 +36,35 @@ class PostsController extends AppController
      */
     public function index()
     {
-        return new NotFoundException(__('Not found'));
+        $query = $this->request->query;
+
+        $owners = (isset($query['owners']) ? $query['owners'] : null);
+        $ownerId = (isset($query['ownerId']) ? $query['ownerId'] : null);
+        $limit = (isset($query['limit']) ? $query['limit'] : null);
+        
+        if ($owners) {
+            $q = $this->Posts->find();
+
+            $where = [];
+            if ($ownerId) {
+               $where['thread_id'] = $ownerId; 
+            }
+            $q->where($where);
+
+        } else {
+            $q = $this->Posts->find();
+        }
+
+        if ($limit) {
+            $q->limit($limit);
+        }
+
+        $q->all();
+
+        $this->set('posts', $q);
+        $this->set('_serialize', [
+            'posts',
+        ]);
     }
 
     /**
@@ -48,7 +76,6 @@ class PostsController extends AppController
      */
     public function view($id = null)
     {
-        return new NotFoundException(__('Not found'));
     }
 
     /**

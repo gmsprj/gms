@@ -35,11 +35,6 @@ class GuildsController extends AppController
             'entry',
             'leave',
         ]);
-        $this->loadModel('Sites');
-        $this->loadModel('Boards');
-        $this->loadModel('Threads');
-        $this->loadModel('Posts');
-        $this->loadModel('Docs');
         $this->loadModel('Cells');
     }
 
@@ -71,13 +66,17 @@ class GuildsController extends AppController
     {
         if ($this->request->is('get')) {
             $guild = $this->Guilds->get($id);
-            $csrf = $this->Csrf->request->_csrfToken;
+            $guild['images'] = $this->Cells->findCells('images', 'syms', 'guilds')
+                ->select([
+                    'id' => 'L.id',
+                    'url' => 'L.url',
+                ])->where([
+                    'R.id' => $id,
+                ])->all();
 
             $this->set('guild', $guild);
-            $this->set('csrf', $csrf);
             $this->set('_serialize', [
                 'guild',
-                'csrf',
             ]);
         }
     }

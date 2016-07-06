@@ -33,7 +33,7 @@
         <div class="col-sm-6">
             <h4><a target="_self" href="/docs">文書</a></h4>
             <ul ng-repeat="el in $ctrl.docs">
-                <li><a target="_self" href="/docs/view/{{ el.id}}">{{ el.name }}</a> (<a target="_self" href="/guilds/view/{{ el.guildId }}">{{ el.guildName }}</a>)</li>
+                <li><a target="_self" href="/docs/view/{{ el.id}}">{{ el.name }}</a> (<a target="_self" href="/guilds/view/{{ el.ownerId }}">{{ el.ownerName }}</a>)</li>
             </ul>
         </div>
     </div>

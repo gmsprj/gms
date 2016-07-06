@@ -19,10 +19,10 @@ mod.component('guildsIndex', {
                 self.site = res.data.site;
             });
 
-            /*$http.get('/news').then(function(res) {
+            $http.get('api/v1/news').then(function(res) {
                 //console.log(res);
                 self.news = res.data.news;
-            });*/
+            });
 
             $http.get('api/v1/boards?owners=sites').then(function(res) {
                 //console.log(res);
@@ -31,7 +31,7 @@ mod.component('guildsIndex', {
                     var url = 'api/v1/boards/' + self.board.id + '/threads';
                     $http.get(url).then(function(res) {
                         self.threads = res.data.threads;
-                        console.log(self.threads);
+                        //console.log(self.threads);
                     });
                 }
             });

@@ -148,6 +148,7 @@ class CellsTable extends Table
                 'type' => 'INNER',
                 'conditions' => 'L.id = Cells.left_id',
             ])->select([
+                'id' => 'L.id',
                 'content' => 'L.content',
                 'created' => 'L.created',
             ])->where([

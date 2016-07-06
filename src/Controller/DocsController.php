@@ -44,18 +44,20 @@ class DocsController extends AppController
      */
     public function index()
     {
-        $docs = $this->Cells->findCells('docs', 'owners', 'guilds')
-            ->select([
-                'id' => 'L.id',
-                'name' => 'L.name',
-                'guildId' => 'R.id',
-                'guildName' => 'R.name',
-            ])->all();
+        if ($this->request->is('get')) {
+            $docs = $this->Cells->findCells('docs', 'owners', 'guilds')
+                ->select([
+                    'id' => 'L.id',
+                    'name' => 'L.name',
+                    'guildId' => 'R.id',
+                    'guildName' => 'R.name',
+                ])->all();
 
-        $this->set('docs', $docs);
-        $this->set('_serialize', [
-            'docs',
-        ]);
+            $this->set('docs', $docs);
+            $this->set('_serialize', [
+                'docs',
+            ]);
+        }
     }
 
     /**
@@ -67,20 +69,22 @@ class DocsController extends AppController
      */
     public function view($id = null)
     {
-        $doc = $this->Cells->findCells('docs', 'owners', 'guilds')
-            ->select([
-                'id' => 'L.id',
-                'name' => 'L.name',
-                'guildId' => 'R.id',
-                'guildName' => 'R.name',
-            ])->where([
-                'L.id' => $id,
-            ])->first();
+        if ($this->request->is('get')) {
+            $doc = $this->Cells->findCells('docs', 'owners', 'guilds')
+                ->select([
+                    'id' => 'L.id',
+                    'name' => 'L.name',
+                    'guildId' => 'R.id',
+                    'guildName' => 'R.name',
+                ])->where([
+                    'L.id' => $id,
+                ])->first();
 
-        $this->set('doc', $doc);
-        $this->set('_serialize', [
-            'doc',
-        ]);
+            $this->set('doc', $doc);
+            $this->set('_serialize', [
+                'doc',
+            ]);
+        }
     }
 
     /**

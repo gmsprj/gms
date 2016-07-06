@@ -42,23 +42,25 @@ class SitesController extends AppController
      */
     public function index()
     {
-        $sites = $this->Sites->find()->all();
+        if ($this->request->is('get')) {
+            $sites = $this->Sites->find()->all();
 
-        // sites に画像を紐付け
-        foreach ($sites as $site) {
-            $site['images'] = $this->Cells->findCells('images', 'syms', 'sites')
-                ->select([
-                    'id' => 'L.id',
-                    'url' => 'L.url',
-                ])->where([
-                    'R.id' => $site['id'],
-                ])->all();
+            // sites に画像を紐付け
+            foreach ($sites as $site) {
+                $site['images'] = $this->Cells->findCells('images', 'syms', 'sites')
+                    ->select([
+                        'id' => 'L.id',
+                        'url' => 'L.url',
+                    ])->where([
+                        'R.id' => $site['id'],
+                    ])->all();
+            }
+
+            $this->set('sites', $sites);
+            $this->set('_serialize', [
+                'sites'
+            ]);
         }
-
-        $this->set('sites', $sites);
-        $this->set('_serialize', [
-            'sites'
-        ]);
     }
 
     /**
@@ -70,19 +72,21 @@ class SitesController extends AppController
      */
     public function view($id = null)
     {
-        $site = $this->Sites->get($id);
-        $images = $this->Cells->findCells('images', 'syms', 'sites')
-            ->select([
-                'id' => 'L.id',
-                'url' => 'L.url',
-            ])->where([
-                'R.id' => $id,
-            ])->all();
-        $site['images'] = $images;
+        if ($this->request->is('get')) {
+            $site = $this->Sites->get($id);
+            $images = $this->Cells->findCells('images', 'syms', 'sites')
+                ->select([
+                    'id' => 'L.id',
+                    'url' => 'L.url',
+                ])->where([
+                    'R.id' => $id,
+                ])->all();
+            $site['images'] = $images;
 
-        $this->set('site', $site);
-        $this->set('_serialize', [
-            'site',
-        ]);
+            $this->set('site', $site);
+            $this->set('_serialize', [
+                'site',
+            ]);
+        }
     }
 }

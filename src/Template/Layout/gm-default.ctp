@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="gm">
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= h($site->name) ?> - <?= $this->fetch('title') ?></title>
+    <title>GMS</title>
     <?= $this->Html->meta('icon') ?>
 
     <!-- css/lib -->

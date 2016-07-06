@@ -50,12 +50,14 @@ class GuildsController extends AppController
      */
     public function index()
     {
-        $guilds = $this->Guilds->find()->all();
+        if ($this->request->is('get')) {
+            $guilds = $this->Guilds->find()->all();
 
-        $this->set('guilds', $guilds);
-        $this->set('_serialize', [
-            'guilds',
-        ]);
+            $this->set('guilds', $guilds);
+            $this->set('_serialize', [
+                'guilds',
+            ]);
+        }
     }
 
     /**
@@ -67,15 +69,17 @@ class GuildsController extends AppController
      */
     public function view($id = null)
     {
-        $guild = $this->Guilds->get($id);
-        $csrf = $this->Csrf->request->_csrfToken;
+        if ($this->request->is('get')) {
+            $guild = $this->Guilds->get($id);
+            $csrf = $this->Csrf->request->_csrfToken;
 
-        $this->set('guild', $guild);
-        $this->set('csrf', $csrf);
-        $this->set('_serialize', [
-            'guild',
-            'csrf',
-        ]);
+            $this->set('guild', $guild);
+            $this->set('csrf', $csrf);
+            $this->set('_serialize', [
+                'guild',
+                'csrf',
+            ]);
+        }
     }
 
     /**

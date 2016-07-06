@@ -47,6 +47,7 @@ Router::defaultRouteClass('DashedRoute');
  *
  */
 Router::scope('/api/v1', function (RouteBuilder $routes) {
+    $routes->resources('Users');
     $routes->resources('Sites');
     $routes->resources('News');
     $routes->resources('Docs');

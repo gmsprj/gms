@@ -23,6 +23,7 @@ class UsersController extends AppController
     public function initialize()
     {
         parent::initialize();
+
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
         $this->Auth->allow([
@@ -100,10 +101,21 @@ class UsersController extends AppController
 
     /**
      * Index method
+     *
      */
     public function index()
     {
-        throw new NotFoundException(__('見つかりません。'));
+        if ($this->request->is('get')) {
+            if (isset($this->request->query['auth'])) {
+                $authUser = $this->Auth->user();
+
+                $this->set('authUser', $authUser);
+                $this->set('_serialize', [
+                    'authUser',
+                ]);
+                return;
+            }
+        }
     }
 
     /**
@@ -113,38 +125,8 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $failTo = ['controller' => 'Guilds', 'action' => 'index'];
-
-        if (!$this->request->is('get')) {
-            return $this->redirect($failTo);
+        if ($this->request->is('get')) {
         }
-
-        // 現在の認証ユーザー
-        $authUser = $this->Auth->user();
-        if (!$authUser) {
-            return $this->redirect($failTo);
-        }
-
-        // users/view/id で見えるユーザー
-        $viewUser = $this->Users->get($id);
-        $viewUserGuilds = $this->Cells->findCells('users', 'owners', 'guilds')
-            ->where([
-                'L.id' => $viewUser->id,
-            ])->select([
-                'id' => 'R.id',
-                'name' => 'R.name',
-            ])->all();
-
-        $this->set('authUser', $authUser);
-        $this->set('viewUser', $viewUser);
-        $this->set('viewUserGuilds', $viewUserGuilds);
-        $this->set('csrf', $this->Csrf->request->_csrfToken);
-        $this->set('_serialize', [
-            'authUser',
-            'viewUser',
-            'viewUserGuilds',
-            'csrf',
-        ]);
     }
 }
 

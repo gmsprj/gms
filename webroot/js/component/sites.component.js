@@ -9,11 +9,14 @@ mod.component('sitesHeader', {
         function sitesHeaderCtrl($http) {
             var self = this;
 
-            $http.get('/sites/view/1.json').then(function(res) {
+            $http.get('/api/v1/users?auth').then(function(res) {
                 //console.log(res);
-                //console.log(res.data.user);
+                self.authUser = res.data.authUser;
+            });
+
+            $http.get('/api/v1/sites/1').then(function(res) {
+                //console.log(res);
                 self.site = res.data.site;
-                self.user = res.data.user;
             });
         }
     ]

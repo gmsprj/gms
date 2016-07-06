@@ -17,6 +17,7 @@ mod.component('guildsIndex', {
             $http.get('api/v1/sites/1').then(function(res) {
                 //console.log(res);
                 self.site = res.data.site;
+                self.image = self.site.images[0];
             });
 
             $http.get('api/v1/news').then(function(res) {

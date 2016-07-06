@@ -32,6 +32,7 @@ class SitesController extends AppController
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
         $this->Auth->allow([]);
+        $this->loadModel('Cells');
     }
 
     /**
@@ -43,8 +44,20 @@ class SitesController extends AppController
     {
         $sites = $this->Sites->find()->all();
 
+        // sites に画像を紐付け
+        foreach ($sites as $site) {
+            $site['images'] = $this->Cells->findCells('images', 'syms', 'sites')
+                ->select([
+                    'id' => 'L.id',
+                    'url' => 'L.url',
+                ])->where([
+                    'R.id' => $site['id'],
+                ])->all();
+        }
+
+        $this->set('sites', $sites);
         $this->set('_serialize', [
-            'sites', $sites,
+            'sites'
         ]);
     }
 
@@ -58,6 +71,14 @@ class SitesController extends AppController
     public function view($id = null)
     {
         $site = $this->Sites->get($id);
+        $images = $this->Cells->findCells('images', 'syms', 'sites')
+            ->select([
+                'id' => 'L.id',
+                'url' => 'L.url',
+            ])->where([
+                'R.id' => $id,
+            ])->all();
+        $site['images'] = $images;
 
         $this->set('site', $site);
         $this->set('_serialize', [

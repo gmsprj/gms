@@ -19,6 +19,8 @@ use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Log\Log;
 
+use \Crud\Controller\ControllerTrait;
+
 /**
  * Application Controller
  *
@@ -29,26 +31,6 @@ use Cake\Log\Log;
  */
 class AppController extends Controller
 {
-
-    use \Crud\Controller\ControllerTrait;
-
-    public $components = [
-        'RequestHandler',
-        'Crud.Crud' => [
-            'actions' => [
-                'Crud.Index',
-                'Crud.View',
-                'Crud.Add',
-                'Crud.Edit',
-                'Crud.Delete'
-            ],
-            'listeners' => [
-                'Crud.Api',
-                'Crud.ApiPagination',
-                'Crud.ApiQueryLog'
-            ]
-        ]
-    ];
 
     /**
      * Initialization hook method.
@@ -62,8 +44,9 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
+
         $this->loadComponent('Flash');
-        //$this->loadComponent('RequestHandler');
+        $this->loadComponent('RequestHandler');
         $this->loadComponent('Auth',[
             'authorize' => 'Controller',
             'authenticate' => [
@@ -86,7 +69,21 @@ class AppController extends Controller
                 'controller' => 'Guilds',
                 'action' => 'index',
             ],
-            'authError' => __('ログインできませんでした。ログインしてください。'),
+            'authError' => __('ログインできませんでした。'),
+        ]);
+        $this->loadComponent('Crud.Crud', [
+            'actions' => [
+                'Crud.Index',
+                'Crud.View',
+                'Crud.Add',
+                'Crud.Edit',
+                'Crud.Delete'
+            ],
+            'listeners' => [
+                'Crud.Api',
+                'Crud.ApiPagination',
+                'Crud.ApiQueryLog'
+            ]
         ]);
         $this->loadModel('Sites');
     }
@@ -109,7 +106,5 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
-
-        $this->set('site', $this->Sites->find()->first());
     }
 }

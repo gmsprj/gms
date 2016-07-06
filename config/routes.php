@@ -42,23 +42,34 @@ use Cake\Routing\Router;
  */
 Router::defaultRouteClass('DashedRoute');
 
+/**
+ * /api/v1
+ *
+ */
+Router::scope('/api/v1', function (RouteBuilder $routes) {
+    $routes->resources('Sites');
+    $routes->resources('Docs');
+    $routes->resources('Guilds');
+    $routes->resources('Boards', function ($routes) {
+        $routes->resources('Threads');
+    });
+    $routes->resources('Threads', function ($routes) {
+        $routes->resources('Posts');    
+    });
+    $routes->resources('Posts');
+
+    $routes->extensions(['json', 'xml']);
+});
+
+/**
+ * ノーマルなスコープ
+ *
+ */
 Router::scope('/', function (RouteBuilder $routes) {
     /**
      * ルートの委譲先
      */
     $routes->connect('/', ['controller' => 'Guilds', 'action' => 'index']);
-
-    /**
-     * API resouces
-     */
-    $routes->resources('Guilds');
-    $routes->resources('Sites');
-
-    /**
-     * JSON
-     * /guilds.json 等で JSON を取得出来るようにする
-     */
-    $routes->extensions(['json']);
 
     /**
      * Connect catchall routes for all controllers.

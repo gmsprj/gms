@@ -14,6 +14,18 @@ use Cake\Log\Log;
  */
 class DocsController extends AppController
 {
+    public $paginate = [
+        'page' => 1,
+        'limit' => 10,
+        'maxLimit' => 100,
+        'fields' => [
+            'id', 'name', 'description'
+        ],
+        'sortWhitelist' => [
+            'id', 'name', 'description'
+        ]
+    ];
+
     public function initialize()
     {
         parent::initialize();
@@ -32,50 +44,17 @@ class DocsController extends AppController
      */
     public function index()
     {
-        $customDocs = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'docs',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id'
-            ])->join([
-                'table' => 'guilds',
-                'alias' => 'R',
-                'type' => 'INNER',
-                'conditions' => 'R.id = Cells.right_id'
-            ])->select([
+        $docs = $this->Cells->findCells('docs', 'owners', 'guilds')
+            ->select([
+                'id' => 'L.id',
+                'name' => 'L.name',
                 'guildId' => 'R.id',
                 'guildName' => 'R.name',
-                'docId' => 'L.id',
-                'docName' => 'L.name'
-            ])->where([
-                'Cells.name' => 'docs-owners-guilds'
             ])->all();
 
-        $user = $this->Auth->user();
-        $userGuilds = [];
-
-        if ($user) {
-            $userGuilds = $this->Cells->findCells('users', 'owners', 'guilds')
-            ->select([
-                'id' => 'R.id',
-                'name' => 'R.name',
-            ])->where([
-                'L.id' => $user['id'],
-            ])->all();
-        }
-
-        $this->set('user', $user);
-        $this->set('userGuilds', $userGuilds);
-        $this->set('customDocs', $customDocs);
-        $this->set('csrf', $this->Csrf->request->_csrfToken);
+        $this->set('docs', $docs);
         $this->set('_serialize', [
-            'user',
-            'userGuilds',
-            'nd',
-            'customDocs',
-            'csrf',
+            'docs',
         ]);
     }
 
@@ -88,53 +67,19 @@ class DocsController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Auth->user();
-        $customDoc = $this->Cells->find()
-            ->hydrate(false)
-            ->join([
-                'table' => 'docs',
-                'alias' => 'L',
-                'type' => 'INNER',
-                'conditions' => 'L.id = Cells.left_id'
-            ])->join([
-                'table' => 'guilds',
-                'alias' => 'R',
-                'type' => 'INNER',
-                'conditions' => 'R.id = Cells.right_id'
-            ])->select([
-                'docId' => 'L.id',
-                'docName' => 'L.name',
-                'docContent' => 'L.content',
-                'docState' => 'L.state',
-                'docCreated' => 'L.created',
-                'docModified' => 'L.modified',
-                'guildId' => 'R.id',
-                'guildName' => 'R.name',
-            ])->where([
-                'Cells.name' => 'docs-owners-guilds',
-                'L.id' => $id,
-            ])->first();
-        $thread = $this->Cells->findCells('threads', 'refs', 'docs')
+        $doc = $this->Cells->findCells('docs', 'owners', 'guilds')
             ->select([
                 'id' => 'L.id',
                 'name' => 'L.name',
+                'guildId' => 'R.id',
+                'guildName' => 'R.name',
             ])->where([
-                'R.id' => $id,
+                'L.id' => $id,
             ])->first();
-        $posts = $this->Posts->find()
-            ->where([
-                'thread_id' => $thread['id'],
-            ])->all();
 
-        $this->set('user', $user);
-        $this->set('thread', $thread);
-        $this->set('posts', $posts);
-        $this->set('customDoc', $customDoc);
+        $this->set('doc', $doc);
         $this->set('_serialize', [
-            'user',
-            'thread',
-            'posts',
-            'customDoc',
+            'doc',
         ]);
     }
 

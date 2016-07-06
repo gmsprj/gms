@@ -9,14 +9,36 @@ mod.component('guildsIndex', {
         function GuildsIndexCtrl($http) {
             var self = this;
 
-            $http.get('/guilds').then(function(res) {
+            $http.get('api/v1/guilds').then(function(res) {
                 //console.log(res);
                 self.guilds = res.data.guilds;
             });
 
-            $http.get('/sites/1').then(function(res) {
+            $http.get('api/v1/sites/1').then(function(res) {
                 //console.log(res);
                 self.site = res.data.site;
+            });
+
+            /*$http.get('/news').then(function(res) {
+                //console.log(res);
+                self.news = res.data.news;
+            });*/
+
+            $http.get('api/v1/boards?owners=sites').then(function(res) {
+                //console.log(res);
+                self.board = res.data.boards[0];
+                if (self.board) {
+                    var url = 'api/v1/boards/' + self.board.id + '/threads';
+                    $http.get(url).then(function(res) {
+                        self.threads = res.data.threads;
+                        console.log(self.threads);
+                    });
+                }
+            });
+
+            $http.get('api/v1/docs').then(function(res) {
+                //console.log(res);
+                self.docs = res.data.docs;
             });
         }
     ]

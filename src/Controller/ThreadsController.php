@@ -37,9 +37,23 @@ class ThreadsController extends AppController
      */
     public function index()
     {
-        $threads = $this->Threads->find('all');
+        $boardId = $this->request->params['board_id'];
+        if ($boardId) {
+            //$board = $this->Boards->get($boardId);
+            //$this->set('board', $board);
+            $threads = $this->Threads->find()
+                ->where([
+                    'board_id' => $boardId,
+                ])->all();
+        } else {
+            $threads = $this->Threads->find()->all();
+        }
+
         $this->set('threads', $threads);
-        $this->set('_serialize', ['threads']);
+        $this->set('_serialize', [
+            'board',
+            'threads',
+        ]);
     }
 
     /**

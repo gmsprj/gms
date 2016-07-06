@@ -57,10 +57,8 @@ class SitesController extends AppController
      */
     public function view($id = null)
     {
-        Log::debug('----');
-        Log::debug($this->request->header('Accept'));
-        Log::debug('----');
         $site = $this->Sites->get($id);
+
         $this->set('site', $site);
         $this->set('_serialize', [
             'site',

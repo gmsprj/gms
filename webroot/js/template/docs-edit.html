@@ -1,8 +1,11 @@
-<div class="container" ng-if="$ctrl.user == null">
+<div class="container" ng-if="$ctrl.authUser == null">
 <p>文書の編集にはサインインが必要です。</p>
 </div>
+<div class="container" ng-if="$ctrl.authUser.guilds == null || $ctrl.authUser.guilds.length === 0">
+<p>文書の編集には所属ギルドが必要です。</p>
+</div>
 
-<div class="container" ng-if="$ctrl.user">
+<div class="container" ng-if="$ctrl.authUser && $ctrl.authUser.guilds && $ctrl.authUser.guilds.length > 0">
     <div class="row">
         <div class="col-sm-12">
             <h3>「{{ $ctrl.doc.name }}」の編集</h3>
@@ -29,8 +32,8 @@
                         <label for="threadId" class="col-xs-2 control-label text-muted">所属ギルド</label>
                         <div class="col-xs-10">
                             <select name="guildId"
-                                ng-options="el.name for el in $ctrl.guilds track by el.id"
-                                ng-model="$ctrl.guilds[$ctrl.selectedGuildIndex]">
+                                ng-options="el.name for el in $ctrl.authUser.guilds track by el.id"
+                                ng-model="$ctrl.authUser.guilds[$ctrl.selectedGuildIndex]">
                             </select>
                         </div>
                     </div>

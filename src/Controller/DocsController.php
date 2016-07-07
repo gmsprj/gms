@@ -32,7 +32,7 @@ class DocsController extends AppController
 
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
-        $this->Auth->allow(['add', 'edit', 'update']);// TODO: デバッグ用の allow
+        $this->Auth->allow(['add', 'edit']);// TODO: デバッグ用の allow
         $this->loadModel('Cells');
     }
 
@@ -98,6 +98,10 @@ class DocsController extends AppController
                 ->select([
                     'id' => 'L.id',
                     'name' => 'L.name',
+                    'state' => 'L.state',
+                    'content' => 'L.content',
+                    'created' => 'L.created',
+                    'modified' => 'L.modified',
                     'ownerId' => 'R.id',
                     'ownerName' => 'R.name',
                 ])->where([
@@ -118,6 +122,10 @@ class DocsController extends AppController
     {
         $failTo = ['controller' => 'Docs', 'action' => 'index'];
         $doneTo = ['controller' => 'Docs', 'action' => 'index'];
+
+        if (!$this->request->is('post')) {
+            return $this->redirect($failTo);
+        }
 
         $guildId = $this->request->data('guildId'); // 所属ギルド
         $threadId = $this->request->data('threadId'); // 参照先スレッド
@@ -205,90 +213,52 @@ class DocsController extends AppController
      */
     public function edit($id = null)
     {
-        $user = $this->Auth->user();
-        $doc = $this->Docs->get($id);
-        $currentGuild = $this->Cells->findCells('docs', 'owners', 'guilds')
-            ->select([
-                'id' => 'R.id',
-                'name' => 'R.name',
-            ])->where([
-                'L.id' => $id,
-            ])->first();
-        $guilds = $this->Guilds->find()
-            ->select([
-                'id',
-                'name',
-            ])->all();
-        $thread = $this->Cells->findCells('threads', 'refs', 'docs')
-            ->select([
-                'id' => 'L.id',
-            ])->where([
-                'R.id' => $id,
-            ])->first();
+        $failTo = ['controller' => 'Docs', 'action' => 'index'];
 
-        $this->set('user', $user);
-        $this->set('guilds', $guilds);
-        $this->set('currentGuild', $currentGuild);
-        $this->set('doc', $doc);
-        $this->set('thread', $thread);
-        $this->set('csrf', $this->Csrf->request->_csrfToken);
-        $this->set('_serialize', [
-            'user', 
-            'guilds', 
-            'currentGuild', 
-            'doc',
-            'thread',
-            'csrf',
-        ]);
-    }
+        if ($this->request->is('post')) {
+            // Get parameters
+            $id = $this->request->data('id');
+            $name = $this->request->data('name');
+            $content = $this->request->data('content');
+            $guildId = $this->request->data('guildId');
+            $threadId = $this->request->data('threadId');
 
-    /**
-     * Update method
-     */
-    public function update()
-    {
-        // Get parameters
-        $id = $this->request->data('id');
-        $name = $this->request->data('name');
-        $content = $this->request->data('content');
-        $guildId = $this->request->data('guildId');
-        $threadId = $this->request->data('threadId');
+            $doneTo = ['controller' => 'Docs', 'action' => 'view', $id];
 
-        $doneTo = ['controller' => 'Docs', 'action' => 'view', $id];
+            // Update parameters
+            $doc = $this->Docs->get($id);
+            $oldName = $doc->name;
+            $doc->name = $name;
+            $doc->content = $content;
 
-        // Update parameters
-        $doc = $this->Docs->get($id);
-        $oldName = $doc->name;
-        $doc->name = $name;
-        $doc->content = $content;
+            // Save
+            $docsTab = TableRegistry::get('Docs');
+            if (!$docsTab->save($doc)) {
+            }
 
-        // Save
-        $docsTab = TableRegistry::get('Docs');
-        if (!$docsTab->save($doc)) {
+            // Update cells for docs and guilds relationship
+            $cell = $this->Cells->findCells('docs', 'owners', 'guilds')
+                ->where([
+                    'L.id' => $id,
+                ])->first();
+            if (!$cell) {
+            }
+            $cellsTab = TableRegistry::get('Cells');
+            $cellEntity = $cellsTab->get($cell['id']);
+            $cellEntity->right_id = $guildId;
+            if (!$cellsTab->save($cellEntity)) {
+            }
+
+            // News
+            if (!$this->Cells->addTextsNews([
+                'right' => 'guilds',
+                'rightId' => $guildId,
+                'content' => __(sprintf('文書「%s」が更新されました。', $oldName))
+            ])) {
+            }
+
+            $this->redirect($doneTo);
         }
-
-        // Update cells for docs and guilds relationship
-        $cell = $this->Cells->findCells('docs', 'owners', 'guilds')
-            ->where([
-                'L.id' => $id,
-            ])->first();
-        if (!$cell) {
-        }
-        $cellsTab = TableRegistry::get('Cells');
-        $cellEntity = $cellsTab->get($cell['id']);
-        $cellEntity->right_id = $guildId;
-        if (!$cellsTab->save($cellEntity)) {
-        }
-
-        // News
-        if (!$this->Cells->addTextsNews([
-            'right' => 'guilds',
-            'rightId' => $guildId,
-            'content' => __(sprintf('文書「%s」が更新されました。', $oldName))
-        ])) {
-        }
-
-        $this->redirect($doneTo);
     }
 }
 

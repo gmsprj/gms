@@ -53,8 +53,18 @@ mod.component('guildsView', {
             var id = $location.$$path.substr($location.$$path.lastIndexOf('/') + 1);
             var q = '';
 
-            $http.get('/api/v1/users?auth').then(function(res) {
-                self.authUser = res.data.authUser;
+            $http.get('/api/v1/users/0').then(function(res) {
+                //console.log(res.data);
+                self.authUser = res.data.user;
+                
+                self.wasEntry = false;
+                for (var i = 0, len = self.authUser.guilds.length; i < len; ++i) {
+                    var el = self.authUser.guilds[i];
+                    if (el.id == id) {
+                        self.wasEntry = true;
+                        break;
+                    }
+                }
                 
                 q = '/api/v1/guilds/' + id;
                 $http.get(q).then(function(res) {

@@ -54,6 +54,8 @@ class ThreadsController extends AppController
 
         $owners = (isset($query['owners']) ? $query['owners'] : null);
         $ownerId = (isset($query['ownerId']) ? $query['ownerId'] : null);
+        $refs = (isset($query['refs']) ? $query['refs'] : null);
+        $refId = (isset($query['refId']) ? $query['refId'] : null);
         $limit = (isset($query['limit']) ? $query['limit'] : null);
         
         if ($owners) {
@@ -65,6 +67,25 @@ class ThreadsController extends AppController
             }
             $q->where($where);
 
+        } else if ($refs) {
+            $q = $this->Cells->findCells('threads', 'refs', $refs);
+
+            $select = [
+                'id' => 'L.id',
+                'name' => 'L.name',
+                'created' => 'L.created',
+                'modified' => 'L.modified',
+                'refId' => 'R.id',
+                'refName' => 'R.name',
+            ];
+            $q->select($select);
+
+            $where = [];
+            if ($refId) {
+                $where['R.id'] = $refId;
+            }
+            $q->where($where);
+            
         } else {
             $q = $this->Threads->find();
         }

@@ -9,9 +9,9 @@ mod.component('sitesHeader', {
         function sitesHeaderCtrl($http) {
             var self = this;
 
-            $http.get('/api/v1/users?auth').then(function(res) {
+            $http.get('/api/v1/users/0').then(function(res) {
                 //console.log(res);
-                self.authUser = res.data.authUser;
+                self.authUser = res.data.user;
             });
 
             $http.get('/api/v1/sites/1').then(function(res) {

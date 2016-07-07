@@ -15,8 +15,8 @@
     <div class="row">
         <div class="col-sm-12">
             <h4>文書一覧</h4>
-            <ul ng-repeat="el in $ctrl.customDocs">
-                <li><a target="_self" href="/docs/view/{{ el.docId }}">{{ el.docName }}</a> (<a target="_self" href="/guilds/view/{{ el.guildId }}">{{ el.guildName }}</a>)</li>
+            <ul ng-repeat="el in $ctrl.docs">
+                <li><a target="_self" href="/docs/view/{{ el.id }}">{{ el.name }}</a> (<a target="_self" href="/guilds/view/{{ el.ownerId }}">{{ el.ownerName }}</a>)</li>
             </ul>
         </div>
     </div>

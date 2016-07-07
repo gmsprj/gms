@@ -22,7 +22,7 @@
             <p ng-if="$ctrl.viewUserGuilds.length === 0">
                 所属しているギルドはありません。
             </p>
-            <ul ng-repeat="el in $ctrl.viewUserGuilds">
+            <ul ng-repeat="el in $ctrl.viewUser.guilds">
                 <li>
                     <a target="_self" href="/guilds/view/{{ el.id }}">{{ el.name }}</a>
                     <div ng-if="$ctrl.viewUser.id === $ctrl.authUser.id" style="display:inline-block;">

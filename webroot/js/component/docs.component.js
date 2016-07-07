@@ -8,13 +8,12 @@ mod.component('docsIndex', {
     controller: ['$http',
         function GuildsIndexCtrl($http) {
             var self = this;
+            var q = '';
 
-            $http.get('/docs.json').then(function(res) {
-                //console.log(res);
-                self.user = res.data.user;
-                self.userGuilds = res.data.userGuilds;
-                self.customDocs = res.data.customDocs;
-                self.csrf = res.data.csrf;
+            q = '/api/v1/docs?owners=guilds';
+            $http.get(q).then(function(res) {
+                //console.log(res.data);
+                self.docs = res.data.docs;
             });
         }
     ]
@@ -25,15 +24,38 @@ mod.component('docsView', {
     controller: ['$http', '$location',
         function GuildsViewCtrl($http, $location) {
             var self = this;
-            var path = $location.$$path + '.json';
-            //console.log(path);
+            var id = $location.$$path.substr($location.$$path.lastIndexOf('/') + 1);
+            var q = '';
 
-            $http.get(path).then(function(res) {
-                //console.log(res);
-                self.user = res.data.user;
-                self.thread = res.data.thread;
-                self.posts = res.data.posts;
-                self.customDoc = res.data.customDoc;
+            q = '/api/v1/users/0';
+            $http.get(q).then(function(res) {
+                //console.log(res.data);
+                self.authUser = res.data.user;
+
+                q = '/api/v1/docs/' + id;
+                $http.get(q).then(function(res) {
+                    //console.log(res.data);
+                    self.doc = res.data.doc;
+
+                    q = '/api/v1/threads?refs=docs&refId=' + self.doc.id;
+                    $http.get(q).then(function(res) {
+                        //console.log(res.data);
+                        self.threads = res.data.threads;
+
+                        for (var i = 0, len = self.threads.length; i < len; ++i) {
+                            (function() {
+                                var _thread = self.threads[i];
+                                return function() {
+                                    //console.log(_thread);
+                                    $http.get('/api/v1/posts?owners=threads&ownerId=' + _thread.id).then(function(res) {
+                                        //console.log(res.data);
+                                        _thread.posts = res.data.posts;
+                                    });
+                                };
+                            }())();
+                        }
+                    });
+                });
             });
         }
     ]
@@ -44,26 +66,39 @@ mod.component('docsEdit', {
     controller: ['$http', '$location',
         function GuildsViewCtrl($http, $location) {
             var self = this;
-            var path = $location.$$path + '.json';
-            //console.log(path);
+            var id = $location.$$path.substr($location.$$path.lastIndexOf('/') + 1);
+            var q = '';
 
-            $http.get(path).then(function(res) {
-                //console.log(res);
-                self.user = res.data.user;
-                self.guilds = res.data.guilds;
-                self.doc = res.data.doc;
-                self.thread = res.data.thread;
-                self.csrf = res.data.csrf;
-
-                //console.log(res.data.currentGuild.id);
-                for (var i = 0, len = self.guilds.length; i < len; ++i) {
-                    var el = self.guilds[i];
-                    if (el.id == res.data.currentGuild.id) {
-                        self.selectedGuildIndex = i;
-                        //console.log(el);
-                        break;
-                    }
+            q = '/api/v1/users/0';
+            $http.get(q).then(function(res) {
+                //console.log(res.data);
+                self.authUser = res.data.user;
+                if (self.authUser == null) {
+                    return;
                 }
+
+                q = '/api/v1/docs/' + id;
+                $http.get(q).then(function(res) {
+                    //console.log(res.data);
+                    self.doc = res.data.doc;
+
+                    for (var i = 0, len = self.authUser.guilds.length; i < len; ++i) {
+                        var el = self.authUser.guilds[i];
+                        if (el.id == self.doc.ownerId) {
+                            self.selectedGuildIndex = i;
+                            //console.log(el);
+                            break;
+                        }
+                    }
+                });
+
+                q = '/api/v1/threads?refs=docs&refId=' + id;
+                $http.get(q).then(function(res) {
+                    //console.log(res.data);
+                    if (res.data.threads && res.data.threads.length > 0) {
+                        self.thread = res.data.threads[0];
+                    }
+                });
             });
         }
     ]

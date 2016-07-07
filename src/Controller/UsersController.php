@@ -106,15 +106,6 @@ class UsersController extends AppController
     public function index()
     {
         if ($this->request->is('get')) {
-            if (isset($this->request->query['auth'])) {
-                $authUser = $this->Auth->user();
-
-                $this->set('authUser', $authUser);
-                $this->set('_serialize', [
-                    'authUser',
-                ]);
-                return;
-            }
         }
     }
 
@@ -126,6 +117,32 @@ class UsersController extends AppController
     public function view($id = null)
     {
         if ($this->request->is('get')) {
+            if ($id == 0) {
+                $user = $this->Auth->user();
+            } else {
+                $user = $this->Users->find()
+                    ->select([
+                        'id',
+                        'name'
+                    ])->where([
+                        'id' => $id,
+                    ])->first();
+            }
+
+            if ($user) {
+                $user['guilds'] = $this->Cells->findCells('users', 'owners', 'guilds')
+                    ->select([
+                        'id' => 'R.id',
+                        'name' => 'R.name',
+                    ])->where([
+                        'L.id' => $user['id'],
+                    ]);
+            }
+
+            $this->set('user', $user);
+            $this->set('_serialize', [
+                'user',
+            ]);
         }
     }
 }

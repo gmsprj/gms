@@ -8,15 +8,19 @@ mod.component('usersView', {
     controller: ['$http', '$location',
         function UsersViewCtrl($http, $location) {
             var self = this;
-            var path = $location.$$path + '.json';
-            //console.log(path);
+            var id = $location.$$path.substr($location.$$path.lastIndexOf('/') + 1);
+            var q = '';
 
-            $http.get(path).then(function(res) {
-                //console.log(self.user);
-                self.authUser = res.data.authUser;
-                self.viewUser = res.data.viewUser;
-                self.viewUserGuilds = res.data.viewUserGuilds;
-                self.csrf = res.data.csrf;
+            q = '/api/v1/users/0';
+            $http.get(q).then(function(res) {
+                console.log(res.data);
+                self.authUser = res.data.user;
+
+                q = '/api/v1/users/' + id;
+                $http.get(q).then(function(res) {
+                    //console.log(res.data);
+                    self.viewUser = res.data.user;
+                });
             });
         }
     ]

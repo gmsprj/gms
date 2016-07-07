@@ -4,7 +4,7 @@
 
 .navbar-default {
     border: 0px solid red;
-    padding: 10px;
+    padding: 4px;
     background: #fff;
     color: #fefefe;
 }
@@ -31,6 +31,11 @@ body {
     background: #f9f9f9;
 }
 
+.gm-content-header {
+    position: relative;
+    top: -230px;
+}
+
 .gm-footer {
     margin-top: 2em;
     border-top: 0px #eee solid;
@@ -38,17 +43,13 @@ body {
     padding: 4em;
 }
 
-.gm-site-header {
-    position: relative;
-    top: -200px;
-}
-
 .gm-test {
     border: 0px solid red;
     height: 240px;
     width: 100%;
+    background-position: center;
     background-image: url('/img/sites/eye-catch.png');
-    background-repeat: no-repeat;
+    background-repeat: repeat-x;
     opacity: 0.4;
 }
 

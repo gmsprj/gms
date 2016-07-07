@@ -34,6 +34,7 @@ class DocsController extends AppController
         $this->viewBuilder()->layout('gm-default');
         $this->Auth->allow(['add', 'edit']);// TODO: デバッグ用の allow
         $this->loadModel('Cells');
+        $this->loadModel('Guilds');
     }
 
     /**

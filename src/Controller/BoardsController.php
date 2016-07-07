@@ -102,6 +102,14 @@ class BoardsController extends AppController
     public function view($id = null)
     {
         $board = $this->Boards->get($id);
+        $owner = $this->Cells->find()
+            ->select([
+                'name' => 'Cells.name',
+            ])->where([
+                'Cells.name LIKE' => '%boards-owners-%',
+                'Cells.left_id' => $id,
+            ])->first();
+        $board['owners'] = substr($owner['name'], strrpos($owner['name'], '-')+1);
 
         $this->set('board', $board);
         $this->set('_serialize', [

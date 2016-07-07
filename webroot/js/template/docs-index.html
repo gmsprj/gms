@@ -23,12 +23,12 @@
     <hr/>
 
     <div class="row">
-        <div class="col-sm-12" ng-if="!$ctrl.user || !$ctrl.userGuilds.length">
-            <p ng-if="!$ctrl.user">文書の提案にはサインインが必要です。</p>
-            <p ng-if="!$ctrl.userGuilds.length">文書の提案には所属ギルドが必要です。</p>
+        <div class="col-sm-12" ng-if="!$ctrl.authUser || !$ctrl.authUser.guilds.length">
+            <p ng-if="!$ctrl.authUser">文書の提案にはサインインが必要です。</p>
+            <p ng-if="!$ctrl.authUser.gilds.length">文書の提案には所属ギルドが必要です。</p>
         </div>
 
-        <div class="col-sm-12" ng-if="$ctrl.user && $ctrl.userGuilds.length">
+        <div class="col-sm-12" ng-if="$ctrl.isPostable">
             <div class="panel panel-default">
                 <div class="panel-heading">文書を提案する</div>
                 <div class="panel-body">
@@ -43,7 +43,7 @@
                                 <label for="guildId" class="col-xs-2 control-label text-muted">ギルド</label>
                                 <div class="col-xs-10">
                                     <select name="guildId">
-                                        <option ng-repeat="el in $ctrl.userGuilds" value="{{ el.id }}">{{ el.name }}</option>
+                                        <option ng-repeat="el in $ctrl.authUser.guilds" value="{{ el.id }}">{{ el.name }}</option>
                                     </select>
                                 </div>
                             </div>

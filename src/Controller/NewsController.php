@@ -47,6 +47,7 @@ class NewsController extends AppController
         
         $owners = (isset($query['owners']) ? $query['owners'] : null);
         $ownerId = (isset($query['ownerId']) ? $query['ownerId'] : null);
+        $limit = (isset($query['limit']) ? $query['limit'] : null);
 
         if ($owners) {
             $select = [
@@ -63,11 +64,16 @@ class NewsController extends AppController
 
             $news = $this->Cells->findCells('texts', 'news', $owners)
                 ->select($select)
-                ->where($where)
-                ->all();
+                ->where($where);
         } else {
-            $news = $this->Cells->findAllTextsNews()->all();
+            $news = $this->Cells->findAllTextsNews();
         }
+
+        if ($limit) {
+            $news->limit($limit);
+        }
+
+        $news->all();
 
         $this->set('news', $news);
         $this->set('_serialize', [

@@ -137,11 +137,18 @@ class UsersController extends AppController
                     ])->where([
                         'L.id' => $user['id'],
                     ]);
+                $postName = $user['name'];
+            } else {
+                $postName = __('名無しさん');
             }
 
             $this->set('user', $user);
+            $this->set('postName', $postName);
+            $this->set('csrf', $this->Csrf->request->_csrfToken);
             $this->set('_serialize', [
                 'user',
+                'postName',
+                'csrf',
             ]);
         }
     }

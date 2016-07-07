@@ -6,14 +6,21 @@ var mod = angular.module('gm');
 mod.component('docsIndex', {
     templateUrl: '/js/template/docs-index.html',
     controller: ['$http',
-        function GuildsIndexCtrl($http) {
+        function DocsIndexCtrl($http) {
             var self = this;
             var q = '';
 
-            q = '/api/v1/docs?owners=guilds';
+            q = '/api/v1/users/0';
             $http.get(q).then(function(res) {
-                //console.log(res.data);
-                self.docs = res.data.docs;
+                self.authUser = res.data.user;
+                self.csrf = res.data.csrf;
+                self.isPostable = self.authUser && self.authUser.guilds.length;
+
+                q = '/api/v1/docs?owners=guilds';
+                $http.get(q).then(function(res) {
+                    //console.log(res.data);
+                    self.docs = res.data.docs;
+                });
             });
         }
     ]
@@ -22,7 +29,7 @@ mod.component('docsIndex', {
 mod.component('docsView', {
     templateUrl: '/js/template/docs-view.html',
     controller: ['$http', '$location',
-        function GuildsViewCtrl($http, $location) {
+        function DocsViewCtrl($http, $location) {
             var self = this;
             var id = $location.$$path.substr($location.$$path.lastIndexOf('/') + 1);
             var q = '';
@@ -31,6 +38,7 @@ mod.component('docsView', {
             $http.get(q).then(function(res) {
                 //console.log(res.data);
                 self.authUser = res.data.user;
+                self.csrf = res.data.csrf;
 
                 q = '/api/v1/docs/' + id;
                 $http.get(q).then(function(res) {
@@ -76,6 +84,7 @@ mod.component('docsEdit', {
                 if (self.authUser == null) {
                     return;
                 }
+                self.csrf = res.data.csrf;
 
                 q = '/api/v1/docs/' + id;
                 $http.get(q).then(function(res) {

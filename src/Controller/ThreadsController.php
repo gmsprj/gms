@@ -112,6 +112,7 @@ class ThreadsController extends AppController
     public function view($id = null)
     {
         $q = $this->Threads->get($id);
+
         $this->set('thread', $q);
         $this->set('_serialize', [
             'thread',
@@ -143,6 +144,7 @@ class ThreadsController extends AppController
         $boardId = $this->request->data('boardId');
 
         $user = $this->Auth->user();
+        $board = $this->Boards->get($boardId);
 
         $failTo = ['controller' => 'Boards', 'action' => 'view', $boardId];
         $doneTo = ['controller' => 'Boards', 'action' => 'view', $boardId];

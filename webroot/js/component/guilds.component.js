@@ -20,7 +20,7 @@ mod.component('guildsIndex', {
                 self.image = self.site.images[0];
             });
 
-            $http.get('api/v1/news').then(function(res) {
+            $http.get('api/v1/news?limit=5').then(function(res) {
                 //console.log(res);
                 self.news = res.data.news;
             });
@@ -57,12 +57,14 @@ mod.component('guildsView', {
                 //console.log(res.data);
                 self.authUser = res.data.user;
                 
-                self.wasEntry = false;
-                for (var i = 0, len = self.authUser.guilds.length; i < len; ++i) {
-                    var el = self.authUser.guilds[i];
-                    if (el.id == id) {
-                        self.wasEntry = true;
-                        break;
+                if (self.authUser) {
+                    self.wasEntry = false;
+                    for (var i = 0, len = self.authUser.guilds.length; i < len; ++i) {
+                        var el = self.authUser.guilds[i];
+                        if (el.id == id) {
+                            self.wasEntry = true;
+                            break;
+                        }
                     }
                 }
                 

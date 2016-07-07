@@ -37,8 +37,8 @@ mod.component('guildsIndex', {
                 }
             });
 
-            $http.get('api/v1/docs').then(function(res) {
-                //console.log(res);
+            $http.get('api/v1/docs?owners=guilds').then(function(res) {
+                console.log(res.data);
                 self.docs = res.data.docs;
             });
         }

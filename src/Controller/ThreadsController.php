@@ -90,6 +90,11 @@ class ThreadsController extends AppController
      */
     public function view($id = null)
     {
+        $q = $this->Threads->get($id);
+        $this->set('thread', $q);
+        $this->set('_serialize', [
+            'thread',
+        ]);
     }
 
     /**

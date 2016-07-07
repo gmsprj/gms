@@ -57,6 +57,12 @@ class ThreadsController extends AppController
         $refs = (isset($query['refs']) ? $query['refs'] : null);
         $refId = (isset($query['refId']) ? $query['refId'] : null);
         $limit = (isset($query['limit']) ? $query['limit'] : null);
+
+        // ネストされていたら上書き（/boards/board_id/threads）
+        if (isset($this->request->params['board_id'])) {
+            $owners = 'boards';
+            $ownerId = $this->request->params['board_id'];
+        }
         
         if ($owners) {
             $q = $this->Threads->find();

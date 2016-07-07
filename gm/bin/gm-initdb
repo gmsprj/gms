@@ -23,11 +23,14 @@ if [ $? -ne 0 ]; then
 fi
 
 gm-guildsadd "練習用ギルド" "練習用のギルドです。"
-if [ $? -ne 0 ]; then
-    exit 1
-fi
-
 gm-guildsadd "開発者ギルド" "開発者のギルドです。"
+gm-guildsadd "プログラマーギルド" "Hello, World!"
+gm-guildsadd "Webデザイナーギルド" "Hello, World!"
+gm-guildsadd "Web制作管理ギルド" "Hello, World!"
+gm-guildsadd "介護士ギルド" "(｀・ω・´)"
+gm-guildsadd "保育士ギルド" "(｀・ω・´)"
+gm-guildsadd "イラストレーターギルド" "(｀・ω・´)"
+gm-guildsadd "アニメーターギルド" "(｀・ω・´)"
 if [ $? -ne 0 ]; then
     exit 1
 fi

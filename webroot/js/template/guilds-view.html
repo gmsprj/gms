@@ -104,7 +104,7 @@
                     <form method="post" accept-charset="utf-8" action="/guilds/entry">
                         <div style="display:none;">
                             <input type="hidden" name="_method" value="POST"/>
-                            <input type="hidden" name="_csrfToken" value="{{ $ctrl.authUser.csrf }}"/>
+                            <input type="hidden" name="_csrfToken" value="{{ $ctrl.csrf }}"/>
                             <input type="hidden" name="userId" value="{{ $ctrl.authUser.id }}"/>
                             <input type="hidden" name="guildId" value="{{ $ctrl.guild.id }}"/>
                         </div>

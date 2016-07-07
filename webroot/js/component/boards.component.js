@@ -8,8 +8,10 @@ mod.component('boardsIndex', {
     controller: ['$http',
         function BoardsIndexController($http) {
             var self = this;
+            var q = '';
 
-            $http.get('/boards.json').then(function(res) {
+            q = '/api/v1/boards';
+            $http.get(q).then(function(res) {
                 //console.log(res.data);
                 self.boards = res.data.boards;
             });
@@ -22,15 +24,17 @@ mod.component('boardsView', {
     controller: ['$http', '$location',
         function BoardsViewController($http, $location) {
             var self = this;
-            var path = $location.$$path + '.json';
-            //console.log(path);
+            var id = $location.$$path.substr($location.$$path.lastIndexOf('/') + 1);
+            var q = '';
 
-            $http.get(path).then(function(res) {
-                self.user = res.data.user;
+            q = '/api/v1/boards/' + id;
+            $http.get(q).then(function(res) {
                 self.board = res.data.board;
-                self.threads = res.data.threads;
-                self.postName = res.data.postName;
-                self.csrf = res.data.csrf;
+
+                q = '/api/v1/threads?owners=boards&ownerId=' + id;
+                $http.get(q).then(function(res) {
+                    self.threads = res.data.threads;
+                });
             });
         }
     ]

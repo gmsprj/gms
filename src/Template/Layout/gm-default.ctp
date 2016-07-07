@@ -7,7 +7,7 @@
     <?= $this->Html->meta('icon') ?>
 
     <!-- css/lib -->
-    <?= $this->Html->css('lib/bootstrap/bootstrap-theme.min.css') ?>
+    <!--<?= $this->Html->css('lib/bootstrap/bootstrap-theme.min.css') ?>-->
     <?= $this->Html->css('lib/bootstrap/bootstrap.min.css') ?>
 
     <!-- css -->

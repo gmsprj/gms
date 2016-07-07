@@ -1,4 +1,23 @@
 /**
+ * Bootstrap
+ */
+
+.navbar-default {
+    border: 0px solid red;
+    padding: 10px;
+    background: #fff;
+    color: #fefefe;
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+/**
+ * gm
+ */
+
+/**
  * body の background は footer の背景色になる
  */
 body {
@@ -8,18 +27,28 @@ body {
 /**
  * body の background を上書き。これはコンテンツの背景色になる
  */
-body .gm-background {
-    background: #fff;
+.gm-background {
+    background: #f9f9f9;
 }
 
 .gm-footer {
     margin-top: 2em;
-    border-top: 1px #eee solid;
-    background: #fefefe;
+    border-top: 0px #eee solid;
+    background: #ececec;
     padding: 4em;
 }
 
-.gm-site-header * {
-    padding: 0.4em;
+.gm-site-header {
+    position: relative;
+    top: -200px;
+}
+
+.gm-test {
+    border: 0px solid red;
+    height: 240px;
+    width: 100%;
+    background-image: url('/img/sites/eye-catch.png');
+    background-repeat: no-repeat;
+    opacity: 0.4;
 }
 

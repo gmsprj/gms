@@ -33,6 +33,7 @@ None.
 | Branch      | Description                                                                           |
 | ----------- |:------------------------------------------------------------------------------------- |
 | 0.1.0       | Posts に user_id を追加。システム初期化時に null ユーザー(id 1)を追加                 |
+|             | UI の /api/v1 への換装。                                                              |
 | 0.0.9       | Users の実装。リファクタリング。                                                      |
 | 0.0.8       | Users の Guilds, Docss, Boards, Threads のための実装                                  |
 | 0.0.7       | Implementation of Docs                                                                |

@@ -9,6 +9,13 @@ mod.component('sitesIndex', {
         function sitesIndexCtrl($http) {
             var self = this;
 
+            $http.get('/api/v1/users/0').then(function(res) {
+                //console.log(res);
+                self.authUser = res.data.user;
+                self.csrf = res.data.csrf;
+                self.postName = res.data.postName;
+            });
+
             $http.get('/api/v1/guilds').then(function(res) {
                 //console.log(res);
                 self.guilds = res.data.guilds;
@@ -52,6 +59,17 @@ mod.component('sitesIndex', {
                // console.log(res.data);
                 self.docs = res.data.docs;
             });
+
+            var interId = setInterval(function() {
+                var url = '/api/v1/posts?owners=threads&ownerId=' + self.thread.id;
+                $http.get(url).then(function(res) {
+                    self.posts.push({
+                        name: 0,
+                        content: 1,
+                        created: 2,
+                    });
+                });
+            }, 2000);
         }
     ]
 });

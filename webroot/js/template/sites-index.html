@@ -22,12 +22,17 @@
         </div>
 
         <div class="col-sm-6">
+            <!-- center 1 -->
             <div class="row">
                 <div class="col-sm-12 gm-col">
-                   <p>ウォッチ・スレッド</p>
+                    <h4><a target="_self" href="/boards/view/{{ $ctrl.board.id }}">{{ $ctrl.board.name }}</a></h4>
+                    <ul ng-repeat="el in $ctrl.threads">
+                        <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
+                    </ul>
                 </div>
             </div><!-- row -->
 
+            <!-- center 2 -->
             <div class="row">
                 <div class="col-sm-12">
                     <div ng-repeat="el in $ctrl.posts">

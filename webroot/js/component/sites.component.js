@@ -4,7 +4,7 @@
 var mod = angular.module('gm');
 
 mod.component('sitesIndex', {
-    templateUrl: '/js/template/sites-index.html',
+    templateUrl: '/js/template/sites/index.html',
     controller: ['$http',
         function sitesIndexCtrl($http) {
             var self = this;
@@ -57,7 +57,7 @@ mod.component('sitesIndex', {
 });
 
 mod.component('sitesHeader', {
-    templateUrl: '/js/template/sites-header.html',
+    templateUrl: '/js/template/sites/header.html',
     controller: ['$http',
         function sitesHeaderCtrl($http) {
             var self = this;
@@ -76,7 +76,7 @@ mod.component('sitesHeader', {
 });
 
 mod.component('sitesFooter', {
-    templateUrl: '/js/template/sites-footer.html',
+    templateUrl: '/js/template/sites/footer.html',
     controller: ['$http',
         function sitesFooterCtrl($http) {
         }

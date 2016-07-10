@@ -4,7 +4,7 @@
 var mod = angular.module('gm');
 
 mod.component('usersView', {
-    templateUrl: '/js/template/users-view.html',
+    templateUrl: '/js/template/users/view.html',
     controller: ['$http', '$location',
         function UsersViewCtrl($http, $location) {
             var self = this;

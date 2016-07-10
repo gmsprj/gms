@@ -4,7 +4,7 @@
 var mod = angular.module('gm');
 
 mod.component('guildsIndex', {
-    templateUrl: '/js/template/guilds-index.html',
+    templateUrl: '/js/template/guilds/index.html',
     controller: ['$http',
         function GuildsIndexCtrl($http) {
             var self = this;
@@ -46,7 +46,7 @@ mod.component('guildsIndex', {
 });
 
 mod.component('guildsView', {
-    templateUrl: '/js/template/guilds-view.html',
+    templateUrl: '/js/template/guilds/view.html',
     controller: ['$http', '$location',
         function GuildsViewCtrl($http, $location) {
             var self = this;

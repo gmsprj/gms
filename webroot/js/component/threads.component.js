@@ -4,7 +4,7 @@
 var mod = angular.module('gm');
 
 mod.component('threadsIndex', {
-    templateUrl: '/js/template/threads-index.html',
+    templateUrl: '/js/template/threads/index.html',
     controller: ['$http',
         function ThreadsIndexController($http) {
             var self = this;
@@ -20,7 +20,7 @@ mod.component('threadsIndex', {
 });
 
 mod.component('threadsView', {
-    templateUrl: '/js/template/threads-view.html',
+    templateUrl: '/js/template/threads/view.html',
     controller: ['$http', '$location',
         function ThreadsViewController($http, $location) {
             var self = this;

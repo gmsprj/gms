@@ -9,6 +9,23 @@ mod.component('sitesIndex', {
         function sitesIndexCtrl($http) {
             var self = this;
 
+            /**
+             * Post method for ajax from trigger of html button
+             */
+            self.post = function() {
+                if (self.postName == null || self.content == null) {
+                    alert('Invalid input data');
+                    return;
+                }
+
+                $http.post('/api/v1/posts/add').then(function(res) {
+                    alert('success!');
+                    console.log(res); 
+                }, function(res) {
+                    console.error(res);
+                });
+            };
+
             $http.get('/api/v1/users/0').then(function(res) {
                 //console.log(res);
                 self.authUser = res.data.user;
@@ -60,16 +77,11 @@ mod.component('sitesIndex', {
                 self.docs = res.data.docs;
             });
 
-            var interId = setInterval(function() {
-                var url = '/api/v1/posts?owners=threads&ownerId=' + self.thread.id;
-                $http.get(url).then(function(res) {
-                    self.posts.push({
-                        name: 0,
-                        content: 1,
-                        created: 2,
-                    });
-                });
-            }, 2000);
+            // Events
+            self.msEvent = 2000;
+            self.eventIntervalId = setInterval(function() {
+                console.log(self.msEvent);
+            }, self.msEvent);
         }
     ]
 });

@@ -1,63 +1,35 @@
 <div ng-include="'/js/template/sites/eye-catch.html'"></div>
 
 <div class="container gm-content">
-    <div class="gm-content-header">
-    </div>
 
     <div class="row">
         <div class="col-sm-3 gm-col">
             <div class="row">
                 <h4>ニュース</h4>
-                <p ng-repeat="el in $ctrl.news">
-                    {{ el.created }} ... {{ el.content }}
-                </p>
+                <div ng-repeat="new in $ctrl.news"
+                     ng-include="'/js/template/sites/news-list.html'">
+                </div>
             </div>
         </div>
 
         <div class="col-sm-6">
-            <!-- center 1 -->
-            <div class="row">
-                <div class="col-sm-12 gm-col">
-                    <h4><a target="_self" href="/boards/view/{{ $ctrl.board.id }}">{{ $ctrl.board.name }}</a></h4>
-                    <ul ng-repeat="el in $ctrl.threads">
-                        <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
-                    </ul>
-                </div>
-            </div><!-- row -->
-
-            <!-- center 2 -->
             <div class="row">
                 <div class="col-sm-12">
-                    <div ng-repeat="el in $ctrl.posts">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <span>{{ $index+1 }}</span> 
-                                        <span ng-if="el.user_id != 1">
-                                            <a ng-if="el.user_id != 1" target="_self" href="/users/view/{{ el.user_id }}">
-                                                <strong>{{ el.name }}</strong> 
-                                            </a>
-                                        </span>
-                                        <span ng-if="el.user_id == 1">
-                                            <strong>{{ el.name }}</strong>
-                                        </span>
-                                        <span class="text-muted">{{ el.created }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <p class="col-sm-11" style="white-space: pre;">{{ el.content }}</p>
-                                    <img class="col-sm-1 img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- posts -->
-                </div><!-- col -->
+                    <div ng-repeat="post in $ctrl.posts"
+                         ng-include="'/js/template/sites/posts-list.html'">
+                    </div>
 
-            </div><!-- row -->
-        </div><!-- col -->
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-12">
+                    <div ng-include="'/js/template/sites/posts-form.html'">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-sm-3 gm-col">
             <p>right</p>
         </div>

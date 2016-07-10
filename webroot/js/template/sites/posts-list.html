@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-sm-12">
+                <span>{{ $index+1 }}</span> 
+                <span ng-if="post.user_id != 1">
+                    <a ng-if="post.user_id != 1" target="_self" href="/users/view/{{ post.user_id }}">
+                        <strong>{{ post.name }}</strong> 
+                    </a>
+                </span>
+                <span ng-if="post.user_id == 1">
+                    <strong>{{ post.name }}</strong>
+                </span>
+                <span class="text-muted">{{ post.created }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <p class="col-sm-11" style="white-space: pre;">{{ post.content }}</p>
+            <img class="col-sm-1 img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+        </div>
+    </div>
+</div>
+

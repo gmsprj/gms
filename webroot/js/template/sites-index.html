@@ -1,11 +1,69 @@
-<div class="gm-test">
-</div>
-<div class="container">
-    <div class="gm-content-header text-center">
-        <h3>{{ $ctrl.site.name }}</h3>
-        <p style="white-space: pre;">{{ $ctrl.site.description }}</p>
+<div class="gm-eye-catch">
+    <div class="transparent">
+        <div class="content">
+            <h3>{{ $ctrl.site.name }}</h3>
+            <p style="white-space: pre;">{{ $ctrl.site.description }}</p>
+        </div>
     </div>
-    <hr/>
+</div>
+
+<div class="container gm-content">
+    <div class="gm-content-header">
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3 gm-col">
+            <div class="row">
+                <h4>ニュース</h4>
+                <p ng-repeat="el in $ctrl.news">
+                    {{ el.created }} ... {{ el.content }}
+                </p>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-12 gm-col">
+                   <p>ウォッチ・スレッド</p>
+                </div>
+            </div><!-- row -->
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div ng-repeat="el in $ctrl.posts">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <span>{{ $index+1 }}</span> 
+                                        <span ng-if="el.user_id != 1">
+                                            <a ng-if="el.user_id != 1" target="_self" href="/users/view/{{ el.user_id }}">
+                                                <strong>{{ el.name }}</strong> 
+                                            </a>
+                                        </span>
+                                        <span ng-if="el.user_id == 1">
+                                            <strong>{{ el.name }}</strong>
+                                        </span>
+                                        <span class="text-muted">{{ el.created }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <p class="col-sm-11" style="white-space: pre;">{{ el.content }}</p>
+                                    <img class="col-sm-1 img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- posts -->
+                </div><!-- col -->
+
+            </div><!-- row -->
+        </div><!-- col -->
+        <div class="col-sm-3 gm-col">
+            <p>right</p>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-sm-6">

@@ -31,11 +31,6 @@ body {
     background: #f9f9f9;
 }
 
-.gm-content-header {
-    position: relative;
-    top: -230px;
-}
-
 .gm-footer {
     margin-top: 2em;
     border-top: 0px #eee solid;
@@ -43,13 +38,53 @@ body {
     padding: 4em;
 }
 
-.gm-test {
+/**
+ * アイキャッチの背景画像
+ * 背景画像への透過色
+ * アイキャッチのコンテンツ
+ *
+ * <gm-eye-catch>
+ *   <transparent>
+ *     <content></content>
+ *   </transparent>
+ * </gm-eye-catch>
+ */
+.gm-eye-catch {
     border: 0px solid red;
-    height: 240px;
+    height: 180px;
     width: 100%;
     background-position: center;
     background-image: url('/img/sites/eye-catch.png');
     background-repeat: repeat-x;
-    opacity: 0.4;
+    background-position: center;
+    background-size: cover;
+}
+.gm-eye-catch h3 {
+    margin: 0;
+}
+.gm-eye-catch .transparent {
+    padding: 2em;
+    background-color: rgba(255, 255, 255, 0.6);
+    height: 180px;
+    width: 100%;
+}
+.gm-eye-catch .content {
+    height: 180px;
+    width: 100%;
+    text-align: center;
+    color: black;
+}
+
+/**
+ * コンテンツ
+ */
+.gm-content {
+    margin-top: 2em;
+}
+
+.gm-col {
+    border: 1px solid #ececec;
+    border-radius: 4px;
+    background-color: white;
 }
 

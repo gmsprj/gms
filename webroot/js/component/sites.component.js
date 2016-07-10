@@ -3,7 +3,6 @@
 
 var mod = angular.module('gm');
 
-
 mod.component('sitesIndex', {
     templateUrl: '/js/template/sites-index.html',
     controller: ['$http',
@@ -26,14 +25,25 @@ mod.component('sitesIndex', {
                 self.news = res.data.news;
             });
 
+            // Boards
             $http.get('/api/v1/boards?owners=sites').then(function(res) {
                 //console.log(res);
                 self.board = res.data.boards[0];
+
+                // Threads
                 if (self.board) {
                     var url = '/api/v1/boards/' + self.board.id + '/threads';
                     $http.get(url).then(function(res) {
                         self.threads = res.data.threads;
-                        console.log(self.threads);
+                        self.thread = res.data.threads[0];
+                        //console.log(self.threads);
+
+                        // Posts
+                        var url = '/api/v1/posts?owners=threads&ownerId=' + self.thread.id;
+                        $http.get(url).then(function(res) {
+                            self.posts = res.data.posts;
+                            //console.log(self.posts);
+                        });
                     });
                 }
             });

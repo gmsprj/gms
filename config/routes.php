@@ -71,7 +71,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     /**
      * ルートの委譲先
      */
-    $routes->connect('/', ['controller' => 'Guilds', 'action' => 'index']);
+    $routes->connect('/', ['controller' => 'Sites', 'action' => 'index']);
 
     /**
      * Connect catchall routes for all controllers.

@@ -1,0 +1,43 @@
+<div class="gm-test">
+</div>
+<div class="container">
+    <div class="gm-content-header text-center">
+        <h3>{{ $ctrl.site.name }}</h3>
+        <p style="white-space: pre;">{{ $ctrl.site.description }}</p>
+    </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h4>ニュース</h4>
+            <ul ng-repeat="el in $ctrl.news">
+                <li>{{ el.created }} ... {{ el.content }}</li>
+            </ul>
+        </div>
+
+        <div class="col-sm-6">
+            <h4><a target="_self" href="/guilds">ギルド</a></h4>
+            <ul ng-repeat="el in $ctrl.guilds">
+                <li><a href="/guilds/view/{{ el.id }}">{{ el.name }}</a></li>
+            </ul>
+        </div>
+    </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h4><a target="_self" href="/boards/view/{{ $ctrl.board.id }}">{{ $ctrl.board.name }}</a></h4>
+            <ul ng-repeat="el in $ctrl.threads">
+                <li><a target="_self" href="/threads/view/{{ el.id }}">{{ el.name }}</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <h4><a target="_self" href="/docs">文書</a></h4>
+            <ul ng-repeat="el in $ctrl.docs">
+                <li><a target="_self" href="/docs/view/{{ el.id}}">{{ el.name }}</a> (<a target="_self" href="/guilds/view/{{ el.ownerId }}">{{ el.ownerName }}</a>)</li>
+            </ul>
+        </div>
+    </div>
+    <hr/>
+</div>
+

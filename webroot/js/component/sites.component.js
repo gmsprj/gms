@@ -13,17 +13,18 @@ mod.component('sitesIndex', {
              * Post method for ajax from trigger of html button
              */
             self.post = function() {
-                if (self.postName == null || self.content == null) {
+                self.threadId = self.thread.id; // TODO: Where is thread?
+
+                if (self.postName == null || self.content == null || self.threadId == null) {
                     alert('Invalid input data');
                     return;
                 }
 
                 var data = {
-                    name: 'my name',//self.postName,
-                    content: 'content',//self.content,
-                    userId: 1,//(self.authUser ? self.authUser.id : 1),
-                    threadId: 1,//self.threadId,
-                    data: {abe:'maria'},
+                    name: self.postName,
+                    content: self.content,
+                    userId: (self.authUser ? self.authUser.id : 1),
+                    threadId: self.threadId,
                 };
                 var conf = {
                     headers: {
@@ -31,12 +32,13 @@ mod.component('sitesIndex', {
                     },
                 };
                 var url = '/api/v1/posts';
+
                 $http.post(url, data, conf).then(function(res) {
-                    alert('success!');
-                    console.log(res); 
+                    //console.log(res.data); 
+                    self.posts.unshift(res.data.post);
                 }, function(res) {
-                    console.error(self);
-                    console.error(res);
+                    alert('Failed');
+                    //console.error(res);
                 });
             };
 
@@ -77,7 +79,7 @@ mod.component('sitesIndex', {
                         //console.log(self.threads);
 
                         // Posts
-                        var url = '/api/v1/posts?owners=threads&ownerId=' + self.thread.id;
+                        var url = '/api/v1/posts?order=created&owners=threads&ownerId=' + self.thread.id;
                         $http.get(url).then(function(res) {
                             self.posts = res.data.posts;
                             //console.log(self.posts);

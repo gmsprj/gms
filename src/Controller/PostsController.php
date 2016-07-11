@@ -59,6 +59,7 @@ class PostsController extends AppController
         $owners = (isset($query['owners']) ? $query['owners'] : null);
         $ownerId = (isset($query['ownerId']) ? $query['ownerId'] : null);
         $limit = (isset($query['limit']) ? $query['limit'] : null);
+        $order = (isset($query['order']) ? $query['order'] : null);
         $q = null;
         
         if ($owners) {
@@ -72,6 +73,12 @@ class PostsController extends AppController
 
         } else {
             $q = $this->Posts->find();
+        }
+
+        if ($order) {
+            $q->order([
+                $order => 'DESC',
+            ]);
         }
 
         if ($limit) {
@@ -115,7 +122,6 @@ class PostsController extends AppController
         }
 
         // パラメーターを取得
-        //Log::debug('request->data');
         //Log::debug(json_encode($this->request->data));
         $name = $this->request->data('name');
         $content = $this->request->data('content');
@@ -149,7 +155,9 @@ class PostsController extends AppController
         }
         
         Log::debug('Success to POST of /posts');
-        echo json_encode($this->request->data);
+        echo json_encode([
+            'post' => $newPost,
+        ]);
     }
 }
 

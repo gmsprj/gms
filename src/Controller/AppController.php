@@ -85,7 +85,6 @@ class AppController extends Controller
                 'Crud.ApiQueryLog',
             ]
         ]);
-        $this->loadModel('Sites');
     }
 
     public function beforeFilter(Event $event)

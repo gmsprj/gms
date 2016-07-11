@@ -18,10 +18,24 @@ mod.component('sitesIndex', {
                     return;
                 }
 
-                $http.post('/api/v1/posts/add').then(function(res) {
+                var data = {
+                    name: 'my name',//self.postName,
+                    content: 'content',//self.content,
+                    userId: 1,//(self.authUser ? self.authUser.id : 1),
+                    threadId: 1,//self.threadId,
+                    data: {abe:'maria'},
+                };
+                var conf = {
+                    headers: {
+                        'X-CSRF-Token': self.csrf,
+                    },
+                };
+                var url = '/api/v1/posts';
+                $http.post(url, data, conf).then(function(res) {
                     alert('success!');
                     console.log(res); 
                 }, function(res) {
+                    console.error(self);
                     console.error(res);
                 });
             };

@@ -49,11 +49,17 @@ class PostsController extends AppController
      */
     public function index()
     {
+        if (!$this->request->is('get')) {
+            Log::error('Invalid request method of ' . $this->request->method());
+            throw new NotfoundException(__('このメソッドには対応していません。'));
+        }
+
         $query = $this->request->query;
 
         $owners = (isset($query['owners']) ? $query['owners'] : null);
         $ownerId = (isset($query['ownerId']) ? $query['ownerId'] : null);
         $limit = (isset($query['limit']) ? $query['limit'] : null);
+        $q = null;
         
         if ($owners) {
             $q = $this->Posts->find();
@@ -100,20 +106,26 @@ class PostsController extends AppController
      */
     public function add()
     {
+        $this->autoRender = false;
+
         // メソッド名をチェック
         if (!$this->request->is('post')) {
             Log::error('Invalid method of ' . $this->request->method());
-            return $this->redirect(['controller' => 'Guilds', 'action' => 'index']);
+            throw new NotfoundException(__('このメソッドには対応していません。'));
         }
 
         // パラメーターを取得
-        $authUser = $this->Auth->user();
+        //Log::debug('request->data');
+        //Log::debug(json_encode($this->request->data));
         $name = $this->request->data('name');
         $content = $this->request->data('content');
         $userId = $this->request->data('userId');
         $threadId = $this->request->data('threadId');
+        if ($name == null || $content == null || $userId == null || $threadId == null) {
+            throw new NotfoundException(__('不正なデータです。') . json_encode($this->request->data));
+        }
+
         $thread = $this->Threads->get($threadId);
-        $redirect = ['controller' => 'Threads', 'action' => 'view', $threadId];
 
         // ポストの作成
         $postsTable = TableRegistry::get('Posts');
@@ -127,15 +139,17 @@ class PostsController extends AppController
         if ($newPost->errors()) {
             $this->Flash->error(__('Invalid input data'));
             Log::error(json_encode($newPost->errors()));
-            return $this->redirect($redirect);
+            throw new NotfoundException(__('不正なデータです。') . json_encode($this->request->data));
         }
 
         if (!$postsTable->save($newPost)) {
             $this->Flash->error(__('Failed to save'));
             Log::error(json_encode($newPost->errors()));
+            throw new NotfoundException(__('応答に失敗しました。') . json_encode($this->request->data));
         }
         
-        return $this->redirect($redirect);
+        Log::debug('Success to POST of /posts');
+        echo json_encode($this->request->data);
     }
 }
 

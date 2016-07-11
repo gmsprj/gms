@@ -12,8 +12,18 @@ mod.config(['$locationProvider', '$httpProvider',
         });
 
         $httpProvider.defaults.headers.get = {
-            'Accept' : 'application/json'
+            'Accept': 'application/json'
         };
+        $httpProvider.defaults.headers.post = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        };
+
+        /*
+        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        $httpProvider.defaults.xsrfHeaderName = 'X-CSRF-Token';
+        $httpProvider.defaults.headers.post['X-CSRF-Token'] = 'MY-CSRF-TOKEN';
+        */
     }
 ]);
 

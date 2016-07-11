@@ -2,7 +2,7 @@
     <div class="panel-heading">
         <div class="row">
             <div class="col-sm-12">
-                <span>{{ $index+1 }}</span> 
+                <span>{{ $ctrl.posts.length-$index }}</span>: 
                 <span ng-if="post.user_id != 1">
                     <a ng-if="post.user_id != 1" target="_self" href="/users/view/{{ post.user_id }}">
                         <strong>{{ post.name }}</strong> 

@@ -40,11 +40,6 @@ mod.component('guildsIndex', {
                     });
                 }
             });
-
-            $http.get('api/v1/docs?owners=guilds').then(function(res) {
-               // console.log(res.data);
-                self.docs = res.data.docs;
-            });
         }
     ]
 });
@@ -78,18 +73,6 @@ mod.component('guildsView', {
                     //console.log(res.data);
                     self.guild = res.data.guild;
                     self.symbol = self.guild.images[0];
-                });
-
-                q = '/api/v1/docs?owners=guilds&ownerId=' + id + '&state=published';
-                $http.get(q).then(function(res) {
-                    //console.log(res.data);
-                    self.publishedDocs = res.data.docs;
-                });
-
-                q = '/api/v1/docs?owners=guilds&ownerId=' + id + '&state=draft';
-                $http.get(q).then(function(res) {
-                    //console.log(res.data);
-                    self.draftDocs = res.data.docs;
                 });
 
                 q = '/api/v1/news?owners=guilds&ownerId=' + id;

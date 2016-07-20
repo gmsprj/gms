@@ -23,7 +23,6 @@
     <?= $this->Html->script('app.js') ?>
     <?= $this->Html->script('component/sites.component.js') ?>
     <?= $this->Html->script('component/guilds.component.js') ?>
-    <?= $this->Html->script('component/sites.component.js') ?>
     <?= $this->Html->script('component/threads.component.js') ?>
     <?= $this->Html->script('component/users.component.js') ?>
 

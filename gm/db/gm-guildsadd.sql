@@ -2,32 +2,27 @@
 
 INSERT INTO guilds (
     name,
-    description
+    description,
+    category_id
 ) VALUES (
     '{{ name }}',
-    '{{ description }}'
+    '{{ description }}',
+    1
 );
 SET @guild_id = LAST_INSERT_ID();
 
--- boards, threads, posts, cells
-
-INSERT INTO boards (
-    name,
-    description
-) VALUES (
-    '{{ name }}専用板',
-    '{{ name }}の専用板です。'
-);
-SET @board_id = LAST_INSERT_ID();
+-- threads
 
 INSERT INTO threads (
     name,
-    board_id
+    guild_id
 ) VALUES (
     '{{ name }}・雑談スレ',
-    @board_id
+    @guild_id
 );
 SET @thread_id = LAST_INSERT_ID();
+
+-- posts
 
 INSERT INTO posts (
     name,
@@ -37,35 +32,6 @@ INSERT INTO posts (
     '名無しさん',
     'ギルドの雑談スレです。',
     @thread_id
-);
-
-INSERT INTO cells (
-    name,
-    left_id,
-    right_id
-) VALUES (
-    'boards-owners-guilds',
-    @board_id,
-    @guild_id
-);
-
--- news
-
-INSERT INTO texts (
-    content
-) VALUES (
-    '{{ name }}専用板が新設されました。'
-);
-SET @text_id = LAST_INSERT_ID();
-
-INSERT INTO cells (
-    name,
-    left_id,
-    right_id
-) VALUES (
-    'texts-news-boards',
-    @text_id,
-    @board_id
 );
 
 -- symbols
@@ -85,72 +51,6 @@ INSERT INTO cells (
     'images-syms-guilds',
     @image_id,
     @guild_id
-);
-
--- docs
-
-INSERT INTO docs (
-    name,
-    content,
-    state
-) VALUES (
-    'ギルド利用マニュアル',
-    'これは{{ name }}の利用マニュアルです。ギルドの新規参加者を対象にしています。',
-    'published'
-);
-SET @doc_id = LAST_INSERT_ID();
-
-INSERT INTO cells (
-    name,
-    left_id,
-    right_id
-) VALUES (
-    'docs-owners-guilds',
-    @doc_id,
-    @guild_id
-);
-
-INSERT INTO cells (
-    name,
-    left_id,
-    right_id
-) VALUES (
-    'threads-refs-docs',
-    @thread_id,
-    @doc_id
-);
-
--- docs
-
-INSERT INTO docs (
-    name,
-    content,
-    state
-) VALUES (
-    '{{ name }}の提案',
-    'これは{{ name }}の文書化前の提案です。',
-    'draft'
-);
-SET @doc_id = LAST_INSERT_ID();
-
-INSERT INTO cells (
-    name,
-    left_id,
-    right_id
-) VALUES (
-    'docs-owners-guilds',
-    @doc_id,
-    @guild_id
-);
-
-INSERT INTO cells (
-    name,
-    left_id,
-    right_id
-) VALUES (
-    'threads-refs-docs',
-    @thread_id,
-    @doc_id
 );
 
 -- news

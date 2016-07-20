@@ -14,7 +14,7 @@ use DateTime;
  *
  * スレッドを管理するアプリケーション。
  *
- * @see src/Controller/Boards.php
+ * @see src/Controller/Guilds.php
  * @see src/Controller/Posts.php
  */
 class ThreadsController extends AppController
@@ -38,7 +38,7 @@ class ThreadsController extends AppController
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
         $this->Auth->allow(['index', 'view', 'add']);
-        $this->loadModel('Boards');
+        $this->loadModel('Guilds');
         $this->loadModel('Posts');
         $this->loadModel('Cells');
     }
@@ -58,10 +58,10 @@ class ThreadsController extends AppController
         $refId = (isset($query['refId']) ? $query['refId'] : null);
         $limit = (isset($query['limit']) ? $query['limit'] : null);
 
-        // ネストされていたら上書き（/boards/board_id/threads）
-        if (isset($this->request->params['board_id'])) {
+        // ネストされていたら上書き（/guilds/guild_id/threads）
+        if (isset($this->request->params['guild_id'])) {
             $owners = 'boards';
-            $ownerId = $this->request->params['board_id'];
+            $ownerId = $this->request->params['guild_id'];
         }
         
         if ($owners) {
@@ -69,7 +69,7 @@ class ThreadsController extends AppController
             
             $where = [];
             if ($ownerId) {
-               $where['board_id'] = $ownerId; 
+               $where['guild_id'] = $ownerId; 
             }
             $q->where($where);
 
@@ -133,7 +133,7 @@ class ThreadsController extends AppController
      * @param string request->data('threadName') 新規スレッド名
      * @param string request->data('postName') 新規スレッドのポストの投稿者名
      * @param string request->data('postContent') 新規スレッドのポストの内容
-     * @param string request->data('boardId') 新規スレッドが属する板のID
+     * @param string request->data('guildId') 新規スレッドが属するギルドのID
      */
     public function add()
     {
@@ -147,19 +147,19 @@ class ThreadsController extends AppController
         $threadName = $this->request->data('threadName');
         $postName = $this->request->data('postName');
         $postContent = $this->request->data('postContent');
-        $boardId = $this->request->data('boardId');
+        $guildId = $this->request->data('guildId');
 
         $user = $this->Auth->user();
-        $board = $this->Boards->get($boardId);
+        $guild = $this->Guilds->get($guildId);
 
-        $failTo = ['controller' => 'Boards', 'action' => 'view', $boardId];
-        $doneTo = ['controller' => 'Boards', 'action' => 'view', $boardId];
+        $failTo = ['controller' => 'Guilds', 'action' => 'view', $guildId];
+        $doneTo = ['controller' => 'Guilds', 'action' => 'view', $guildId];
 
         // スレッドの作成
         $threadsTable = TableRegistry::get('Threads');
         $newThread = $threadsTable->newEntity([
             'name' => $threadName,
-            'board_id' => $boardId,
+            'guild_id' => $guildId,
         ]);
 
         if ($newThread->errors()) {
@@ -193,8 +193,8 @@ class ThreadsController extends AppController
 
         // News
         $this->Cells->addTextsNews([
-            'right' => 'boards',
-            'rightId' => $boardId,
+            'right' => 'guilds',
+            'rightId' => $guildId,
             'content' => sprintf('%sに新規スレッド「%s」が作成されました。', $board->name, $threadName),
         ]);
 

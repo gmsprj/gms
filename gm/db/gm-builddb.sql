@@ -69,28 +69,54 @@ CREATE TABLE users (
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /**
- * boards
+ * categorys
  *
- * 「板/スレッド/ポスト」の内、板の情報が保存される。
+ * カテゴリの複数形は categories だが、便宜上 categorys とする。
+ *
  */
 
-DROP TABLE IF EXISTS boards;
+DROP TABLE IF EXISTS categorys;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE boards (
-  id int(11) NOT NULL AUTO_INCREMENT COMMENT '板のID',
-  name varchar(128) NOT NULL COMMENT '板の名前',
-  description text COMMENT '板の説明',
-  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の作成日',
-  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT '板の更新日',
+CREATE TABLE categorys (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'カテゴリのID',
+  name varchar(64) NOT NULL COMMENT 'カテゴリの名前',
+  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'カテゴリの作成日',
+  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'カテゴリの更新日',
   PRIMARY KEY (id)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のリスト';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='カテゴリのリスト';
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/**
+ * guilds
+ *
+ * ギルドの情報が保存される。
+ *
+ * users はユーザーの新規作成時に users.guild_id の参照先が必要になるため、サービス起動時に最低 1 つ以上のギルド(ID は 1)が必要。
+ * boards は boards.parent_name が "guilds" である時、boards.parent_id が guilds.id を参照するので、ギルドの削除時などに boards の走査/削除も必要になる。
+ */
+
+DROP TABLE IF EXISTS guilds;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE guilds (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ギルドのID',
+  name varchar(128) NOT NULL COMMENT 'ギルドの名前',
+  description text COMMENT 'ギルドの説明',
+  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの作成日',
+  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの更新日',
+  category_id int(11) NOT NULL DEFAULT 1 COMMENT 'カテゴリのID',
+  PRIMARY KEY (id),
+  KEY category_id (category_id),
+  CONSTRAINT category FOREIGN KEY (category_id) REFERENCES categorys (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ギルドのリスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /**
  * threads
  *
- * 「板/スレッド/ポスト」の内、スレッドの情報が保存される。
+ * 「ギルド/スレッド/ポスト」の内、スレッドの情報が保存される。
  * 依存関係は boards を参照。
  */
 
@@ -102,11 +128,11 @@ CREATE TABLE threads (
   name varchar(128) NOT NULL COMMENT 'スレッドの名前',
   created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'スレッドの作成日',
   modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'スレッドの更新日',
-  board_id int(11) NOT NULL COMMENT '所属する板のID',
+  guild_id int(11) NOT NULL COMMENT '所属するギルドのID',
   PRIMARY KEY (id),
-  KEY board_id (board_id),
-  CONSTRAINT board_threads_ibfk_1 FOREIGN KEY (board_id) REFERENCES boards (id)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='板のスレッド';
+  KEY guild_id (guild_id),
+  CONSTRAINT guild FOREIGN KEY (guild_id) REFERENCES guilds (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ギルドのスレッド';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /**
@@ -134,67 +160,6 @@ CREATE TABLE posts (
   CONSTRAINT post_user_ibfk_1 FOREIGN KEY (user_id) REFERENCES users (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='スレッドへのポスト';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-/**
- * guilds
- *
- * ギルドの情報が保存される。
- *
- * 依存関係:
- *
- *     <- 依存方向
- *
- *     guilds <- users
- *            <- boards
- *
- * users はユーザーの新規作成時に users.guild_id の参照先が必要になるため、サービス起動時に最低 1 つ以上のギルド(ID は 1)が必要。
- * boards は boards.parent_name が "guilds" である時、boards.parent_id が guilds.id を参照するので、ギルドの削除時などに boards の走査/削除も必要になる。
- */
-
-DROP TABLE IF EXISTS guilds;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE guilds (
-  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ギルドのID',
-  name varchar(128) NOT NULL COMMENT 'ギルドの名前',
-  description text COMMENT '板の説明',
-  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの作成日',
-  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ギルドの更新日',
-  PRIMARY KEY (id)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ギルドのリスト';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-/**
- * docs
- *
- * state
- * 文書の状態
- *
- * - draft
- *   名称: 提案、原案、草案
- *   30日で寿命が尽きる。
- *   条件を満たすと published へ遷移。
- *
- * - published
- *   名称: 文書、公開文書
- *   恒久的に保存される。
- *   条件を満たすと draft へ遷移。
- */
-
-DROP TABLE IF EXISTS docs;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE docs (
-  id int(11) NOT NULL AUTO_INCREMENT COMMENT '文書のID',
-  name varchar(256) NOT NULL DEFAULT '' COMMENT '文書の名前',
-  content text COMMENT '文書の内容',
-  state varchar(32) NOT NULL DEFAULT 'closed' COMMENT '文書の状態',
-  created datetime DEFAULT CURRENT_TIMESTAMP COMMENT '文書の作成日',
-  modified datetime DEFAULT CURRENT_TIMESTAMP COMMENT '文書の更新日',
-  PRIMARY KEY (id)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='ドキュメントのリスト';
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /**
  * ここから以下は抽象化されたデータ構造と、それを表現するためのテーブル。
@@ -325,22 +290,5 @@ CREATE TABLE images (
  * cells.name: 'xxxs-owners-xxxs' (example 'docs-owners-guilds')
  * cells.left_id: xxxs.id 
  * cells.right_id: xxxs.id 
- */
-
-/**
- * xxxs-refs-xxxs
- *
- * 参照先と参照元を表現する構造。
- * 左が参照先、右が参照元。
- *
- * 'threads-refs-docs' で、Threads が Docs に参照されている状態を表す。
- *
- *      cells
- *    /       \
- * xxxs       xxxs
- *
- * cells.name: 'xxxs-refs-xxxs'
- * cells.left_id: xxxs.id 
- * cells.right_id: xxxs.id
  */
 

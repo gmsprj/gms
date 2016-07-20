@@ -1,0 +1,19 @@
+#!/bin/bash
+DBNAME="$GM_DBNAME"
+DBUSER="$GM_DBUSER"
+DBPASS="$GM_DBPASS"
+BASEDIR=$(dirname "$0")
+SQLPATH="$BASEDIR/../db/gm-catesadd.sql"
+
+NAME="$1"
+
+if [ -z "$NAME" ]; then
+    NAME="No Name"
+fi
+
+mysql -u $DBUSER -p$DBPASS $DBNAME <<EOF
+`cat $SQLPATH | sed "s/{{ name }}/$NAME/g"`
+EOF
+
+exit 0
+

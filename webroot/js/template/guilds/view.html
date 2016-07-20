@@ -32,14 +32,6 @@
                         <div class="col-sm-8">xxx</div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-4">文書総数</div>
-                        <div class="col-sm-8">xxx</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">板総数</div>
-                        <div class="col-sm-8">xxx</div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-4">スレッド総数</div>
                         <div class="col-sm-8">xxx</div>
                     </div>
@@ -68,30 +60,7 @@
     <hr/>
 
     <div class="row">
-        <div class="col-sm-6">
-            <h4><a target="_self" href="/docs">文書</a></h4>
-            <ul ng-repeat="el in $ctrl.publishedDocs">
-                <li><a target="_self" href="/docs/view/{{ el.id }}">{{ el.name }}</a></li>
-            </ul>
-        </div>
-        <div class="col-sm-6">
-            <h4><a target="_self" href="/docs">提案</a></h4>
-            <ul ng-repeat="el in $ctrl.draftDocs">
-                <li><a target="_self" href="/docs/view/{{ el.id }}">{{ el.name }}</a></li>
-            </ul>
-        </div>
-    </div>
-    <hr/>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <h4>板</h4>
-            <ul ng-repeat="el in $ctrl.boards">
-                <li><a target="_self" href="/boards/view/{{ el.id }}">{{ el.name }}</a></li>
-            </ul>
-        </div>
-
-        <div class="col-sm-6">
+        <div class="col-sm-12">
             <h4>入会</h4>
             <div ng-if="!$ctrl.authUser">
                 <p>{{ $ctrl.guild.name }}への入会には<a target="_self" href="/users/signin">サインイン</a>が必要です。</p>

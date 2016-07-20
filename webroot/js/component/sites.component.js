@@ -70,13 +70,13 @@ mod.component('sitesIndex', {
             });
 
             // Boards
-            $http.get('/api/v1/boards?owners=sites').then(function(res) {
+            $http.get('/api/v1/guilds?owners=sites').then(function(res) {
                 //console.log(res);
-                self.board = res.data.boards[0];
+                self.guild = res.data.guilds[0];
 
                 // Threads
-                if (self.board) {
-                    var url = '/api/v1/boards/' + self.board.id + '/threads';
+                if (self.guild) {
+                    var url = '/api/v1/guilds/' + self.guild.id + '/threads';
                     $http.get(url).then(function(res) {
                         self.threads = res.data.threads;
                         self.thread = res.data.threads[0];

@@ -39,17 +39,12 @@ mod.component('threadsView', {
                     //console.log(res.data);
                     self.thread = res.data.thread;
 
-                    q = '/api/v1/boards/' + self.thread.board_id;
+                    q = '/api/v1/guilds/' + self.thread.guild_id;
                     $http.get(q).then(function(res) {
                         //console.log(res.data);
-                        self.board = res.data.board;
+                        self.guild = res.data.guild;
 
-                        self.isPostable = false;
-                        if (self.authUser || self.board.owners === 'sites') {
-                            self.isPostable = true;
-                        }
-
-                        q = '/api/v1/threads?owners=boards&ownerId=' + self.board.id;
+                        q = '/api/v1/threads?owners=guilds&ownerId=' + self.guild.id;
                         $http.get(q).then(function(res) {
                             //console.log(res.data);
                             self.threads = res.data.threads;

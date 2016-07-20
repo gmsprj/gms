@@ -13,7 +13,7 @@
     </div>
 
     <div class="col-sm-10">
-        <h3>{{ $ctrl.board.name }} &gt; {{ $ctrl.thread.name }}</h3>
+        <h3>{{ $ctrl.guild.name }} &gt; {{ $ctrl.thread.name }}</h3>
         <hr/>
 
         <p>スレッドID: {{ $ctrl.thread.id }}</p>
@@ -47,7 +47,7 @@
         </div>
         <hr/>
         
-        <div class="panel panel-default" ng-if="$ctrl.isPostable">
+        <div class="panel panel-default">
             <div class="panel-heading">コメント投稿</div>
                 <div class="panel-body">
                     <form method="post" accept-charset="utf-8" action="/posts/add">

@@ -3,6 +3,7 @@
 # DBのテーブルを初期化する。
 #
 
+# クリア
 gm-cleardb 
 if [ $? -ne 0 ]; then
     exit 1
@@ -22,6 +23,10 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# カテゴリーの追加
+gm-catesadd "なし"
+
+# ギルドの追加
 gm-guildsadd "練習用ギルド" "練習用のギルドです。"
 gm-guildsadd "開発者ギルド" "開発者のギルドです。"
 gm-guildsadd "プログラマーギルド" "Hello, World!"
@@ -31,11 +36,6 @@ gm-guildsadd "介護士ギルド" "(｀・ω・´)"
 gm-guildsadd "保育士ギルド" "(｀・ω・´)"
 gm-guildsadd "イラストレーターギルド" "(｀・ω・´)"
 gm-guildsadd "アニメーターギルド" "(｀・ω・´)"
-if [ $? -ne 0 ]; then
-    exit 1
-fi
-
-gm-boardsadd "ロビー板" "ロビー板です。ゲストも書き込みできます。"
 if [ $? -ne 0 ]; then
     exit 1
 fi

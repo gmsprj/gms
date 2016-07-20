@@ -29,11 +29,11 @@ mod.component('guildsIndex', {
                 self.news = res.data.news;
             });
 
-            $http.get('/api/v1/boards?owners=sites').then(function(res) {
+            $http.get('/api/v1/guilds').then(function(res) {
                 //console.log(res);
-                self.board = res.data.boards[0];
-                if (self.board) {
-                    var url = '/api/v1/boards/' + self.board.id + '/threads';
+                self.guild = res.data.guilds[0];
+                if (self.guild) {
+                    var url = '/api/v1/guilds/' + self.guild.id + '/threads';
                     $http.get(url).then(function(res) {
                         self.threads = res.data.threads;
                         console.log(self.threads);
@@ -90,24 +90,6 @@ mod.component('guildsView', {
                 $http.get(q).then(function(res) {
                     //console.log(res.data);
                     self.draftDocs = res.data.docs;
-                });
-
-                q = '/api/v1/boards?owners=guilds&ownerId=' + id;
-                $http.get(q).then(function(res) {
-                    //console.log(res.data);
-                    self.boards = res.data.boards;
-
-                    // Headline of thread
-                    q = '/api/v1/threads?owners=boards&ownerId=' + self.boards[0].id + '&limit=1';
-                    $http.get(q).then(function(res) {
-                        self.thread = (res.data.threads ? res.data.threads[0] : null);
-                        if (self.thread) {
-                            q = '/api/v1/posts?owners=threads&ownerId=' + self.thread.id + '&limit=5';
-                            $http.get(q).then(function(res) {
-                                self.posts = res.data.posts;
-                            });
-                        }
-                    });
                 });
 
                 q = '/api/v1/news?owners=guilds&ownerId=' + id;

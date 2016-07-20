@@ -8,7 +8,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-gm-sitesadd "GMS `git branch | grep \* | sed 's/\* //g'`" "`cat <<EOT
+gm-sitesadd "GMS" "`cat <<EOT
 仕事とネットをつなぐ、みんなのギルド。
 EOT
 `"

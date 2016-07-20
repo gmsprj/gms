@@ -131,17 +131,17 @@ gm.SitesNewsListCtrl = function($http) {
 
 var mod = angular.module('gm');
 
-mod.component('sitesIndex', {
+mod.component('gmSitesIndex', {
     templateUrl: '/js/template/sites/index.html',
     controller: ['$http', gm.SitesIndexCtrl]
 });
 
-mod.component('sitesHeader', {
+mod.component('gmSitesHeader', {
     templateUrl: '/js/template/sites/header.html',
     controller: ['$http', gm.SitesHeaderCtrl]
 });
 
-mod.component('sitesFooter', {
+mod.component('gmSitesFooter', {
     templateUrl: '/js/template/sites/footer.html',
     controller: ['$http', gm.SitesFooterCtrl]
 });

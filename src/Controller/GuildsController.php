@@ -29,12 +29,14 @@ class GuildsController extends AppController
     public function initialize()
     {
         parent::initialize();
+
         $this->loadComponent('Csrf');
         $this->viewBuilder()->layout('gm-default');
         $this->Auth->allow([
             'entry',
             'leave',
         ]);
+        $this->loadModel('Category');
         $this->loadModel('Cells');
     }
 

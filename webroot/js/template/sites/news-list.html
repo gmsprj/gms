@@ -1,4 +1,15 @@
-<p>
-    {{ new.created }} ... {{ new.content }}
-</p>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="gm-panel">
+            <div class="gm-panel-body">
+                <h3>ニュース</h3>
+                <ul>
+                    <li ng-repeat="new in $ctrl.news">
+                        <span>{{ new.created }} ... {{ new.content }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 

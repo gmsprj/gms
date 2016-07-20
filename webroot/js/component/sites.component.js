@@ -1,3 +1,7 @@
+if (typeof gm === 'undefined') {
+    var gm = {};
+}
+
 (function() {
 'use strict';
 
@@ -121,12 +125,36 @@ mod.component('sitesHeader', {
     ]
 });
 
+gm.SitesDescriptionCtrl = function($http) {
+    var self = this;
+
+    self.description = 'ギルドに参加して自分たちの仕事について話し合おう！';
+};
+
+gm.SitesNewsListCtrl = function($http) {
+    var self = this;
+
+    $http.get('/api/v1/news?limit=5').then(function(res) {
+        self.news = res.data.news;
+    });
+};
+
 mod.component('sitesFooter', {
     templateUrl: '/js/template/sites/footer.html',
     controller: ['$http',
         function sitesFooterCtrl($http) {
         }
     ]
+});
+
+mod.component('gmSitesDescription', {
+    templateUrl: '/js/template/sites/description.html',
+    controller: ['$http', gm.SitesDescriptionCtrl],
+});
+
+mod.component('gmSitesNewsList', {
+    templateUrl: '/js/template/sites/news-list.html',
+    controller: ['$http', gm.SitesNewsListCtrl],
 });
 
 }());

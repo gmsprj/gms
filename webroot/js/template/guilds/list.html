@@ -1,2 +1,17 @@
-<p>guilds list</p>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="gm-panel">
+            <div class="gm-panel-body">
+                <h3>ギルド</h3>
+                <ul>
+                    <li ng-repeat="guild in $ctrl.guilds">
+                        <a target="_self" href="/guilds/view/{{ guild.id }}">
+                            <span>{{ guild.name }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 

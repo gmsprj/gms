@@ -1,3 +1,7 @@
+if (typeof gm === 'undefined') {
+    var gm = {};
+}
+
 (function() {
 'use strict';
 
@@ -115,6 +119,23 @@ mod.component('guildsView', {
         }
     ]
 })
+
+/**
+ * gm.GuildsListCtrl
+ *
+ */
+gm.GuildsListCtrl = function($http) {
+    var self = this;
+
+    $http.get('/guilds').then(function(res) {
+        self.guilds = res.data.guilds;
+    });
+};
+
+mod.component('gmGuildsList', {
+    templateUrl: '/js/template/guilds/list.html',
+    controller: ['$http',  gm.GuildsListCtrl],
+});
 
 }());
 

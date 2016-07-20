@@ -1,13 +1,13 @@
-<div ng-include="'/js/template/sites/eye-catch.html'"></div>
-
 <div class="container gm-content">
     <div class="row">
 
         <div class="col-sm-3 gm-col">
             <div class="row">
-                <h4>ニュース</h4>
-                <div ng-repeat="new in $ctrl.news"
-                     ng-include="'/js/template/sites/news-list.html'">
+                <div class="col-sm-12">
+                    <h4>ニュース</h4>
+                    <div ng-repeat="new in $ctrl.news"
+                         ng-include="'/js/template/sites/news-list.html'">
+                    </div>
                 </div>
             </div>
         </div>

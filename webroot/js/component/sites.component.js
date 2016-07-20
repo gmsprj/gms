@@ -114,13 +114,11 @@ gm.SitesFooterCtrl = function($http) {
 
 gm.SitesDescriptionCtrl = function($http) {
     var self = this;
-
     self.description = 'ギルドに参加して自分たちの仕事について話し合おう！';
 };
 
 gm.SitesNewsListCtrl = function($http) {
     var self = this;
-
     $http.get('/api/v1/news?limit=5').then(function(res) {
         self.news = res.data.news;
     });

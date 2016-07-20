@@ -43,24 +43,13 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <h4>ヘッドライン</h4>
-            <p><a target="_self" href="/threads/view/{{ $ctrl.thread.id }}">{{ $ctrl.thread.name }}</a>の新着{{ $ctrl.posts.length }}コメント</p>
-            <ul>
-                <li ng-repeat="el in $ctrl.posts">{{ el.name }}: {{ el.content }}</li>
-            </ul>
-        </div>
-        
-        <div class="col-sm-6">
             <h4>ニュース</h4>
             <ul ng-repeat="el in $ctrl.news">
                 <li>{{ el.created }} ... {{ el.content }}</li>
             </ul>
         </div>
-    </div>
-    <hr/>
 
-    <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-6">
             <h4>入会</h4>
             <div ng-if="!$ctrl.authUser">
                 <p>{{ $ctrl.guild.name }}への入会には<a target="_self" href="/users/signin">サインイン</a>が必要です。</p>

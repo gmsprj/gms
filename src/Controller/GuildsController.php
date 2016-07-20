@@ -157,7 +157,7 @@ class GuildsController extends AppController
     /**
      * Leave method
      *
-     * ギルドからの入会を処理する。
+     * ギルドからの退会を処理する。
      * 退会に失敗した場合、/guilds/index へリダイレクト。
      * 退会に成功した場合、退会したギルドへリダイレクト。
      *

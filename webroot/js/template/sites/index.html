@@ -18,10 +18,17 @@
 
             <div class="row">
                 <div class="col-sm-12">
+                    <gm-guilds-thumbs></gm-guilds-thumbs>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
                     <div ng-include="'/js/template/sites/posts-ajax-form.html'">
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-sm-12">
                     <div ng-repeat="post in $ctrl.posts"
@@ -36,6 +43,12 @@
             <div class="row">
                 <div class="col-sm-12">
                     <gm-guilds-list></gm-guilds-list>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <gm-boards-list></gm-boards-list>
                 </div>
             </div>
         </div>

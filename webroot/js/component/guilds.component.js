@@ -132,9 +132,40 @@ gm.GuildsListCtrl = function($http) {
     });
 };
 
+/**
+ * 
+ *
+ */
+gm.GuildsThumbsCtrl = function($http) {
+    var self = this;
+
+    $http.get('/guilds').then(function(res) {
+        self.guilds = res.data.guilds;
+        if (!self.guilds) {
+            return;
+        }
+
+        for (var i = 0, len = self.guilds.length; i < len; ++i) {
+            (function() {
+                var _guild = self.guilds[i];
+                return function() {
+                    $http.get('/api/v1/guilds/' + _guild.id).then(function(res) {
+                        _guild.symbol = res.data.guild.images[0];
+                    });
+                };
+            }())();
+        }
+    });
+};
+
 mod.component('gmGuildsList', {
     templateUrl: '/js/template/guilds/list.html',
     controller: ['$http',  gm.GuildsListCtrl],
+});
+
+mod.component('gmGuildsThumbs', {
+    templateUrl: '/js/template/guilds/thumbs.html',
+    controller: ['$http',  gm.GuildsThumbsCtrl],
 });
 
 }());

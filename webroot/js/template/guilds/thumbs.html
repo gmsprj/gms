@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="gm-panel">
+            <div class="gm-panel-body">
+                <div class="row">
+                    <div class="col-sm-4" style="" ng-repeat="guild in $ctrl.guilds">
+                        <a target="_self" href="/guilds/view/{{ guild.id }}">
+                            <img class="img-thumbnail" src="{{ guild.symbol.url }}"/>
+                            <p>{{ guild.name }}</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,7 @@
+if (typeof gm === 'undefined') {
+    var gm = {};
+}
+
 (function() {
 'use strict';
 
@@ -57,6 +61,19 @@ mod.component('boardsView', {
             });
         }
     ]
+});
+
+gm.BoardsListCtrl = function($http) {
+    var self = this;
+
+    $http.get('/api/v1/boards').then(function(res) {
+        self.boards = res.data.boards;
+    });
+};
+
+mod.component('gmBoardsList', {
+    templateUrl: '/js/template/boards/list.html',
+    controller: ['$http', gm.BoardsListCtrl],
 });
 
 }());

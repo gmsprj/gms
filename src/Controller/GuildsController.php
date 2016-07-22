@@ -36,7 +36,7 @@ class GuildsController extends AppController
             'entry',
             'leave',
         ]);
-        $this->loadModel('Category');
+        $this->loadModel('Categorys');
         $this->loadModel('Cells');
     }
 
@@ -49,6 +49,12 @@ class GuildsController extends AppController
     {
         if ($this->request->is('get')) {
             $guilds = $this->Guilds->find()->all();
+            foreach ($guilds as $guild) {
+                $cate = $this->Categorys->find()->where([
+                    'id' => $guild->category_id,
+                ])->first();
+                $guild['category'] = $cate;
+            }
 
             $this->set('guilds', $guilds);
             $this->set('_serialize', [

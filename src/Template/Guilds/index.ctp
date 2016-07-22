@@ -1,6 +1,6 @@
 <div ng-app="gm">
-    <sites-header></sites-header>
-    <guilds-index></guilds-index>
-    <sites-footer></sites-footer>
+    <gm-sites-header></gm-sites-header>
+    <gm-guilds-index></gm-guilds-index>
+    <gm-sites-footer></gm-sites-footer>
 </div>
 

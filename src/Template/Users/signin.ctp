@@ -1,5 +1,5 @@
 <div ng-app="gm">
-    <sites-header></sites-header>
+    <gm-sites-header></gm-sites-header>
     <div class="container">
         <h3><?= __('サインイン') ?></h3>
         <hr/>
@@ -17,6 +17,6 @@
         </div>
     </div>
 
-    <sites-footer></sites-footer>
+    <gm-sites-footer></gm-sites-footer>
 </div>
 

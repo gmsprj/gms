@@ -1,5 +1,5 @@
 <div ng-app="gm">
-    <sites-header></sites-header>
+    <gm-sites-header></gm-sites-header>
     <div class="container">
         <div class="boards index large-9 medium-8 columns content">
             <h3><?= __('サインアップ') ?></h3>
@@ -17,5 +17,5 @@
                 <?= $this->Form->end() ?>
             </div>
         </div>
-    <sites-footer></sites-footer>
+    <gm-sites-footer></gm-sites-footer>
 </div>
